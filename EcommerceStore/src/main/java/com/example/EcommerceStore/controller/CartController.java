@@ -8,6 +8,7 @@ import com.example.EcommerceStore.repository.CartItemRepository;
 import com.example.EcommerceStore.repository.CartRepository;
 import com.example.EcommerceStore.repository.ProductRepository;
 import com.example.EcommerceStore.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class CartController {
 
 
   @GetMapping("/cart/{user_id}")
-  public String viewCart(@PathVariable("user_id") int user_id, Model model) {
+  public String viewCart(@PathVariable("user_id") int user_id, Model model, HttpSession session) {
     Cart cart = cartRepository.findCartByUserId(user_id);
 
     if (cart == null) {
@@ -47,6 +48,7 @@ public class CartController {
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("cartItemList", cartItemList);
       model.addAttribute("user_id", user_id);
+      session.setAttribute("cartItemList",cartItemList);
       int total = 0;
       for (CartItem c : cartItemList) {
         total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())

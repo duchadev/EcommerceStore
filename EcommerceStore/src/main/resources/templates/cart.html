@@ -15,7 +15,8 @@
     <td th:text="${cartItem.quantity}"></td>
     <td>
       <!-- Use Thymeleaf form to submit quantity update -->
-      <form th:action="@{/EcommerceStore/cart/updateQuantity}" method="post" th:if="${cartItem.quantity > 0}">
+      <form th:action="@{/EcommerceStore/cart/updateQuantity}" method="post"
+            th:if="${cartItem.quantity > 0}">
         <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
         <input type="hidden" name="quantity" th:value="${cartItem.quantity}">
         <input type="hidden" name="user_id" th:value="${user_id}">
@@ -39,8 +40,15 @@
     </td>
   </tr>
 </table>
+
 <span>Total: </span>
 <p th:text="${total}"></p>
-<button>Order</button>
+<form th:action="@{/EcommerceStore/order}" method="get">
+  <input type="hidden" name="user_id" th:value="${user_id}">
+  <input type="hidden" name="total" th:value="${total}">
+
+  <button type="submit">Order</button>
+</form>
+
 </body>
 </html>
