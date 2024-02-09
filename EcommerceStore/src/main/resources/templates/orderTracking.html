@@ -19,22 +19,27 @@
       <th>Action</th>
     </tr>
     <tr th:each="order : ${orderList}">
-      <td th:text="${order.order_id}"></td>
+      <td th:text="${order.orderId}"></td>
       <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id)}"></td>
       <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id).getCusInfo()}"></td>
 
       <td th:text="${order.order_date}"></td>
-      <td th:text="${order.cost}"></td>
+      <td th:text="${#numbers.formatDecimal(order.cost, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
       <td th:text="${order.status}"></td>
       <td th:text="${order.getPStatus()}"></td>
 
-      <td><button type="submit">View Detail</button></td>
+      <td>
+        <form th:action="@{/EcommerceStore/viewOrderDetail}" method="get">
+          <input type="hidden" name="order_id" th:value="${order.orderId}">
+          <button type="submit">View Detail</button>
+        </form>
+      </td>
     </tr>
   </table>
 </div>
-  <div th:if="${orderList} == null">
-    <p>You do not have any order.</p>
-  </div>
+<div th:if="${orderList} == null">
+  <p>You do not have any order.</p>
+</div>
 
 
 </body>
