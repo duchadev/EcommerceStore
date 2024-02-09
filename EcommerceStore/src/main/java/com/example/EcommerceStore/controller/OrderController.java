@@ -93,7 +93,7 @@ public class OrderController {
       LocalDateTime now = LocalDateTime.now();
       Date orderDate = Date.valueOf(now.toLocalDate());
 
-      Order order = new Order(user_address, total, status, pStatus, user_id,orderDate);
+      Order order = new Order(user_address, total, status, pStatus, user_id, orderDate);
 
       orderRepository.save(order);
       List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");
@@ -181,7 +181,7 @@ public class OrderController {
       String pStatus = "PAID";
       String status = "PENDING";
       Cart cart = cartRepository.findCartByUserId(user_id);
-      Order order = new Order(address_id, total, status, pStatus, user_id,orderDate);
+      Order order = new Order(address_id, total, status, pStatus, user_id, orderDate);
 
       orderRepository.save(order);
       List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");

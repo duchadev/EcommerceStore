@@ -28,7 +28,7 @@ public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "order_id")
-  private int order_id;
+  private int orderId;
   @Column(name="user_id")
   private int userId;
   private int address_id;
@@ -48,4 +48,5 @@ public class Order {
   }
   @OneToMany(mappedBy = "order", cascade  = CascadeType.ALL)
   private List<OrderDetail> orderDetails = new ArrayList<>();
+
 }

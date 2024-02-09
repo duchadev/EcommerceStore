@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Detail</title>
+</head>
+<body>
+<a th:href="@{/EcommerceStore/orderTracking(user_id=${user_id}, status=${status})}"></a>
+  <table>
+    <tr>
+      <th>Product name</th>
+      <th>Image</th>
+      <th>Quantity</th>
+    </tr>
+    <tr th:each="orderDetail: ${orderDetailList}">
+      <td th:text="${orderDetail.product_name}"></td>
+      <td th:text="${orderDetail.image}"></td>
+      <td th:text="${orderDetail.quantity}"></td>
+    </tr>
+  </table>
+</body>
+</html>
