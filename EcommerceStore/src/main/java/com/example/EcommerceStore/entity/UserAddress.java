@@ -2,6 +2,8 @@ package com.example.EcommerceStore.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.Setter;
 public class UserAddress {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "address_id")
   private int addressId;
   @Column(name = "user_id")
@@ -33,5 +36,20 @@ public class UserAddress {
   @Override
   public String toString() {
     return district + ", " + commute + ", " + detailAddress + ", " + city ;
+  }
+ public String getCusInfo()
+ {
+   return receive_name+", "+ receive_phone;
+ }
+  public UserAddress(String district, String commute, String detailAddress, String city,
+      String receive_name ,String receive_phone, int userId)
+  {
+    this.userId = userId;
+    this.district = district;
+    this.commute = commute;
+    this.detailAddress = detailAddress;
+    this.city = city;
+    this.receive_name = receive_name;
+    this.receive_phone= receive_phone;
   }
 }

@@ -38,7 +38,7 @@ public class Controller {
   public ResponseEntity saveUser(@RequestBody User user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     User result = userRepository.save(user);
-    if (result.getUser_id() > 0) {
+    if (result.getUserId() > 0) {
       return ResponseEntity.ok("User saved");
     }
     return ResponseEntity.status(404).body("User is not saved");

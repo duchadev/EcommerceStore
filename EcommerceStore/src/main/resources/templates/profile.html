@@ -11,7 +11,7 @@
   <!-- Other form fields -->
 
   <!-- Null check for user_id -->
-  <input type="hidden" name="user_id" th:if="${user != null}" th:value="${user.user_id}" class="d-none form-control">
+  <input type="hidden" name="user_id" th:if="${user != null}" th:value="${user.userId}" class="d-none form-control">
 
   <!-- Null check for user_name -->
   <input type="text" name="user_name" th:if="${user != null}" th:value="${user.user_name}" class="d-none form-control">
@@ -25,6 +25,11 @@
   <input type="password" name="password" th:if="${user != null}" th:value="${user.password}" class="d-none form-control">
 
   <button type="submit">Submit</button>
+</form>
+<form th:action="@{/EcommerceStore/orderTracking}" method="get">
+  <input type="hidden" name="user_id" th:value="${user.userId}">
+  <input type="hidden" name="status" value="PENDING">
+  <button type="submit">Pending order</button>
 </form>
 </body>
 </html>

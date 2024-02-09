@@ -3,6 +3,10 @@ package com.example.EcommerceStore.config;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
+import com.example.EcommerceStore.entity.User;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -25,10 +30,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableMethodSecurity
 public class SecurityConfig {
+
   @Autowired
   private OurUserDetailsService userDetailsService;
-
-
 
 
   @Bean
@@ -36,8 +40,8 @@ public class SecurityConfig {
     httpSecurity.authorizeHttpRequests(auth -> auth
             .requestMatchers("/EcommerceStore/product", "/EcommerceStore/loginpage",
                 "/EcommerceStore/productDetails/{product_id}", "/css/**", "/js/**", "/vendor/**",
-                "/fonts/**", "/images/**", "/static/**","/asset/**",
-                "/EcommerceStore/register_form","/EcommerceStore/register",
+                "/fonts/**", "/images/**", "/static/**", "/asset/**",
+                "/EcommerceStore/register_form", "/EcommerceStore/register",
                 "/EcommerceStore/otp_verify").permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
@@ -56,25 +60,22 @@ public class SecurityConfig {
             logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll()
-
         )
         .oauth2Login(oauth2 -> oauth2
             .loginPage("/login/oauth2/authorization/google")
-            .defaultSuccessUrl("/EcommerceStore/signingoogle", true)
+            .defaultSuccessUrl("/EcommerceStore/product", true)
             .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
             logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll()
-
         )
         .oauth2Login(oauth2 -> oauth2
             .loginPage("/login/oauth2/authorization/facebook")
-            .defaultSuccessUrl("/EcommerceStore/signinfacebook", true)
+            .defaultSuccessUrl("/EcommerceStore/product", true)
             .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
             logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll()
-
         )
         .csrf(AbstractHttpConfigurer::disable);
 
@@ -90,12 +91,16 @@ public class SecurityConfig {
     auth.setPasswordEncoder(passwordEncoder());
     return auth;
   }
+
   public AuthenticationManager authenticationManager(
       AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
+
 }
