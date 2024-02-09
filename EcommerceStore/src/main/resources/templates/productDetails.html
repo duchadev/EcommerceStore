@@ -10,7 +10,7 @@
 <form th:action="@{/EcommerceStore/cart/add}" method="POST">
   <input type="hidden" name="product_id" id="product_id" th:value="${productId}">
   <input type="hidden" name="user_id" id="user_id"
-         th:value="${userRepository.findByUserEmail(user_email).getUser_id()}">
+         th:value="${userRepository.findByUserEmail(user_email).getUserId()}">
 
   <p th:text="'Product ID: ' + ${product.productId}"></p>
   <p th:text="'Product Name: ' + ${product.product_name}"></p>

@@ -42,7 +42,7 @@ public class ProductController {
         model.addAttribute("user_email", email);
         User user = userRepository.findByUserEmail(email);
         model.addAttribute("userRepository", userRepository);
-        int user_id = user.getUser_id();
+        int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);
       } else if (principal instanceof OAuth2User oAuth2User) {
         // get user_email when sign in with google or facebook
@@ -82,7 +82,7 @@ public class ProductController {
         model.addAttribute("user_email", email);
         User user = userRepository.findByUserEmail(email);
         model.addAttribute("userRepository", userRepository);
-        int user_id = user.getUser_id();
+        int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);
       } else if (principal instanceof OAuth2User oAuth2User) {
         // get user_email when sign in with google or facebook

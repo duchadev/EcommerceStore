@@ -14,12 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
   User findByUserEmail(String emailId);
+  User findUserByUserId(int user_id);
   @Query(value = "select * from [dbo].[User] where user_email = :user_email", nativeQuery = true)
   Optional<User> findByEmail(@Param("user_email") String user_email);
 
   @Modifying
   @Query("UPDATE User SET user_name = :user_name, user_phoneNumber = :user_phoneNumber, "
-      + "birthday = :birthday, password = :password WHERE user_id = :user_id")
+      + "birthday = :birthday, password = :password WHERE userId = :user_id")
   void updateUserByUserId(@Param("user_id") int user_id,
       @Param("user_name") String user_name,
       @Param("user_phoneNumber") String user_phoneNumber,

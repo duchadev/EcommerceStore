@@ -42,19 +42,24 @@ public class CartController {
     Cart cart = cartRepository.findCartByUserId(user_id);
 
     if (cart == null) {
+      int total = 0;
+      model.addAttribute("total", total);
       model.addAttribute("error", "Your cart is empty");
     } else {
       List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("cartItemList", cartItemList);
       model.addAttribute("user_id", user_id);
-      session.setAttribute("cartItemList",cartItemList);
-      int total = 0;
-      for (CartItem c : cartItemList) {
-        total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())
-            .getProductPrice();
+      session.setAttribute("cartItemList", cartItemList);
+      int total = getTotal(cartItemList);
+      if(cartItemList == null)
+      {
+        total = 0;
+        model.addAttribute("total", total);
+      } else
+      {
+        model.addAttribute("total", total);
       }
-      model.addAttribute("total", total);
     }
 
     return "cart";
@@ -62,7 +67,7 @@ public class CartController {
 
   @PostMapping("/cart/add")
   public String addToCart(@RequestParam("product_id") int product_id,
-      @RequestParam("user_id") int user_id, Model model) {
+      @RequestParam("user_id") int user_id, Model model, HttpSession session) {
     try {
       Optional<Product> productOptional = productRepository.findById(product_id);
 
@@ -70,14 +75,15 @@ public class CartController {
         Product product = productOptional.get();
 
         // Retrieve or create a user based on the user_id
-        User user = userRepository.findById(user_id).orElse(null);
+        User user = userRepository.findUserByUserId(user_id);
 
         if (user != null) {
-          Cart cart = getCurrentUserCart(user.getUser_id());
+          Cart cart = getCurrentUserCart(user.getUserId());
           Optional<CartItem> existingItem = cart.getCartItemList().stream()
               .filter(item -> item.getProductId() == (product.getProductId()))
               .findFirst();
-
+          cart.setUserId(user_id);
+          cartRepository.save(cart);
           if (existingItem.isPresent()) {
             // If the product is already in the cart, increase the quantity
             existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
@@ -94,18 +100,20 @@ public class CartController {
           }
           List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
           model.addAttribute("cartItemList", cartItemList);
-          int total = 0;
-          for (CartItem c : cartItemList) {
-            total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())
-                .getProductPrice();
+          session.setAttribute("cartItemList", cartItemList);
+          int total = getTotal(cartItemList);
+          if(cartItemList == null)
+          {
+            total = 0;
+            model.addAttribute("total", total);
+          } else
+          {
+            model.addAttribute("total", total);
           }
-          model.addAttribute("total", total);
           model.addAttribute("productRepository", productRepository);
           model.addAttribute("user_id", user_id);
           // Set the user in the cart
           model.addAttribute("userRepository", userRepository);
-          cart.setUserId(user_id);
-          cartRepository.save(cart);
 
           return "cart";
         } else {
@@ -159,12 +167,15 @@ public class CartController {
       }
       List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
       model.addAttribute("cartItemList", cartItemList);
-      int total = 0;
-      for (CartItem c : cartItemList) {
-        total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())
-            .getProductPrice();
+      int total = getTotal(cartItemList);
+      if(cartItemList == null)
+      {
+        total = 0;
+        model.addAttribute("total", total);
+      } else
+      {
+        model.addAttribute("total", total);
       }
-      model.addAttribute("total", total);
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("user_id", user_id);
       cartItemRepository.save(cartItem);
@@ -187,12 +198,17 @@ public class CartController {
       // You may want to update the cart or related data here if needed
       List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
       model.addAttribute("cartItemList", cartItemList);
-      int total = 0;
-      for (CartItem c : cartItemList) {
-        total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())
-            .getProductPrice();
+
+      int total = getTotal(cartItemList);
+      if(cartItemList == null)
+      {
+        total = 0;
+        model.addAttribute("total", total);
+      } else
+      {
+        model.addAttribute("total", total);
       }
-      model.addAttribute("total", total);
+
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("user_id", user_id);
       return "cart";
@@ -200,7 +216,24 @@ public class CartController {
       model.addAttribute("error", ex.getMessage());
       return "error";
     }
-  }
 
+  }
+  public int getTotal(List<CartItem> cartItemList)
+  {
+    if(cartItemList == null)
+    {
+      return 0;
+    } else
+    {
+      int total = 0;
+      for (CartItem c : cartItemList) {
+        total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())
+            .getProductPrice();
+      }
+      return total;
+    }
+
+
+  }
 
 }
