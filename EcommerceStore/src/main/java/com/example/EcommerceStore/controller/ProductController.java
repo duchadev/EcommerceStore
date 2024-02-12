@@ -5,6 +5,7 @@ import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.service.ProductService;
+import com.example.EcommerceStore.service.ProductServiceImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.boot.Banner.Mode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -34,8 +36,10 @@ public class ProductController {
   private ProductRepository productRepository;
   @Autowired
   private UserRepository userRepository;
+  //  @Autowired
+//  private ProductService productService;
   @Autowired
-  private ProductService productService;
+  private ProductServiceImpl productService;
 
   @GetMapping("/product")
   public String getProduct(Authentication authentication, Model model,
@@ -72,11 +76,10 @@ public class ProductController {
 //    }
 //    model.addAttribute("keyword", keyword);
 
-    Page<Product> productList = this.productService.getAll(pageNo);
-
+//    Page<Product> productList = this.productService.getAll(pageNo);
+    List<Product> productList = productService.getInitialProducts();
     model.addAttribute("productList", productList);
-    model.addAttribute("totalPage", productList.getTotalPages());
-    model.addAttribute("currentPage", pageNo);
+
     List<Product> listPhone = productRepository.findProductByProductType("Phone");
     model.addAttribute("listPhone", listPhone);
     List<Product> listLaptop = productRepository.findProductByProductType("Laptop");
@@ -84,6 +87,13 @@ public class ProductController {
     List<Product> listEarPhone = productRepository.findProductByProductType("Ear Phone");
     model.addAttribute("listEarPhone", listEarPhone);
     return "homepage";
+  }
+
+  @GetMapping("/products/more")
+  public String getMoreProduct(Model model, @RequestParam int page, @RequestParam int size) {
+    List<Product> moreProducts = productService.getMoreProducts(page, size);
+    model.addAttribute("productListMore", moreProducts);
+    return "homepage"; // Trả về một fragment chứa danh sách sản phẩm mới
   }
 
   @GetMapping("/productDetails/{productId}")
@@ -157,23 +167,15 @@ public class ProductController {
   }
 
   @GetMapping("/search")
-  public String searchProduct(@RequestParam(value = "keyword", required = false) String keyword,
-      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+  public String searchProduct(@RequestParam String keyword,
+      @RequestParam int page, @RequestParam int size,
       Model model) {
-    Page<Product> productList;
 
-    if (keyword != null && !keyword.trim().isEmpty()) {
-      productList = productService.searchProduct(keyword.trim(), pageNo);
-//      System.out.println(productList.getTotalPages());
-    } else {
-      productList = productService.getAll(pageNo);
-    }
-
+    List<Product> productList = productService.searchProduct(keyword);
+    List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
     model.addAttribute("productList", productList);
-    model.addAttribute("totalPage", productList.getTotalPages());
-    model.addAttribute("currentPage", pageNo);
+    model.addAttribute("productListMore", pList);
     model.addAttribute("keyword", keyword);
-
     return "homepage";
   }
 

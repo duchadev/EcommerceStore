@@ -4,6 +4,8 @@ import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.entity.User;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
    @Query("select p from Product p where p.product_name LIKE CONCAT('%', ?1, '%')")
   List<Product> searchProduct(String keyword);
 
+  @Query("select p from Product p where p.product_name LIKE CONCAT('%', ?1, '%')")
+  Page<Product> searchProducts(String keyword, PageRequest of);
 
 }
