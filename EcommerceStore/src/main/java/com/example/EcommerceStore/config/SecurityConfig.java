@@ -38,12 +38,13 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/EcommerceStore/product", "/EcommerceStore/loginpage",
+            .requestMatchers("/EcommerceStore/product", "/EcommerceStore/products/more/**","/EcommerceStore/loginpage",
                 "/EcommerceStore/productDetails/{product_id}", "/css/**", "/js/**", "/vendor/**",
                 "/fonts/**", "/images/**", "/static/**", "/asset/**",
                 "/EcommerceStore/register_form", "/EcommerceStore/register",
                 "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
-            ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**").permitAll()
+            ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**",
+                "/EcommerceStore/products/more").permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
         .formLogin(formLogin ->
