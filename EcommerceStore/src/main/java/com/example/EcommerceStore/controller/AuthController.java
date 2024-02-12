@@ -42,11 +42,11 @@ public class AuthController {
   public String verifyUser(@RequestParam String email, @RequestParam String otp, Model model) {
     try {
       userService.verify(email, otp);
-      // You can add attributes to the model if needed
-      return "product"; // Thymeleaf template name
+
+      return "product";
     } catch (RuntimeException e) {
       model.addAttribute("error", e.getMessage());
-      return "error"; // Thymeleaf template name
+      return "error";
     }
   }
 }

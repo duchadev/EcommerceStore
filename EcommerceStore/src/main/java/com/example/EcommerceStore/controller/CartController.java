@@ -74,7 +74,7 @@ public class CartController {
       if (productOptional.isPresent()) {
         Product product = productOptional.get();
 
-        // Retrieve or create a user based on the user_id
+        // retrieve or create a user based on the user_id
         User user = userRepository.findUserByUserId(user_id);
 
         if (user != null) {
@@ -85,10 +85,10 @@ public class CartController {
           cart.setUserId(user_id);
           cartRepository.save(cart);
           if (existingItem.isPresent()) {
-            // If the product is already in the cart, increase the quantity
+            // increase the quantity if the product already in cart
             existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
           } else {
-            // If the product is not in the cart, create a new CartItem
+            // create new cart_item if product have not been in cart yet
             CartItem cartItem = new CartItem();
             cartItem.setProductId(product.getProductId());
             cartItem.setQuantity(1);
@@ -117,12 +117,11 @@ public class CartController {
 
           return "cart";
         } else {
-          // Log or handle the case where the user does not exist
-          // Return an appropriate error response or redirect
+
           return "error";
         }
       } else {
-        // Product not found, handle accordingly
+       //handle product not found
         return "error";
       }
     } catch (Exception ex) {

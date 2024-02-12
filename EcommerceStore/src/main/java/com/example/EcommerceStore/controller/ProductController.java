@@ -4,6 +4,7 @@ import com.example.EcommerceStore.config.UserInfoDetails;
 import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
+import com.example.EcommerceStore.service.ProductService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner.Mode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -30,9 +34,12 @@ public class ProductController {
   private ProductRepository productRepository;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private ProductService productService;
 
   @GetMapping("/product")
-  public String getProduct(Authentication authentication, Model model) {
+  public String getProduct(Authentication authentication, Model model,
+      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
     if (authentication != null && authentication.isAuthenticated()) {
       Object principal = authentication.getPrincipal();
 
@@ -57,9 +64,19 @@ public class ProductController {
         return "error";
       }
     }
-    List<Product> productList = productRepository.findAll();
-    model.addAttribute("productList", productList);
+//    List<Product> productList = productRepository.findAll();
+//    model.addAttribute("productList", productList);
+//    List<Product> productList = productRepository.findAll();
+//    if (keyword != null) {
+//      productList = productRepository.searchProduct(keyword);
+//    }
+//    model.addAttribute("keyword", keyword);
 
+    Page<Product> productList = this.productService.getAll(pageNo);
+
+    model.addAttribute("productList", productList);
+    model.addAttribute("totalPage", productList.getTotalPages());
+    model.addAttribute("currentPage", pageNo);
     List<Product> listPhone = productRepository.findProductByProductType("Phone");
     model.addAttribute("listPhone", listPhone);
     List<Product> listLaptop = productRepository.findProductByProductType("Laptop");
@@ -70,7 +87,6 @@ public class ProductController {
   }
 
   @GetMapping("/productDetails/{productId}")
-
   public String getProductDetails(@PathVariable("productId") Integer productId,
       Authentication authentication, Model model) {
     if (authentication != null && authentication.isAuthenticated()) {
@@ -95,6 +111,11 @@ public class ProductController {
       } else {
         return "error";
       }
+
+    } else {
+      model.addAttribute("user_email", " ");
+      model.addAttribute("user_id", -1);
+      model.addAttribute("userRepository", userRepository);
 
     }
     Optional<Product> optionalProduct = productRepository.findById(productId);
@@ -134,4 +155,26 @@ public class ProductController {
     model.addAttribute("productType", productType);
     return "productFilter";
   }
+
+  @GetMapping("/search")
+  public String searchProduct(@RequestParam(value = "keyword", required = false) String keyword,
+      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+      Model model) {
+    Page<Product> productList;
+
+    if (keyword != null && !keyword.trim().isEmpty()) {
+      productList = productService.searchProduct(keyword.trim(), pageNo);
+//      System.out.println(productList.getTotalPages());
+    } else {
+      productList = productService.getAll(pageNo);
+    }
+
+    model.addAttribute("productList", productList);
+    model.addAttribute("totalPage", productList.getTotalPages());
+    model.addAttribute("currentPage", pageNo);
+    model.addAttribute("keyword", keyword);
+
+    return "homepage";
+  }
+
 }

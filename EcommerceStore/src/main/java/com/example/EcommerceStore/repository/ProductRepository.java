@@ -15,5 +15,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
   Product getProductByProductId(int product_id);
   List<Product> findProductsByProductBrand(String productBrand);
   List<Product> findProductsByProductPriceBetweenAndProductType(int start_price, int end_price, String productType);
-  List<Product> findProductsByProductPriceBetweenAndProductBrand(int start_price,int end_price, String productBrand);
+   @Query("select p from Product p where p.product_name LIKE CONCAT('%', ?1, '%')")
+  List<Product> searchProduct(String keyword);
+
+
 }
