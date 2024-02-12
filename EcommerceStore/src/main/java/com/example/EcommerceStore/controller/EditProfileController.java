@@ -61,7 +61,7 @@ public String editProfile(@RequestParam("user_id") int user_id,
       Date parsedDate = dateFormat.parse(birthdayString);
       birthday = new Timestamp(parsedDate.getTime());
     } catch (ParseException e) {
-      // Handle parsing exception
+
       e.printStackTrace();
     }
     String encodePass = bCryptPasswordEncoder.encode(password);
@@ -69,7 +69,7 @@ public String editProfile(@RequestParam("user_id") int user_id,
 
     return "redirect:" + UriComponentsBuilder.fromPath("/EcommerceStore/profile/{user_email}")
         .buildAndExpand(user_email)
-        .toUriString(); // Redirect to the profile page after successful update
+        .toUriString(); // redirect to the profile page after successful update
   } catch (Exception ex) {
     model.addAttribute("error", ex.getMessage());
     ex.printStackTrace();

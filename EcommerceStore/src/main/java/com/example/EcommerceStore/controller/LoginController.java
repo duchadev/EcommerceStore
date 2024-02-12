@@ -35,15 +35,13 @@ public class LoginController {
 
   @PostMapping("/login")
   public String login(@RequestParam String username, @RequestParam String password, Model model) {
-    // Perform proper authentication logic here (consider using Spring Security)
 
-    // Example using your repository methods (not recommended for production)
     Optional<User> user = userRepository.findByEmail(username);
     if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
-      // Authentication successful, redirect to the product page
+      // auth successful, redirect to the product page
       return "redirect:/EcommerceStore/product";
     } else {
-      // Authentication failed, set error message and return to login page
+      // auth failed, set error message and return to login page
       model.addAttribute("errorlogin", "Invalid username or password");
       return "login";
     }
@@ -82,7 +80,7 @@ public class LoginController {
   public String currentFacebookUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
     Map<String, Object> attributes = oAuth2AuthenticationToken.getPrincipal().getAttributes();
 
-    // Convert attributes to User object for Facebook
+    // convert attributes to User object for Facebook
     User user = toFacebookUser(attributes);
 
     if (!userRepository.existsUserByUserEmail(user.getUserEmail())) {

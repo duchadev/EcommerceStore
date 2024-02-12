@@ -42,7 +42,8 @@ public class SecurityConfig {
                 "/EcommerceStore/productDetails/{product_id}", "/css/**", "/js/**", "/vendor/**",
                 "/fonts/**", "/images/**", "/static/**", "/asset/**",
                 "/EcommerceStore/register_form", "/EcommerceStore/register",
-                "/EcommerceStore/otp_verify").permitAll()
+                "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
+            ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**").permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
         .formLogin(formLogin ->
