@@ -29,6 +29,7 @@
 <form th:action="@{/EcommerceStore/orderTracking}" method="get">
   <input type="hidden" name="user_id" th:value="${user.userId}">
   <input type="hidden" name="status" value="PENDING">
+
   <button type="submit">Pending order</button>
 </form>
 </body>
