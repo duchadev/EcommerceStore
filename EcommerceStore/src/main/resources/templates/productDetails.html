@@ -21,7 +21,19 @@
   <p th:text="'Price: ' + ${product.productPrice}"></p>
   <p th:text="'Rating: ' + ${product.rating}"></p>
   <p th:text="'Brand: ' + ${product.productBrand}"></p>
-  <button type="submit">Add to cart</button>
+  <div th:if="${productRepository.getProductByProductId(productId).getProduct_quantity() >0}">
+    <button type="submit">Thêm vào giỏ hàng</button>
+  </div>
+
 </form>
+<form action="/EcommerceStore/register-product" method="post">
+  <div th:if="${productRepository.getProductByProductId(productId).getProduct_quantity() == 0}">
+    <span>Đăng kí nhận thông tin khi có hàng</span><br>
+    <input type="hidden" name="product_id"  th:value="${product.productId}">
+    <input type="hidden" name="user_email" th:value="${user_email}">
+    <button type="submit">Đăng kí nhận thông tin</button>
+  </div>
+</form>
+
 </body>
 </html>

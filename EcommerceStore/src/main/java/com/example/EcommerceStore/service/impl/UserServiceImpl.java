@@ -80,4 +80,9 @@ public class UserServiceImpl implements UserService {
     String body ="your verification otp is: "+otp;
     emailService.sendEmail(email,subject,body);
   }
+  public void sendNotification(String email,String productName){
+    String subject = "Thông báo sản phẩm mới";
+    String body ="Sản phẩm "+productName+ " đã có hàng.";
+    emailService.sendEmail(email,subject,body);
+  }
 }
