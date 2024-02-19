@@ -35,7 +35,6 @@ public class AuthController {
   {
     return "otp_verify";
   }
-
   }
 
   @PostMapping("/verify")

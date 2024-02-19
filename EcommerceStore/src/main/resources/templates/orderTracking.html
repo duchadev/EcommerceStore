@@ -44,7 +44,7 @@
     <table>
       <tr th:each="order : ${morePendingOrder}">
         <div class="hot-product-main-item">
-       
+
           <td th:text="${order.orderId}"></td>
           <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id)}"></td>
           <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id).getCusInfo()}"></td>

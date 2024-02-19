@@ -5,6 +5,7 @@ import com.example.EcommerceStore.entity.Cart;
 import com.example.EcommerceStore.entity.CartItem;
 import com.example.EcommerceStore.entity.Order;
 import com.example.EcommerceStore.entity.OrderDetail;
+import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.entity.UserAddress;
 import com.example.EcommerceStore.repository.CartItemRepository;
 import com.example.EcommerceStore.repository.CartRepository;
@@ -99,6 +100,10 @@ public class OrderController {
       List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");
       for (CartItem cartItem : cartItemList) {
         OrderDetail orderDetail = new OrderDetail();
+        Product product = productRepository.getProductByProductId(cartItem.getProductId());
+//        System.out.println("Product ID: " + product.getProductId());
+//        System.out.println("cart item quantity: " + cartItem.getQuantity());
+        product.setProduct_quantity(product.getProduct_quantity() - cartItem.getQuantity());
         orderDetail.setOrder(order);
         orderDetail.setProduct_id(cartItem.getProductId());
         orderDetail.setQuantity(cartItem.getQuantity());
@@ -106,10 +111,13 @@ public class OrderController {
             productRepository.getProductByProductId(cartItem.getProductId()).getProduct_name());
         orderDetail.setImage(
             productRepository.getProductByProductId(cartItem.getProductId()).getProduct_image());
+
         orderDetailRepository.save(orderDetail);
         cartItemRepository.delete(cartItem);
 
+
       }
+
       session.removeAttribute("cart");
       session.removeAttribute("cartItemList");
       cartRepository.delete(cart);

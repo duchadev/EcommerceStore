@@ -84,8 +84,9 @@ public class CartController {
               .findFirst();
           cart.setUserId(user_id);
           cartRepository.save(cart);
+
           if (existingItem.isPresent()) {
-            // increase the quantity if the product already in cart
+
             existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
           } else {
             // create new cart_item if product have not been in cart yet
@@ -95,9 +96,10 @@ public class CartController {
             cartItem.setCart(cart);
             cartItem.setCartId(cart.getCartId());
             cart.getCartItemList().add(cartItem);
-            cartItemRepository.save(cartItem);
 
+            cartItemRepository.save(cartItem);
           }
+
           List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
           model.addAttribute("cartItemList", cartItemList);
           session.setAttribute("cartItemList", cartItemList);
@@ -147,24 +149,31 @@ public class CartController {
 
       @RequestParam("action") String action,
       @RequestParam("user_id") int user_id,
-      Model model) {
+      Model model, HttpSession session) {
     try {
       CartItem cartItem = cartItemRepository.findById(cartItemId)
           .orElseThrow(() -> new IllegalArgumentException("Invalid cart item Id: " + cartItemId));
       Cart cart = cartRepository.findCartByUserId(user_id);
       if ("increase".equalsIgnoreCase(action)) {
         cartItem.setQuantity(cartItem.getQuantity() + 1);
-
+        cartItemRepository.save(cartItem);
+//
+//        System.out.println("Product ID: " + cartItem.getProductId());
+//        System.out.println("Quantity: "+ cartItem.getQuantity());
       } else if ("decrease".equalsIgnoreCase(action)) {
         if (cartItem.getQuantity() > 1) {
           cartItem.setQuantity(cartItem.getQuantity() - 1);
           cartItemRepository.save(cartItem);
+//          System.out.println("Product ID: " + cartItem.getProductId());
+//          System.out.println("Quantity: "+ cartItem.getQuantity());
         } else {
           removeItem(cartItemId, user_id, model);
           return "cart";
         }
       }
+
       List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
+      session.setAttribute("cartItemList", cartItemList);
       model.addAttribute("cartItemList", cartItemList);
       int total = getTotal(cartItemList);
       if(cartItemList == null)

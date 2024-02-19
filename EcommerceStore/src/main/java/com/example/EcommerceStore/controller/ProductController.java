@@ -130,6 +130,7 @@ public class ProductController {
     }
     Optional<Product> optionalProduct = productRepository.findById(productId);
     if (optionalProduct.isPresent()) {
+      model.addAttribute("productRepository", productRepository);
       model.addAttribute("product", optionalProduct.get());
       return "productDetails";
     }
