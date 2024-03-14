@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form action="/EcommerceStore/clean-booking/confirm-booking" method="post">
+  <input type="hidden" name="product_type" th:value="${product_type}">
+  <input type="hidden" name="user_id" th:value="${user_id}">
+  <input type="hidden" name="status" value="PENDING">
+
+
+  <br>
+
+  <label for="address1">Địa chỉ</label>
+
+  <input type="radio" name="address"  id="address1" value="1" th:checked="${address}">
+  <br>
+  <label for="user_address">Select user address:</label>
+  <select name="user_address" id="user_address">
+
+    <option th:each="useraddress: ${userAddressList}"
+            th:value="${useraddress.getAddressId()}"
+            th:text="${useraddress.toString()} +' - '+
+                  ${useraddress.getCusInfo()}"
+    ></option>
+  </select>
+  <br>
+  <label for="address2">Địa chỉ khác</label>
+  <input type="radio" name="address" id="address2" value="2" th:checked="${address}" >
+  <br>
+  <label for="district">Quận: </label>
+  <input type="text" id="district" name="district" th:value="${district}"><br>
+  <label for="commute">Huyện: </label>
+  <input type="text" id="commute" name="commute" th:value="${commute}"><br>
+  <label for="detail_address">Số nhà: </label>
+  <input type="text" id="detail_address" name="detail_address" th:value="${detailAddress}"><br>
+  <label for="city">Thành phố:</label>
+  <input type="text" id="city" name="city" th:value="${city}"><br>
+  <label for="receiver_name">Tên người đặt:</label>
+  <input type="text" id="receiver_name" name="receiver_name" th:value="${receiver_name}"><br>
+  <label for="receiver_phone">Số điện thoại liên hệ:</label>
+  <input type="text" id="receiver_phone" name="receiver_phone" th:value="${receiver_phone}"><br>
+
+  <label for="customer_email">
+    Email:
+    <input type="text" id="customer_email" name="customer_email"
+           placeholder="Email nhận hóa đơn (không bắt buộc)" th:value="${customer_email}">
+  </label><br>
+  <label for="date">
+    Ngày:
+    <input type="date" id="date" name="date" th:min="${current_date}" th:value="${current_date}"
+        >
+  </label><br>
+  <label>
+    Thời gian:
+    <input type="radio" name="time" value="8:00 - 9:00">8:00 - 9:00
+    <input type="radio" name="time" value="9:00 - 10:00">9:00 - 10:00
+    <input type="radio" name="time" value="10:00 - 11:00">10:00 - 11:00
+    <input type="radio" name="time" value="14:00 - 15:00">14:00 - 15:00
+    <input type="radio" name="time" value="15:00 - 16:00">15:00 - 16:00
+    <input type="radio" name="time" value="16:00 - 17:00">16:00 - 17:00
+  </label>
+  <br>
+  <div th:if="${error != null}">
+    <p style="color: red">Kín lịch</p>
+  </div>
+  <br>
+  <label>
+    Ghi chú
+    <input type="text" name="notes" placeholder="Note..." th:value="${notes}">
+  </label>
+  <button type="submit">Đặt lịch</button>
+</form>
+
+</body>
+</html>
+

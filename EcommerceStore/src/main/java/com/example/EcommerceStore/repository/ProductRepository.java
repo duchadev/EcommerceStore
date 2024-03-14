@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
   List<Product> findProductByProductType(String productType);
+  Product findProductByProductId(int id);
   Product getProductByProductId(int product_id);
   List<Product> findProductsByProductBrand(String productBrand);
   List<Product> findProductsByProductPriceBetweenAndProductType(int start_price, int end_price, String productType);
@@ -23,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
   @Query("select p from Product p where p.product_name LIKE CONCAT('%', ?1, '%')")
   Page<Product> searchProducts(String keyword, PageRequest of);
 
+  @Query(value = "select * from Product p where p.pc_id = ?1 ", nativeQuery = true)
+  List<Product> findProductByPc_id(int pc_id);
 }

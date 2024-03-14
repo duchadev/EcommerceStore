@@ -14,15 +14,30 @@
   <input type="hidden" name="user_id" th:if="${user != null}" th:value="${user.userId}" class="d-none form-control">
 
   <!-- Null check for user_name -->
-  <input type="text" name="user_name" th:if="${user != null}" th:value="${user.user_name}" class="d-none form-control">
+  <label>
+    Username:
+    <input type="text" name="user_name" th:if="${user != null}" th:value="${user.user_name}" class="d-none form-control">
+  </label>
   <br>
-  <input type="text" name="user_email" th:if="${user != null}" th:value="${user.userEmail}" class="d-none form-control">
+  <label>
+    Email:
+    <input type="text" name="user_email" th:if="${user != null}" th:value="${user.userEmail}" class="d-none form-control">
+  </label>
   <br>
-  <input type="text" name="user_phoneNumber" th:if="${user != null}" th:value="${user.user_phoneNumber}" class="d-none form-control">
+  <label>
+    Phone number:
+    <input type="text" name="user_phoneNumber" th:if="${user != null}" th:value="${user.user_phoneNumber}" class="d-none form-control">
+  </label>
   <br>
-  <input type="text" name="birthday" th:if="${user != null}" th:value="${user.birthday}" class="d-none form-control">
+  <label>
+    Birthday:
+    <input type="text" name="birthday" th:if="${user != null}" th:value="${#dates.format(user.birthday,'yyyy-MM-dd') }" class="d-none form-control">
+  </label>
   <br>
-  <input type="password" name="password" th:if="${user != null}" th:value="${user.password}" class="d-none form-control">
+  <label>
+    Password:
+    <input type="password" name="password" th:if="${user != null}" th:value="${user.password}" class="d-none form-control">
+  </label>
 
   <button type="submit">Submit</button>
 </form>
@@ -31,6 +46,12 @@
   <input type="hidden" name="status" value="PENDING">
 
   <button type="submit">Pending order</button>
+</form>
+<form th:action="@{/EcommerceStore/successOrder}" method="get">
+  <input type="hidden" name="user_id" th:value="${user.userId}">
+  <input type="hidden" name="status" value="SUCCESS">
+
+  <button type="submit">Success order</button>
 </form>
 </body>
 </html>

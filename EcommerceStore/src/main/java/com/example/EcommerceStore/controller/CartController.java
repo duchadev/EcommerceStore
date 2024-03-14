@@ -52,12 +52,10 @@ public class CartController {
       model.addAttribute("user_id", user_id);
       session.setAttribute("cartItemList", cartItemList);
       int total = getTotal(cartItemList);
-      if(cartItemList == null)
-      {
+      if (cartItemList == null) {
         total = 0;
         model.addAttribute("total", total);
-      } else
-      {
+      } else {
         model.addAttribute("total", total);
       }
     }
@@ -88,6 +86,9 @@ public class CartController {
           if (existingItem.isPresent()) {
 
             existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
+            session.setAttribute("cartItemList", existingItem.stream().toList());
+            model.addAttribute("cartItemList", existingItem.stream().toList());
+            cartItemRepository.save(existingItem.get());
           } else {
             // create new cart_item if product have not been in cart yet
             CartItem cartItem = new CartItem();
@@ -104,12 +105,10 @@ public class CartController {
           model.addAttribute("cartItemList", cartItemList);
           session.setAttribute("cartItemList", cartItemList);
           int total = getTotal(cartItemList);
-          if(cartItemList == null)
-          {
+          if (cartItemList == null) {
             total = 0;
             model.addAttribute("total", total);
-          } else
-          {
+          } else {
             model.addAttribute("total", total);
           }
           model.addAttribute("productRepository", productRepository);
@@ -123,7 +122,7 @@ public class CartController {
           return "error";
         }
       } else {
-       //handle product not found
+        //handle product not found
         return "error";
       }
     } catch (Exception ex) {
@@ -176,12 +175,10 @@ public class CartController {
       session.setAttribute("cartItemList", cartItemList);
       model.addAttribute("cartItemList", cartItemList);
       int total = getTotal(cartItemList);
-      if(cartItemList == null)
-      {
+      if (cartItemList == null) {
         total = 0;
         model.addAttribute("total", total);
-      } else
-      {
+      } else {
         model.addAttribute("total", total);
       }
       model.addAttribute("productRepository", productRepository);
@@ -208,12 +205,10 @@ public class CartController {
       model.addAttribute("cartItemList", cartItemList);
 
       int total = getTotal(cartItemList);
-      if(cartItemList == null)
-      {
+      if (cartItemList == null) {
         total = 0;
         model.addAttribute("total", total);
-      } else
-      {
+      } else {
         model.addAttribute("total", total);
       }
 
@@ -226,13 +221,11 @@ public class CartController {
     }
 
   }
-  public int getTotal(List<CartItem> cartItemList)
-  {
-    if(cartItemList == null)
-    {
+
+  public int getTotal(List<CartItem> cartItemList) {
+    if (cartItemList == null) {
       return 0;
-    } else
-    {
+    } else {
       int total = 0;
       for (CartItem c : cartItemList) {
         total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())

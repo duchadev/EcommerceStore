@@ -248,7 +248,10 @@
                   alt=""
               />
               <div class="gear-product-main-item-content">
-                <h1 th:text="${product.product_name}"></h1>
+                <h1><a th:text="${product.product_name}"
+                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productId})}"></a>
+                </h1>
+
               </div>
               <div class="gear-product-item-review">
                 <div class="gear-product-item-review-star">

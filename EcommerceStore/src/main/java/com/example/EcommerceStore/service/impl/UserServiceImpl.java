@@ -5,11 +5,14 @@ import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.request.RegisterRequest;
 import com.example.EcommerceStore.response.RegisterResponse;
 import com.example.EcommerceStore.service.UserService;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +33,14 @@ public class UserServiceImpl implements UserService {
         return false;
       }
     } else {
-
-
+      LocalDate currentDate = LocalDate.now();
       User users = User.builder()
           .user_name("")
           .userEmail(registerRequest.getEmail())
           .password(passwordEncoder.encode(registerRequest.getPassword()))
           .roles("USER")
           .user_phoneNumber("")
-          .birthday(Timestamp.valueOf(LocalDateTime.now()))
+          .birthday(Date.valueOf(currentDate))
           .otpGeneratedTime(LocalDateTime.now())
           .build();
       String otp = generateOTP();

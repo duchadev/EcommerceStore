@@ -6,6 +6,7 @@ import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.service.ProductService;
 import com.example.EcommerceStore.service.ProductServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,14 +37,13 @@ public class ProductController {
   private ProductRepository productRepository;
   @Autowired
   private UserRepository userRepository;
-  //  @Autowired
-//  private ProductService productService;
+
   @Autowired
   private ProductServiceImpl productService;
 
   @GetMapping("/product")
   public String getProduct(Authentication authentication, Model model,
-      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
+      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, HttpSession session) {
     if (authentication != null && authentication.isAuthenticated()) {
       Object principal = authentication.getPrincipal();
 
@@ -51,8 +51,12 @@ public class ProductController {
         // Standard UserDetails case
         String email = userDetails.getUsername();
         model.addAttribute("user_email", email);
+        session.setAttribute("user_email",email);
         User user = userRepository.findByUserEmail(email);
         model.addAttribute("userRepository", userRepository);
+        session.setAttribute("user",user);
+        System.out.println("User: "+user.getUserId());
+
         int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);
       } else if (principal instanceof OAuth2User oAuth2User) {
@@ -60,23 +64,18 @@ public class ProductController {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         model.addAttribute("user_email",
             attributes.get("email"));
+        session.setAttribute("user_email", attributes.get("email"));
 
         model.addAttribute("userRepository", userRepository);
-
+        User user = userRepository.findByUserEmail((String) attributes.get("email"));
+        session.setAttribute("user", user);
+//        System.out.println("User: "+user.getUserId());
 
       } else {
         return "error";
       }
     }
-//    List<Product> productList = productRepository.findAll();
-//    model.addAttribute("productList", productList);
-//    List<Product> productList = productRepository.findAll();
-//    if (keyword != null) {
-//      productList = productRepository.searchProduct(keyword);
-//    }
-//    model.addAttribute("keyword", keyword);
 
-//    Page<Product> productList = this.productService.getAll(pageNo);
     List<Product> productList = productService.getInitialProducts();
     model.addAttribute("productList", productList);
 
@@ -93,12 +92,13 @@ public class ProductController {
   public String getMoreProduct(Model model, @RequestParam int page, @RequestParam int size) {
     List<Product> moreProducts = productService.getMoreProducts(page, size);
     model.addAttribute("productListMore", moreProducts);
-    return "homepage"; // Trả về một fragment chứa danh sách sản phẩm mới
+
+    return "homepage";
   }
 
   @GetMapping("/productDetails/{productId}")
   public String getProductDetails(@PathVariable("productId") Integer productId,
-      Authentication authentication, Model model) {
+      Authentication authentication, Model model, HttpSession session) {
     if (authentication != null && authentication.isAuthenticated()) {
       Object principal = authentication.getPrincipal();
 
@@ -107,6 +107,7 @@ public class ProductController {
         String email = userDetails.getUsername();
         model.addAttribute("user_email", email);
         User user = userRepository.findByUserEmail(email);
+
         model.addAttribute("userRepository", userRepository);
         int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);
@@ -116,7 +117,8 @@ public class ProductController {
         model.addAttribute("user_email",
             attributes.get("email"));
         model.addAttribute("userRepository", userRepository);
-
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("user",user);
 
       } else {
         return "error";
@@ -139,44 +141,62 @@ public class ProductController {
   }
 
   @GetMapping("/productFilter/{product_type}")
-  public String productFilter(@PathVariable("product_type") String product_type, Model model) {
+  public String productFilter(@PathVariable("product_type") String product_type, Model model
+  ,HttpSession session) {
     List<Product> listProduct = productRepository.findProductByProductType(product_type);
     model.addAttribute("listProduct", listProduct);
+    String email = String.valueOf(session.getAttribute("user_email"));
+    model.addAttribute("user_email", email);
     model.addAttribute("productType", product_type);
+    User user = (User)session.getAttribute("user");
+    model.addAttribute("user",user);
+//    System.out.println("User id in product filter: "+ user.getUserId());
     return "productFilter";
   }
 
   @GetMapping("/productBrandFilter/{product_brand}")
   public String findByProductBrand(@PathVariable("product_brand") String product_brand,
-      Model model) {
+      Model model, HttpSession session) {
     List<Product> listProduct = productRepository.findProductsByProductBrand(product_brand);
     model.addAttribute("listProduct", listProduct);
+    String email = String.valueOf(session.getAttribute("user_email"));
+    model.addAttribute("user_email", email);
     model.addAttribute("productType", "Laptop");
+    User user = (User)session.getAttribute("user");
+    model.addAttribute("user",user);
     return "productFilter";
   }
 
   @GetMapping("/productFilter")
   public String findProductByPrice(@RequestParam("start_price") int start_price,
       @RequestParam("end_price") int end_price, @RequestParam("productType") String productType,
-      Model model) {
+      Model model, HttpSession session) {
     List<Product> listProduct = productRepository.findProductsByProductPriceBetweenAndProductType(
         start_price,
         end_price, productType);
+    String email = String.valueOf(session.getAttribute("user_email"));
+    model.addAttribute("user_email", email);
     model.addAttribute("listProduct", listProduct);
     model.addAttribute("productType", productType);
+    User user = (User)session.getAttribute("user");
+    model.addAttribute("user",user);
     return "productFilter";
   }
 
   @GetMapping("/search")
   public String searchProduct(@RequestParam String keyword,
       @RequestParam int page, @RequestParam int size,
-      Model model) {
+      Model model,HttpSession session) {
 
     List<Product> productList = productService.searchProduct(keyword);
     List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
     model.addAttribute("productList", productList);
     model.addAttribute("productListMore", pList);
     model.addAttribute("keyword", keyword);
+    User user = (User)session.getAttribute("user");
+    model.addAttribute("user",user);
+    String email = String.valueOf(session.getAttribute("user_email"));
+    model.addAttribute("user_email", email);
     return "homepage";
   }
 

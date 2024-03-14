@@ -4,6 +4,7 @@ package com.example.EcommerceStore.controller;
 import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,54 +29,60 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping("/EcommerceStore")
 public class EditProfileController {
- @Autowired
- public PasswordEncoder bCryptPasswordEncoder;
+
+  @Autowired
+  public PasswordEncoder bCryptPasswordEncoder;
   @Autowired
   public UserRepository userRepository;
 
   @GetMapping("/profile/{user_email}")
-  public String profile(@PathVariable String user_email, Model model) {
+  public String profile(@PathVariable String user_email, Model model, HttpSession session) {
     Optional<User> optionalUser = userRepository.findByEmail(user_email);
+
     if (optionalUser.isPresent()) {
       User user = optionalUser.get();
+
       model.addAttribute("user", user);
+
+      session.setAttribute("user", user);
     }
 
     return "profile";
   }
-//update profile
-@Transactional
-@PostMapping("/profile/edit")
 
-public String editProfile(@RequestParam("user_id") int user_id,
-    @RequestParam("user_name") String user_name,
-    @RequestParam("user_phoneNumber") String user_phoneNumber,
-    @RequestParam("birthday") String birthdayString,
-    @RequestParam("password") String password,
-    @RequestParam("user_email") String user_email,
-    Model model) {
-  try {
-      Timestamp birthday = null;
+  //update profile
+  @Transactional
+  @PostMapping("/profile/edit")
+
+  public String editProfile(@RequestParam("user_id") int user_id,
+      @RequestParam("user_name") String user_name,
+      @RequestParam("user_phoneNumber") String user_phoneNumber,
+      @RequestParam("birthday") String birthdayString,
+      @RequestParam("password") String password,
+      @RequestParam("user_email") String user_email,
+      Model model) {
     try {
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-      Date parsedDate = dateFormat.parse(birthdayString);
-      birthday = new Timestamp(parsedDate.getTime());
-    } catch (ParseException e) {
+      Date birthday = null;
+      try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = dateFormat.parse(birthdayString);
+        birthday = new Timestamp(parsedDate.getTime());
+      } catch (ParseException e) {
 
-      e.printStackTrace();
+        e.printStackTrace();
+      }
+      String encodePass = bCryptPasswordEncoder.encode(password);
+      userRepository.updateUserByUserId(user_id, user_name, user_phoneNumber, birthday, encodePass);
+
+      return "redirect:" + UriComponentsBuilder.fromPath("/EcommerceStore/profile/{user_email}")
+          .buildAndExpand(user_email)
+          .toUriString(); // redirect to the profile page after successful update
+    } catch (Exception ex) {
+      model.addAttribute("error", ex.getMessage());
+      ex.printStackTrace();
+      return "error";
     }
-    String encodePass = bCryptPasswordEncoder.encode(password);
-    userRepository.updateUserByUserId(user_id, user_name,user_phoneNumber, birthday, encodePass);
-
-    return "redirect:" + UriComponentsBuilder.fromPath("/EcommerceStore/profile/{user_email}")
-        .buildAndExpand(user_email)
-        .toUriString(); // redirect to the profile page after successful update
-  } catch (Exception ex) {
-    model.addAttribute("error", ex.getMessage());
-    ex.printStackTrace();
-    return "error";
   }
-}
 
 
 }

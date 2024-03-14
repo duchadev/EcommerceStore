@@ -79,12 +79,14 @@ public class OrderController {
     int user_address;
     if (address == 1) {
       user_address = address_id;
+//      session.setAttribute("user_address", user_address);
     } else {
       UserAddress userAddress = new UserAddress(district, commute, detail_address, city,
           receive_name, receive_phone, user_id);
       userAddressRepository.save(userAddress);
-      UserAddress userAddress1 = userAddressRepository.getUserAddress();
-      user_address = userAddress1.getAddressId();
+//      UserAddress userAddress1 = userAddressRepository.getUserAddress();
+      user_address = userAddress.getAddressId();
+//      session.setAttribute("user_address", user_address);
     }
 
     if (payment_method == 1) {
@@ -128,7 +130,7 @@ public class OrderController {
 
       LocalDateTime now = LocalDateTime.now();
       Date orderDate = Date.valueOf(now.toLocalDate());
-      session.setAttribute("address_id", address_id);
+      session.setAttribute("user_address", user_address);
       session.setAttribute("total", total);
       session.setAttribute("status", status);
       session.setAttribute("user_id", user_id);
@@ -182,7 +184,7 @@ public class OrderController {
     model.addAttribute("transactionId", transactionId);
     if (paymentStatus == 1) {
 
-      int address_id = (int) session.getAttribute("address_id");
+      int address_id = (int) session.getAttribute("user_address");
       int total = (int) session.getAttribute("total");
       int user_id = (int) session.getAttribute("user_id");
       Date orderDate = (Date) session.getAttribute("orderDate");
@@ -195,6 +197,9 @@ public class OrderController {
       List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");
       for (CartItem cartItem : cartItemList) {
         OrderDetail orderDetail = new OrderDetail();
+        // decrease quantity of product after confirm order
+        Product product = productRepository.getProductByProductId(cartItem.getProductId());
+        product.setProduct_quantity(product.getProduct_quantity() - cartItem.getQuantity());
         orderDetail.setOrder(order);
         orderDetail.setProduct_id(cartItem.getProductId());
         orderDetail.setQuantity(cartItem.getQuantity());

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" th:href="@{/asset/css/style.css}"/>
+  <link rel="stylesheet"
+        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}"/>
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}"/>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
+
+  <title>Home</title>
+</head>
+<body>
+<section class="page-top">
+  <div class="container">
+    <div class="row row-grid">
+      <div class="page-top-contact">
+        <ul class="row-flex">
+          <li>
+            <i class="fa-solid fa-phone-volume"> </i
+            ><a href="tel: 0935708235"> 0935.708.235</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="contact"> thai06314@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<header>
+  <div class="header-top">
+    <div class="container">
+      <div class="row row-grid">
+        <div class="header-top-logo">
+          <img width="150px" src="" alt=""/>
+        </div>
+        <form th:action="@{/EcommerceStore/search}" method="get">
+          <div class="header-top-search row-grid">
+            <input type="text" name="keyword" id="keyword"
+                   placeholder="Nhập sản phẩm cần tìm..."
+                   th:value="${keyword}"
+            />
+            <input type="hidden" name="page" id="page"
+
+                   th:value="${10}"
+            />
+            <input type="hidden" name="size" id="size"
+
+                   value="4"
+            />
+
+            <button type="submit">
+              Tìm kiếm <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
+
+        <div class="header-top-user_cart">
+          <ul class="row-flex">
+
+            <li>
+              <a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}">
+                <i class="fa-solid fa-user"></i> Tai Khoan
+              </a>
+            </li>
+
+
+            <li>
+              <i class="fa-solid fa-cart-shopping">
+                <a th:if="${userRepository != null and userRepository.findByUserEmail(user_email) != null}"
+                   th:href="@{/EcommerceStore/cart/{user_id}(user_id=${userRepository.findByUserEmail(user_email).userId})}">
+                  Cart
+                </a>
+              </i> <span>0</span>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="container">
+      <div class="row row-grid">
+        <div class="header-bottom-menubar">
+              <span
+              ><i class="fa-solid fa-bars"></i> Danh Muc San Pham
+                <i class="fa-solid fa-arrow-down"></i
+                ></span>
+        </div>
+        <div class="header-bottom-menulist">
+          <ul class="row-flex">
+            <li><a href="">Xay Dung Cau Hinh Pc</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/PC}">Pc Gaming</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Man Hinh}">Man Hinh</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop Van Phong</a></li>
+            <li>
+              <a th:href="@{/EcommerceStore/cleanBooking}">Dat lich ve sinh<i class="fa-solid fa-fire"></i></a>
+            </li>
+            <li><a th:href="@{/EcommerceStore/productBrandFilter/MSI}">Laptop MSI</a></li>
+            <li><a href="">Gioi thieu</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<a href="/EcommerceStore/clean-booking/clean-laptop-booking">Đặt lịch vệ sinh Laptop windows</a><br>
+<a href="/EcommerceStore/clean-booking/clean-macbook-booking">Đặt lịch vệ sinh Macbook</a><br>
+<a href="/EcommerceStore/clean-booking/clean-pc-booking">Đặt lịch vệ sinh PC</a><br>
+
+<!-- hot product -->
+<style>
+  .page-top,
+  .header {
+    color: whitesmoke;
+  }
+
+  body {
+    background-color: rgb(243, 243, 243);
+  }
+
+  .hot-product {
+    margin: 30px 0;
+  }
+
+  .hot-product .container {
+    background-color: white;
+    padding: 10px 0;
+  }
+
+  .row-grid,
+  .row-flex {
+    padding: 0 12px;
+  }
+
+  .hot-product-main.row-grid {
+    grid-template-columns: 20% 80%;
+  }
+
+  .hot-product-main-items.row-grid {
+    grid-template-columns: repeat(4, 24%);
+  }
+</style>
+
+
+</body>
+
+
+<script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    cssMode: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    autoplay: {
+      delay: 5000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    mousewheel: true,
+    keyboard: true,
+  });
+  // show more product
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</html>

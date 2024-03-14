@@ -51,6 +51,7 @@ public class RegisterProductController {
     String product_brand = "Asus";
     int product_price = 23000000;
     String product_type = "Laptop";
+
     Product product = new Product(product_id, productName, product_quantity, product_image, rating,
         product_brand,
         product_price, product_type);

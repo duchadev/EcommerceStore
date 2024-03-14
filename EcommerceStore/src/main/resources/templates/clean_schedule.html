@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<a href="/EcommerceStore/clean-booking/booking">Back</a>
+<form action="/EcommerceStore/clean-booking/confirm-booking" method="post">
+  <input type="hidden" name="product_type" th:value="${product_type}">
+  <input type="hidden" name="user_id" th:value="${user_id}">
+  <input type="hidden" name="status" value="PENDING">
+  <label for="customer_name">
+    Họ và tên:
+    <input type="text" id="customer_name" name="customer_name"
+           placeholder="Họ và tên (bắt buộc)"
+           th:value="${customer_name}" >
+
+  </label><br>
+  <label for="customer_phone_number">
+    Số điện thoại:
+    <input type="text" id="customer_phone_number" name="customer_phone_number"
+           placeholder="Số điện thoại (bắt buộc)" th:value="${customer_phone_number}">
+  </label><br>
+  <label for="customer_email">
+    Email:
+    <input type="text" id="customer_email" name="customer_email"
+           placeholder="Email nhận hóa đơn (không bắt buộc)" th:value="${customer_email}">
+  </label><br>
+  <label for="date">
+    <input type="date" id="date" name="date" th:min="${current_date}" th:value="${current_date}"
+    >
+  </label><br>
+  <label>
+    Thời gian:
+    <input type="radio" name="time" value="8:00 - 9:00"> 8:00 - 9:00
+    <input type="radio" name="time" value="9:00 - 10:00">9:00 - 10:00
+    <input type="radio" name="time" value="10:00 - 11:00">10:00 - 11:00
+    <input type="radio" name="time" value="14:00 - 15:00">14:00 - 15:00
+    <input type="radio" name="time" value="15:00 - 16:00">15:00 - 16:00
+    <input type="radio" name="time" value="16:00 - 17:00">16:00 - 17:00
+  </label>
+  <br>
+  <div th:if="${error != null}">
+    <p style="color: red">Kín lịch</p>
+  </div>
+  <label>
+    Ghi chú
+    <input type="text" name="notes" placeholder="Note..." th:value="${notes}">
+  </label>
+  <br>
+
+  <button type="submit">Đặt lịch</button>
+</form>
+
+</body>
+</html>
