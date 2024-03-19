@@ -23,7 +23,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
   @Query("select p from Product p where p.product_name LIKE CONCAT('%', ?1, '%')")
   Page<Product> searchProducts(String keyword, PageRequest of);
+  @Query("SELECT p FROM Product p WHERE p.productType = :product_type")
+  Page<Product> searchFilterProducts(String product_type, PageRequest pageRequest);
 
   @Query(value = "select * from Product p where p.pc_id = ?1 ", nativeQuery = true)
   List<Product> findProductByPc_id(int pc_id);
+  @Query(value="SELECT * FROM Product p WHERE p.product_type = :productType AND p.product_price >= :startPrice AND p.product_price <= :endPrice", nativeQuery = true)
+  Page<Product> getFilteredProductByPrice(String productType, int startPrice, int endPrice, PageRequest pageRequest);
 }

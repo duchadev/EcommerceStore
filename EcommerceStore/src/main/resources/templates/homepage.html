@@ -36,7 +36,15 @@
     <div class="container">
       <div class="row row-grid">
         <div class="header-top-logo">
-          <img width="150px" src="" alt=""/>
+          <a th:href="@{/EcommerceStore/product}">
+            <img
+                width="90px"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/800px-FPT_logo_2010.svg.png"
+                alt=""
+
+            />
+          </a>
+
         </div>
         <form th:action="@{/EcommerceStore/search}" method="get">
           <div class="header-top-search row-grid">
@@ -94,7 +102,7 @@
         </div>
         <div class="header-bottom-menulist">
           <ul class="row-flex">
-            <li><a href="">Xay Dung Cau Hinh Pc</a></li>
+            <li><a th:href="@{/EcommerceStore/build-pc}">Xay Dung Cau Hinh Pc</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/PC}">Pc Gaming</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/Man Hinh}">Man Hinh</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop</a></li>

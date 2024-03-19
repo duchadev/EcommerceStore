@@ -53,7 +53,7 @@ private UserRepository  userRepository;
                 "/fonts/**", "/images/**", "/static/**", "/asset/**",
                 "/EcommerceStore/register_form", "/EcommerceStore/register",
                 "/EcommerceStore/otp_verify", "/EcommerceStore/search",
-                "/EcommerceStore/productFilter/**"
+                "/EcommerceStore/productFilter/**","/EcommerceStore/productFilter/price/more/**"
                 , "/EcommerceStore/productBrandFilter/**", "/EcommerceStore/productDetails/**",
                 "/EcommerceStore/products/more", "/EcommerceStore/clean-booking/**").permitAll()
             .anyRequest().authenticated())

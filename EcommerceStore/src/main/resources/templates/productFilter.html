@@ -34,19 +34,37 @@
     <div class="container">
       <div class="row row-grid">
         <div class="header-top-logo">
-          <img
-              width="90px"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/800px-FPT_logo_2010.svg.png"
-              alt=""
-          />
+          <a th:href="@{/EcommerceStore/product}">
+            <img
+                width="90px"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/800px-FPT_logo_2010.svg.png"
+                alt=""
+
+            />
+          </a>
+
         </div>
         <div class="header-top-search row-grid">
-          <input type="text" placeholder="Nhập sản phẩm cần tìm..."/>
-          <button>
-            <a href="">
-              Tìm kiếm <i class="fa-solid fa-magnifying-glass"></i
-            ></a>
-          </button>
+          <form th:action="@{/EcommerceStore/searchFilter}" method="get">
+            <div class="header-top-search row-grid">
+              <input type="text" name="keyword" id="keyword"
+                     placeholder="Nhập sản phẩm cần tìm..."
+                     th:value="${keyword}"
+              />
+              <input type="hidden" name="page" id="page"
+
+                     th:value="${10}"
+              />
+              <input type="hidden" name="size" id="size"
+
+                     value="4"
+              />
+
+              <button type="submit">
+                Tìm kiếm <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </form>
         </div>
         <div class="header-top-user_cart">
           <ul class="row-flex">
@@ -114,7 +132,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=0&amp;end_price=8000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=0,
-                end_price=8000000, productType=${productType})}"
+                end_price=8000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>Dưới 8 triệu</span>
                   <span class="total-attr"></span>
@@ -125,7 +143,7 @@
 
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=8000000&amp;end_price=11000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=8000000, end_price=11000000, productType=${productType})}"
+                <a th:href="@{/EcommerceStore/productFilter(start_price=8000000, end_price=11000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>8 triệu - 11 triệu</span>
                   <span class="total-attr"></span>
@@ -139,7 +157,7 @@
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=11000000&amp;end_price=15000000\'|'"></div>
 
                 <a th:href="@{/EcommerceStore/productFilter(start_price=11000000,
-                end_price=15000000, productType=${productType})}"
+                end_price=15000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>11 triệu - 15 triệu</span>
                   <span class="total-attr"></span>
@@ -151,7 +169,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=15000000&amp;end_price=20000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=15000000,
-                end_price=20000000, productType=${productType})}"
+                end_price=20000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>15 triệu - 20 triệu</span>
                   <span class="total-attr"></span>
@@ -162,7 +180,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=20000000&amp;end_price=25000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=20000000,
-                end_price=25000000, productType=${productType})}"
+                end_price=25000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>20 triệu - 25 triệu</span>
                   <span class="total-attr"></span>
@@ -174,7 +192,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=25000000&amp;end_price=30000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=25000000,
-                end_price=30000000, productType=${productType})}"
+                end_price=30000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>25 triệu - 30 triệu</span>
                   <span class="total-attr"></span>
@@ -186,7 +204,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=30000000&amp;end_price=50000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=30000000,
-                end_price=50000000, productType=${productType})}"
+                end_price=50000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>30 triệu - 50 triệu</span>
                   <span class="total-attr"></span>
@@ -198,7 +216,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=50000000&amp;end_price=70000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=50000000,
-                 end_price=70000000, productType=${productType})}"
+                 end_price=70000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>50 triệu - 70 triệu</span>
                   <span class="total-attr"></span>
@@ -211,7 +229,7 @@
                 <div class="icon-check"
                      th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=70000000&amp;end_price=85000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=70000000,
-                end_price=85000000, productType=${productType})}"
+                end_price=85000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>70 triệu - 80 triệu</span>
                   <span class="total-attr"></span>
@@ -221,9 +239,9 @@
               <div class="item-attr d-flex align-items">
 
                 <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=80000000&amp;end_price=10000000000000000\'|'"></div>
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=80000000&amp;end_price=10000000000\'|'"></div>
                 <a th:href="@{/EcommerceStore/productFilter(start_price=80000000,
-                end_price=10000000000000000000000000, productType=${productType})}"
+                end_price=10000000000, product_type=${productType})}"
                    class="filter-right d-flex align-items space-between">
                   <span>Trên 80 triệu</span>
                   <span class="total-attr"></span>
@@ -273,12 +291,59 @@
 
 
         </div>
+        <!--    show more product-->
+<!--        <div >-->
+
+          <div id="product-container" class="gear-product-main-items row-grid">
+            <tr th:each="product : ${productListMore}">
+              <div class="gear-product-main-item">
+                <img
+                    width="100%"
+                    src="https://www.tncstore.vn/media/product/250-8741-sniper-i3060---wh---01-2000000.jpg"
+                    alt=""
+                />
+                <div class="gear-product-main-item-content">
+                  <h1><a th:text="${product.product_name}"
+                         th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productId})}"></a>
+                  </h1>
+
+                </div>
+                <div class="gear-product-item-review">
+                  <div class="gear-product-item-review-star">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                  </div>
+                  <p><span th:text="${product.rating}">  </span></p>
+                  <div class="gear-product-item-price">
+                    <div class="price"><span th:text="${product.productPrice} " d></span></div>
+                    <div class="sellprice"><span th:text="${product.productPrice} " d>-19%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+
+
+          </div>
+<!--        </div>-->
       </div>
+
+
     </div>
 
   </div>
 </div>
+<input type="hidden" name="product_type" id="product_type" th:value="${productType}">
+<input type="hidden" name="start_price" id="start_price" th:value="${start_price}">
+<input type="hidden" name="end_price" id="end_price" th:value="${end_price}">
+<div th:if="${listProduct != null}">
+  <button type="button" id="show-more-btn">Show More</button>
 </div>
+
+
 </body>
 <footer>
   <div class="footer-container">
@@ -311,5 +376,60 @@
     </div>
   </div>
 </footer>
+<script>
+  // show more product
+  const product_type = document.getElementById('product_type').value;
+  let page = 0;
+  let size = 4; // Số sản phẩm muốn hiển thị mỗi lần
+  const start_price = parseInt(document.getElementById('start_price').value);
+  const end_price = parseInt(document.getElementById('end_price').value);
 
+  document.addEventListener('DOMContentLoaded', function () {
+
+    if (product_type !== '' && (isNaN(start_price) || isNaN(end_price))) {
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/productFilter/more?product_type='+product_type +'&page=' + page + '&size=' + size)
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          console.log("Response HTML:", html);
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+    } else {
+
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/productFilter/price/more?product_type=' + product_type
+            + '&start_price=' + start_price + '&end_price=' + end_price
+            + '&page=' + page   + '&size=' + size)
+
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+
+    }
+
+  });
+</script>
 </html>

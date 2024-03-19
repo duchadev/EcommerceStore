@@ -1,6 +1,8 @@
 package com.example.EcommerceStore.service.impl;
 
 import com.example.EcommerceStore.entity.User;
+import com.example.EcommerceStore.entity.UserAddress;
+import com.example.EcommerceStore.repository.UserAddressRepository;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.request.RegisterRequest;
 import com.example.EcommerceStore.response.RegisterResponse;
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserService {
   private final EmailService emailService;
   @Autowired
   PasswordEncoder passwordEncoder;
+  @Autowired
+  UserAddressRepository userAddressRepository;
   @Override
   public boolean register(RegisterRequest registerRequest) {
     User existingUser = userRepository.findByUserEmail(registerRequest.getEmail());
@@ -85,6 +89,28 @@ public class UserServiceImpl implements UserService {
   public void sendNotification(String email,String productName){
     String subject = "Thông báo sản phẩm mới";
     String body ="Sản phẩm "+productName+ " đã có hàng.";
+    emailService.sendEmail(email,subject,body);
+  }
+  public void sendScheduleConfirmedEmail(String email,String customer_name,
+      String customer_phone, java.util.Date date, String time,String note)
+  {
+      String subject = "Thông báo thông tin đặt lịch vệ sinh";
+      String body = "Tên khách hàng: "+ customer_name + "<br>"
+          +"Số điện thoại: " + customer_phone +"<br>"
+          +"Ngày giờ: "+ date +" - "+ time +"<br>"
+          + "Ghi chú: "+ note;
+      emailService.sendEmail(email,subject,body);
+  }
+  public void sendSchedulePcBookingEmail(
+    String email,  int user_address, java.util.Date date, String time, String note
+  )
+  {
+    String subject = "Thông báo thông tin đặt lịch vệ sinh";
+    String body = "Tên khách hàng: "+ userAddressRepository.getUserAddressByAddressId(user_address).getReceive_name() + "<br>"
+        +"Số điện thoại: " + userAddressRepository.getUserAddressByAddressId(user_address).getReceive_phone() +"<br>"
+       +"Địa chỉ khách hàng: "+ userAddressRepository.getUserAddressByAddressId(user_address) +"<br>"
+        +"Ngày giờ: "+ date +" - "+ time +"<br>"
+        + "Ghi chú: "+ note;
     emailService.sendEmail(email,subject,body);
   }
 }

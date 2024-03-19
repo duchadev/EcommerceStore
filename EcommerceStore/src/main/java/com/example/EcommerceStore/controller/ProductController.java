@@ -6,6 +6,7 @@ import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.service.ProductService;
 import com.example.EcommerceStore.service.ProductServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -143,7 +144,7 @@ public class ProductController {
   @GetMapping("/productFilter/{product_type}")
   public String productFilter(@PathVariable("product_type") String product_type, Model model
   ,HttpSession session) {
-    List<Product> listProduct = productRepository.findProductByProductType(product_type);
+    List<Product> listProduct = productService.searchFilteredProduct(product_type);
     model.addAttribute("listProduct", listProduct);
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
@@ -151,6 +152,24 @@ public class ProductController {
     User user = (User)session.getAttribute("user");
     model.addAttribute("user",user);
 //    System.out.println("User id in product filter: "+ user.getUserId());
+    return "productFilter";
+  }
+  @GetMapping("/productFilter/more")
+  public String getMoreFilteredProduct(
+     HttpServletRequest request, Model model, @RequestParam int page, @RequestParam int size
+  ) {
+    String product_type = request.getParameter("product_type");
+    List<Product> moreProducts = productService.getMoreSearchFilteredProduct(product_type,page, size);
+    model.addAttribute("productListMore", moreProducts);
+    System.out.println(product_type);
+    if(moreProducts.isEmpty())
+    {
+      System.out.println("empty");
+    }
+    for(Product p : moreProducts)
+    {
+      System.out.println(p);
+    }
     return "productFilter";
   }
 
@@ -169,15 +188,50 @@ public class ProductController {
 
   @GetMapping("/productFilter")
   public String findProductByPrice(@RequestParam("start_price") int start_price,
-      @RequestParam("end_price") int end_price, @RequestParam("productType") String productType,
+      @RequestParam("end_price") int end_price,
+      @RequestParam("product_type") String productType,
       Model model, HttpSession session) {
-    List<Product> listProduct = productRepository.findProductsByProductPriceBetweenAndProductType(
-        start_price,
-        end_price, productType);
+    List<Product> listProduct = productService.getProductFilterByPrice(
+        productType,
+        start_price, end_price);
+
+//    if(listProduct.isEmpty())
+//    {
+//      System.out.println("hello");
+//    } else
+//    {
+//      for(Product p: listProduct)
+//      {
+//        System.out.println(p.getProductPrice());
+//      }
+//    }
+
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
-    model.addAttribute("listProduct", listProduct);
+    if(!listProduct.isEmpty())
+    {
+      model.addAttribute("listProduct", listProduct);
+    }
+
     model.addAttribute("productType", productType);
+    model.addAttribute("start_price", start_price);
+    model.addAttribute("end_price", end_price);
+    User user = (User)session.getAttribute("user");
+    model.addAttribute("user",user);
+    return "productFilter";
+  }
+  @GetMapping("/productFilter/price/more")
+  public String findMoreProductByPrice(@RequestParam("start_price") int start_price,
+      @RequestParam("end_price") int end_price, @RequestParam("product_type") String productType,
+      Model model,@RequestParam int page, @RequestParam int size,
+      HttpSession session)
+  {
+    List<Product> productListMore = productService.getMoreProductFilterByPrice(productType,
+        start_price,end_price,page,size );
+    model.addAttribute("productListMore",productListMore);
+    model.addAttribute("product_type",productType);
+    model.addAttribute("start_price", start_price);
+    model.addAttribute("end_price", end_price);
     User user = (User)session.getAttribute("user");
     model.addAttribute("user",user);
     return "productFilter";
@@ -198,6 +252,22 @@ public class ProductController {
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
     return "homepage";
+  }
+  @GetMapping("/searchFilter")
+  public String searchFilteredProduct(@RequestParam String keyword,
+      @RequestParam int page, @RequestParam int size,
+      Model model,HttpSession session) {
+
+    List<Product> productList = productService.searchProduct(keyword);
+    List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
+    model.addAttribute("productList", productList);
+    model.addAttribute("productListMore", pList);
+    model.addAttribute("keyword", keyword);
+    User user = (User)session.getAttribute("user");
+    model.addAttribute("user",user);
+    String email = String.valueOf(session.getAttribute("user_email"));
+    model.addAttribute("user_email", email);
+    return "productFilter";
   }
 
 }

@@ -15,4 +15,5 @@ public interface UserAddressRepository extends JpaRepository<UserAddress,Integer
   UserAddress findUserAddressByUserIdOrderByAddressIdAsc(int user_id);
 UserAddress findUserAddressByAddressId(int address_id);
 
+  UserAddress getUserAddressByAddressId(int userAddress);
 }

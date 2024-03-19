@@ -6,6 +6,8 @@ import com.example.EcommerceStore.repository.ScheduleRepository;
 import com.example.EcommerceStore.repository.UserAddressRepository;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.service.ScheduleServiceImpl;
+import com.example.EcommerceStore.service.UserService;
+import com.example.EcommerceStore.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -38,7 +40,8 @@ public class ScheduleController {
   private ScheduleRepository scheduleRepository;
   @Autowired
   private ScheduleServiceImpl scheduleService;
-
+@Autowired
+private UserServiceImpl userService;
   @GetMapping("/booking")
   public String getMapping(HttpSession session, Model model) {
     String user_id = String.valueOf(session.getAttribute("user_id"));
@@ -126,6 +129,7 @@ public class ScheduleController {
     if (product_type.equalsIgnoreCase("Laptop")) {
 
       int price = 100000;
+
       return getString(model, product_type, user_id, status, customer_name, customer_phone_number,
           customer_email, time, notes, date, scheduleList, staff_id, address_id, price);
 
@@ -149,6 +153,8 @@ public class ScheduleController {
               addressId, product_type, customer_name, customer_phone_number,
               customer_email, price, date);
           scheduleRepository.save(schedule);
+          userService.sendSchedulePcBookingEmail(customer_email,addressId,date
+              ,time,notes);
           return "success";
         } else {
           model.addAttribute("address", selectedAddress);
@@ -193,6 +199,8 @@ public class ScheduleController {
               addressId, product_type, receiver_name, receiver_phone,
               customer_email, price, date);
           scheduleRepository.save(schedule);
+          userService.sendSchedulePcBookingEmail(customer_email,addressId,date
+          ,time,notes);
           return "success";
         } else {
           model.addAttribute("product_type", product_type);
@@ -244,6 +252,8 @@ public class ScheduleController {
           address_id, product_type, customer_name, customer_phone_number,
           customer_email, price, date);
       scheduleRepository.save(schedule);
+      userService.sendScheduleConfirmedEmail(customer_email,customer_name,customer_phone_number,
+          date,time,notes);
       return "success";
     } else {
       model.addAttribute("product_type", product_type);
