@@ -3,6 +3,7 @@ package com.example.EcommerceStore.repository;
 import com.example.EcommerceStore.entity.User;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
   void updateUserByUserId(@Param("user_id") int user_id,
       @Param("user_name") String user_name,
       @Param("user_phoneNumber") String user_phoneNumber,
-      @Param("birthday") Timestamp birthday,
+      @Param("birthday") Date birthday,
       @Param("password") String password);
 
 
@@ -34,4 +35,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
   boolean existsUserByUserEmail(String userEmail);
 
   boolean existsByPassword(String password);
+  User findUserByUserEmail(String email);
 }

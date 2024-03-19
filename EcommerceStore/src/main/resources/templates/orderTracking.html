@@ -20,8 +20,8 @@
     </tr>
     <tr th:each="order : ${orderList}">
       <td th:text="${order.orderId}"></td>
-      <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id)}"></td>
-      <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id).getCusInfo()}"></td>
+      <td th:text="${userAddressRepository.findUserAddressByAddressId(order.address_id)}"></td>
+      <td th:text="${userAddressRepository.findUserAddressByAddressId(order.address_id).getCusInfo()}"></td>
 
       <td th:text="${order.order_date}"></td>
       <td th:text="${#numbers.formatDecimal(order.cost, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
@@ -42,12 +42,12 @@
 
   <div class="hot-product-main-items row-grid">
     <table>
-      <tr th:each="order : ${morePendingOrder}">
-        <div class="hot-product-main-item">
+      <tr th:each="order : ${moreOrder}">
+<!--        <div class="hot-product-main-item">-->
 
           <td th:text="${order.orderId}"></td>
-          <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id)}"></td>
-          <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id).getCusInfo()}"></td>
+          <td th:text="${userAddressRepository.findUserAddressByAddressId(order.address_id)}"></td>
+          <td th:text="${userAddressRepository.findUserAddressByAddressId(order.address_id).getCusInfo()}"></td>
 
           <td th:text="${order.order_date}"></td>
           <td th:text="${#numbers.formatDecimal(order.cost, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
@@ -61,7 +61,7 @@
             </form>
           </td>
 
-        </div>
+<!--        </div>-->
       </tr>
     </table>
 

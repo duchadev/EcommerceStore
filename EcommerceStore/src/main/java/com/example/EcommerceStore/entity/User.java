@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "[User]")
 public class User {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -27,13 +29,13 @@ public class User {
 
   @Column(unique = true)
   private String user_name;
-  private Timestamp birthday;
+  private Date birthday;
   @Column(name = "user_email")
   private String userEmail;
 
   @Column(name = "user_phone_number")
   private String user_phoneNumber;
-  @Column(name="password")
+  @Column(name = "password")
   private String password;
   private String roles;
   private String otp;

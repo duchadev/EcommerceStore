@@ -33,19 +33,19 @@ public class OrderTrackingController {
   private UserAddressRepository userAddressRepository;
   @Autowired
   private OrderDetailRepository orderDetailRepository;
-@Autowired
-private OrderServiceImpl orderService;
+  @Autowired
+  private OrderServiceImpl orderService;
+
   @GetMapping("/orderTracking")
   public String getOrderTracking(HttpServletRequest request, Model model, HttpSession session
-      ) {
+  ) {
     int user_id = Integer.parseInt(request.getParameter("user_id"));
     String user_email = userRepository.findUserByUserId(user_id).getUserEmail();
     String status = request.getParameter("status");
     session.setAttribute("user_id", user_id);
     session.setAttribute("status", status);
 
-    List<Order> orderList = orderService.getInitPendingOrder(user_id, status);
-
+    List<Order> orderList = orderService.getInitOrder(user_id, status);
 
     model.addAttribute("user_id", user_id);
     model.addAttribute("status", status);
@@ -55,19 +55,57 @@ private OrderServiceImpl orderService;
     model.addAttribute("userAddressRepository", userAddressRepository);
     return "orderTracking";
   }
+
   @GetMapping("/orderTracking/more")
-  public String getMoreProduct(HttpServletRequest request,Model model, @RequestParam int page, @RequestParam int size) {
+  public String getMoreProduct(HttpServletRequest request, Model model, @RequestParam int page,
+      @RequestParam int size, HttpSession session) {
     String status = request.getParameter("status");
     int user_id = Integer.parseInt(request.getParameter("user_id"));
-    System.out.println(status);
-    System.out.println(user_id);
-    List<Order> morePendingOrder = orderService.getMorePendingOrder(status,user_id,page, size);
-    for(Order o: morePendingOrder)
-    {
+//    System.out.println(status);
+//    System.out.println(user_id);
+    session.setAttribute("user_id", user_id);
+    session.setAttribute("status", status);
+    List<Order> morePendingOrder = orderService.getMoreOrder(status, user_id, page, size);
+    for (Order o : morePendingOrder) {
       System.out.println(o.toString());
     }
-    model.addAttribute("userAddressRepository",userAddressRepository);
-    model.addAttribute("morePendingOrder", morePendingOrder);
+    model.addAttribute("userAddressRepository", userAddressRepository);
+    model.addAttribute("moreOrder", morePendingOrder);
+    return "orderTracking";
+  }
+
+  @GetMapping("/successOrder")
+  public String getSuccessOrder(HttpServletRequest request, Model model, HttpSession session) {
+    int user_id = Integer.parseInt(request.getParameter("user_id"));
+    String status = request.getParameter("status");
+    String user_email = userRepository.findUserByUserId(user_id).getUserEmail();
+    session.setAttribute("user_id", user_id);
+    session.setAttribute("status", status);
+    List<Order> successOrder = orderService.getInitOrder(user_id, status);
+    model.addAttribute("user_id", user_id);
+    model.addAttribute("status", status);
+    model.addAttribute("user_email", user_email);
+    model.addAttribute("orderList", successOrder);
+    model.addAttribute("userAddressRepository", userAddressRepository);
+    return "orderTracking";
+
+  }
+
+  @GetMapping("/successOrder/more")
+  public String getMoreOrder(HttpServletRequest request, Model model, @RequestParam int page,
+      @RequestParam int size, HttpSession session) {
+    String status = request.getParameter("status");
+    int user_id = Integer.parseInt(request.getParameter("user_id"));
+//    System.out.println(status);
+//    System.out.println(user_id);
+    session.setAttribute("user_id", user_id);
+    session.setAttribute("status", status);
+    List<Order> moreSuccessOrder = orderService.getMoreOrder(status, user_id, page, size);
+    for (Order o : moreSuccessOrder) {
+      System.out.println(o.toString());
+    }
+    model.addAttribute("userAddressRepository", userAddressRepository);
+    model.addAttribute("moreOrder", moreSuccessOrder);
     return "orderTracking";
   }
 
@@ -84,10 +122,6 @@ private OrderServiceImpl orderService;
     model.addAttribute("status", status);
     return "detail";
   }
-  public String formatNumber(float number)
-  {
-    DecimalFormat decimalFormat = new DecimalFormat("#,###");
-    return decimalFormat.format(number);
 
-  }
+
 }

@@ -10,6 +10,10 @@ public interface UserAddressRepository extends JpaRepository<UserAddress,Integer
   List<UserAddress> findUserAddressesByUserId(int user_id);
   @Query(value = "SELECT TOP 1 * FROM user_address ORDER BY address_id DESC", nativeQuery = true)
   UserAddress getUserAddress();
-  UserAddress findUserAddressesByAddressId(int address_id);
 
+@Query(value = "SELECT TOP 1 * FROM user_address where user_id =:user_id  ORDER BY address_id",nativeQuery = true)
+  UserAddress findUserAddressByUserIdOrderByAddressIdAsc(int user_id);
+UserAddress findUserAddressByAddressId(int address_id);
+
+  UserAddress getUserAddressByAddressId(int userAddress);
 }

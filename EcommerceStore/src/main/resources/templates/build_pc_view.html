@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>PC List</h1>
+<table>
+  <thead>
+  <tr>
+    <th>PC ID</th>
+    <th>PC Name</th>
+    <th>PC Price</th>
+    <th>PC Description</th>
+    <th>PC Rating</th>
+    <th>PC Image</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="p : ${productList}" >
+    <td th:text="${p.getProductId()}" ></td>
+    <td th:text="${p.getProduct_name()}" ></td>
+    <td th:text="${p.getProduct_quantity()}" ></td>
+    <td th:text="${p.getProductPrice()}" ></td>
+    <td th:text="${p.getProductPrice()}" ></td>
+    <td th:text="${p.getProductBrand()}" ></td>
+
+
+  </tr>
+  </tbody>
+
+
+</table>
+</body>
+</html>

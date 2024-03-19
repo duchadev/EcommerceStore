@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
   public List<Product> getInitialProducts() {
     return productRepository.findAll(PageRequest.of(0, 4)).getContent();
   }
-
+// get more product search function in home page
   public List<Product> searchProduct(String keyword) {
     // Perform the search using pagination
     Page<Product> searchPage = productRepository.searchProducts(keyword,
@@ -58,8 +58,41 @@ public class ProductServiceImpl implements ProductService {
 
     return searchPage.getContent();
   }
+  // get more product in product filter
+  public List<Product> searchFilteredProduct(String product_type)
+  {
+    Page<Product> searchPage = productRepository.searchFilterProducts(product_type,
+        PageRequest.of(0,4));
+    return searchPage.getContent();
+  }
+  public List<Product> getMoreSearchFilteredProduct(String keyword, int page, int size) {
+    // Perform the search using pagination
+    Page<Product> searchPage = productRepository.searchFilterProducts(keyword,
+        PageRequest.of(page, size));
+
+    // Retrieve the content of the first page
+
+    return searchPage.getContent();
+  }
+
 
   public List<Product> getMoreProducts(int page, int size) {
     return productRepository.findAll(PageRequest.of(page, size)).getContent();
+  }
+//get more product filtered by price
+  @Override
+  public List<Product> getProductFilterByPrice(String product_type, int start, int end) {
+   Page<Product> filteredPage = productRepository.getFilteredProductByPrice(product_type,
+        start,end, PageRequest.of(0,4));
+    return filteredPage.getContent();
+  }
+
+  @Override
+  public List<Product> getMoreProductFilterByPrice(String product_type, int start, int end,
+      int page, int size) {
+    Page<Product> filteredPage = productRepository.getFilteredProductByPrice(product_type,
+        start,end, PageRequest.of(page,size));
+
+    return filteredPage.getContent();
   }
 }

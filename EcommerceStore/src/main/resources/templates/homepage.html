@@ -10,6 +10,7 @@
   <script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
 
   <title>Home</title>
+  <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=65e043e9e244f7092e2dbbe2" async="async"></script><!--End of Fchat.vn-->
 </head>
 <body>
 <section class="page-top">
@@ -35,7 +36,15 @@
     <div class="container">
       <div class="row row-grid">
         <div class="header-top-logo">
-          <img width="150px" src="" alt=""/>
+          <a th:href="@{/EcommerceStore/product}">
+            <img
+                width="90px"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/800px-FPT_logo_2010.svg.png"
+                alt=""
+
+            />
+          </a>
+
         </div>
         <form th:action="@{/EcommerceStore/search}" method="get">
           <div class="header-top-search row-grid">
@@ -93,13 +102,13 @@
         </div>
         <div class="header-bottom-menulist">
           <ul class="row-flex">
-            <li><a href="">Xay Dung Cau Hinh Pc</a></li>
+            <li><a th:href="@{/EcommerceStore/build-pc}">Xay Dung Cau Hinh Pc</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/PC}">Pc Gaming</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/Man Hinh}">Man Hinh</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop</a></li>
             <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop Van Phong</a></li>
             <li>
-              <a href="">Khuyen Mai<i class="fa-solid fa-fire"></i></a>
+              <a th:href="@{/EcommerceStore/clean-booking/booking}">Dat lich ve sinh<i class="fa-solid fa-fire"></i></a>
             </li>
             <li><a th:href="@{/EcommerceStore/productBrandFilter/MSI}">Laptop MSI</a></li>
             <li><a href="">Gioi thieu</a></li>

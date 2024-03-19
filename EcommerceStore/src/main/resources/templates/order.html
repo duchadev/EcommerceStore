@@ -11,6 +11,8 @@
   <label for="address1">Saved Address</label>
   <input type="radio" name="address" id="address1" value="1" >
   <input type="hidden" name="user_id" th:value="${user_id}">
+
+  <br>
   <label for="useraddress">Select user address:</label>
   <select name="useraddress" id="useraddress" >
     <option th:each="useraddress: ${userAddressList}"
@@ -42,6 +44,7 @@
   <br>
   <label for="total">Total: </label> <br>
   <input type="text" name="total" id="total" th:value="${total}" readonly>
+  <br>
   <button type="submit">Confirm Order</button>
 </form>
 </body>

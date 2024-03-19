@@ -15,14 +15,14 @@ public class OrderServiceImpl implements OrderService {
   private OrderRepository orderRepository;
 
   @Override
-  public List<Order> getInitPendingOrder(int user_id, String status) {
+  public List<Order> getInitOrder(int user_id, String status) {
     Page<Order> searchPage = orderRepository.findOrdersByUserIdAndStatus(user_id, status,
         PageRequest.of(0, 4));
     return searchPage.getContent();
   }
 
   @Override
-  public List<Order> getMorePendingOrder(String status, int user_id, int page, int size) {
+  public List<Order> getMoreOrder(String status, int user_id, int page, int size) {
     // Perform the search using pagination
     Page<Order> searchPage = orderRepository.findOrdersByUserIdAndStatus(user_id, status,
         PageRequest.of(page, size));
