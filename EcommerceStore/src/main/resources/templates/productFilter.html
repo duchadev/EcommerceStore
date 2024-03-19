@@ -292,43 +292,43 @@
 
         </div>
         <!--    show more product-->
-<!--        <div >-->
+        <!--        <div >-->
 
-          <div id="product-container" class="gear-product-main-items row-grid">
-            <tr th:each="product : ${productListMore}">
-              <div class="gear-product-main-item">
-                <img
-                    width="100%"
-                    src="https://www.tncstore.vn/media/product/250-8741-sniper-i3060---wh---01-2000000.jpg"
-                    alt=""
-                />
-                <div class="gear-product-main-item-content">
-                  <h1><a th:text="${product.product_name}"
-                         th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productId})}"></a>
-                  </h1>
+        <div id="product-container" class="gear-product-main-items row-grid">
+          <tr th:each="product : ${productListMore}">
+            <div class="gear-product-main-item">
+              <img
+                  width="100%"
+                  src="https://www.tncstore.vn/media/product/250-8741-sniper-i3060---wh---01-2000000.jpg"
+                  alt=""
+              />
+              <div class="gear-product-main-item-content">
+                <h1><a th:text="${product.product_name}"
+                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productId})}"></a>
+                </h1>
 
+              </div>
+              <div class="gear-product-item-review">
+                <div class="gear-product-item-review-star">
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
                 </div>
-                <div class="gear-product-item-review">
-                  <div class="gear-product-item-review-star">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                  </div>
-                  <p><span th:text="${product.rating}">  </span></p>
-                  <div class="gear-product-item-price">
-                    <div class="price"><span th:text="${product.productPrice} " d></span></div>
-                    <div class="sellprice"><span th:text="${product.productPrice} " d>-19%</span>
-                    </div>
+                <p><span th:text="${product.rating}">  </span></p>
+                <div class="gear-product-item-price">
+                  <div class="price"><span th:text="${product.productPrice} " d></span></div>
+                  <div class="sellprice"><span th:text="${product.productPrice} " d>-19%</span>
                   </div>
                 </div>
               </div>
-            </tr>
+            </div>
+          </tr>
 
 
-          </div>
-<!--        </div>-->
+        </div>
+        <!--        </div>-->
       </div>
 
 
@@ -390,7 +390,8 @@
       document.getElementById('show-more-btn').addEventListener('click', function () {
 
         page++;
-        fetch('/EcommerceStore/productFilter/more?product_type='+product_type +'&page=' + page + '&size=' + size)
+        fetch('/EcommerceStore/productFilter/more?product_type=' + product_type + '&page=' + page
+            + '&size=' + size)
         .then(function (response) {
           return response.text();
         })
@@ -412,7 +413,7 @@
         page++;
         fetch('/EcommerceStore/productFilter/price/more?product_type=' + product_type
             + '&start_price=' + start_price + '&end_price=' + end_price
-            + '&page=' + page   + '&size=' + size)
+            + '&page=' + page + '&size=' + size)
 
         .then(function (response) {
           return response.text();
@@ -430,6 +431,18 @@
 
     }
 
+  });
+  // filter redirect
+  document.addEventListener('DOMContentLoaded', function () {
+    const itemAttrs = document.querySelectorAll('.item-attr');
+
+    itemAttrs.forEach(function (item) {
+      item.addEventListener('click', function () {
+        const link = this.querySelector('a'); // Lấy phần tử a trong item
+        const href = link.getAttribute('href'); // Lấy giá trị href của phần tử a
+        window.location.href = href; //redirect
+      });
+    });
   });
 </script>
 </html>
