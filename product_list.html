@@ -1,0 +1,962 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1"
+    />
+    <meta name="google-site-verification" content="EOEwXTWB17ajswn1Z2Q0g-6UH9mHD4f4OF125eZRWM4"
+    />
+    <title>
+      sos
+    </title>
+    <link rel="icon" type="image/png" href="..\static\assets\default\images\logo-white.png"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/static/assets/default/script/library.css?v=1.00111"
+    />
+    <link href="/static/assets/default/script/style_2023.css?2024-03-25.22.08.47"
+    rel="stylesheet" />
+  </head>
+<body>
+  
+  <div class="header">
+    <div class="header-top">
+      <div class="container">
+        <div class="right d-flex align-items">
+          <a href="tel:0868302123" class="item d-flex align-items">
+            <i class="icon_2023 phone">
+            </i>
+            <span class="hover-txt">
+              0123456789
+            </span>
+          </a>
+          <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
+            <i class="icon_2023 email">
+            </i>
+            <span class="hover-txt">
+              abczxc@gmail.vn
+            </span>
+          </a>
+        </div>
+        <div class="clearfix">
+        </div>
+      </div>
+    </div>
+    <div class="header-mid">
+      <div class="container">
+        <div class="content-header-mid d-flex align-items">
+          <a href="..\static\assets\default\images\logo-white.png" class="logo">
+            <img src="" alt="logo" width="160px" height="45px" />
+          </a>
+          <div class="form__input">
+            <form>
+              <div class="searh-form-container">
+                <div class="box-select" onclick="_show_option_search();">
+                  <input type="hidden" name="category" id="js-search-catId" value="0" />
+                  <a href="" class="title-select" id="js-search-title">
+                    Tất cả danh mục
+                  </a>
+                  <div class="content-select" id="js-list-option-search">
+                    <a href="">
+                      Tất cả danh mục
+                    </a>
+                    <a href="" data-id="76">
+                      Xây dựng cấu hình PC
+                    </a>
+                    <a href="" data-id="82">
+                      PC Gaming
+                    </a>
+                    <a href="" data-id="210">
+                      PC Đồ Họa
+                    </a>
+                    <a href="" data-id="182">
+                      PC Văn Phòng
+                    </a>
+                    <a href="" data-id="217">
+                      Máy chơi game - Console
+                    </a>
+                    <a href="" data-id="68">
+                      Màn Hình Máy Tính
+                    </a>
+                    <a href="" data-id="65">
+                      VGA - Card màn hình
+                    </a>
+                    <a href="" data-id="60">
+                      Linh kiện máy tính
+                    </a>
+                    <a href="" data-id="78">
+                      Gaming Gears
+                    </a>
+                    <a href="" data-id="79">
+                      Laptop - Máy Tính Xách Tay
+                    </a>
+                    <a href="" data-id="103">
+                      Phụ Kiện - Tản Nhiệt PC
+                    </a>
+                  </div>
+                </div>
+                <input type="text" id="js-global-seach" class="text_search" name="q" placeholder="Nhập sản phẩm cần tìm..."
+                autocomplete="off" value="" />
+                <button type="submit" class="submit-search">
+                  <span>
+                    Tìm kiếm
+                  </span>
+                  <i class="icon_2023 search">
+                  </i>
+                </button>
+              </div>
+            </form>
+            <div class="autocomplete-suggestions" id="js-show-search">
+              <div class="content-suggestions" id="js-seach-holder">
+              </div>
+              <a href="/" class="more-all" id="click_search">
+                <span class="hover-txt">
+                  Xem tất cả
+                  <span id="total-pro">
+                  </span>
+                  sản phẩm
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="header-mid-right d-flex align-items">
+            <a class="item account d-flex align-items" href="" "
+           >
+            <i class="icon_2023 account "></i>
+            <span class="hover-txt ">Tài khoản</span>
+            </a>
+            <a
+            href=" "
+            class="item box-cart "
+            id="js-header-cart "
+            >
+            <i class="icon_2023 cart "></i>
+            <span class="counter-cart js-cart-counter ">0</span>
+            <div class="header-cart-hover " id="js-header-cart-holder ">
+            <!-- cart hover -->
+            </div>
+            </a>
+            </div>
+            <div class="global-login ">
+            <a
+            href=" "
+            class="close-login "
+            ">
+              <i class="fa fa-times">
+              </i>
+            </a>
+            <div class="content-form-login padding-24" id="js-form-holder">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <div class="container">
+        <div class="header-bottom-content d-flex">
+          <div class="header-menu">
+            <div class="title">
+              <i class="fa fa-bars">
+              </i>
+              <span class="hover-txt">
+                Danh mục sản phẩm
+              </span>
+              <i class="fa fa-angle-down">
+              </i>
+            </div>
+            <div class="height-hover">
+            </div>
+            <div class="menu_holder">
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Xây dựng cấu hình PC
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    PC Gaming
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    PC Đồ Họa
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    PC Văn Phòng
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Màn Hình Máy Tính
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    VGA - Card màn hình
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Linh kiện máy tính
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Gaming Gears
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Laptop - Máy Tính Xách Tay
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Phụ Kiện - Tản Nhiệt PC
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!---header menu --->
+          <div class="header-bottom-right d-flex align-items">
+            <a href="" class="item">
+              <span class="txt" alt="Build PC Gaming">
+                Xây dựng cấu hình PC
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt" alt="PC Gaming">
+                PC gaming
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt" alt="Màn hình Gaming">
+                Màn hình gaming
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt" alt="Laptop Gaming">
+                Laptop gaming
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                PS5 Slim
+                <img border="0" src="/media/lib/07-12-2023/hotsale2.png" width="20" height="20"
+                />
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                PC Văn phòng
+              </span>
+            </a>
+            <a href="/media/marketing/khuyenmai/khuyen-mai-8-3.html" class="item">
+              <span class="txt">
+                Khuyến mãi
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                RTX 4070 Super
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                RTX 4080 Super
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                Giới thiệu
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <div class="product-category">
+  <div class="container">
+
+      <div class="breadcrumb">
+        <ol itemscope="" itemtype="http://schema.org/BreadcrumbList" class="ul clearfix">
+          <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a href="/" itemprop="item" class="nopad-l">
+              <span itemprop="name">Trang chủ</span>
+            </a> <i class="fa fa-angle-right"></i>
+            <meta itemprop="position" content="1">
+          </li>
+
+          <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a href="/gaming-pc.html" itemprop="item">
+              <span itemprop="name">
+                PC Gaming
+              </span> <i class="fa fa-angle-right"></i>
+            </a>
+            <meta itemprop="position" content="2">
+          </li>
+        </ol>
+      </div>
+      <div class="clearfix"></div>
+    <div class="content-category d-flex">
+      <div class="left">
+        <div class="background-white">
+          <h2 class="title">Bộ lọc sản phẩm</h2>
+
+          <div class="box-filter">
+ 
+  <!---end hãng sản xuất -->
+    <div class="item-filter">
+    <div class="title-filter d-flex align-items space-between">
+      <span>Khoảng giá (VNĐ)</span>
+      <i class="fa fa-angle-down"></i>
+    </div>
+    <div class="content-filter">
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check " ">
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>Dưới 8 triệu</span>
+          <span class="total-attr">(4)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check " onclick="">
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>8 triệu - 11 triệu</span>
+          <span class="total-attr">(2)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check " >
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>11 triệu - 15 triệu</span>
+          <span class="total-attr">(7)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check ">
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>15 triệu - 20 triệu</span>
+          <span class="total-attr">(5)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check " >
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>20 triệu - 25 triệu</span>
+          <span class="total-attr">(4)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check ">
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>25 triệu - 30 triệu</span>
+          <span class="total-attr">(7)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check ">
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>30 triệu - 50 triệu</span>
+          <span class="total-attr">(14)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check ">
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>50 triệu - 70 triệu</span>
+          <span class="total-attr">(8)</span>
+        </a>
+      </div>
+        
+      <div class="item-attr d-flex align-items">
+        
+          	<div class="icon-check ">
+        
+        </div>
+        <a href="" class="filter-right d-flex align-items space-between">
+          <span>70 triệu - 80 triệu</span>
+          <span class="total-attr">(3)</span>
+        </a>
+      </div>
+
+    </div>
+   
+  </div>
+  
+ <!-----end gia ban --->
+
+</div>
+        </div>
+      </div>
+      <!---end  left --->
+      <div class="right">
+        <div class="background-white">
+          <div class="main-title d-flex space-between align-items">
+            <h1>PC Gaming</h1>
+            <div class="right-sort d-flex align-items">
+              <div class="total-product">có bao nhiêu sp trong db m show nó ở đây, khó quá thì xoá đi cũng được</div>
+              <div class="content-sort d-flex align-items">
+                <p>Hiển thị theo:</p>
+                <select onchange="location.href=this.value" class="sort-pro">
+                  <option value="">Sắp xếp sản phẩm</option>
+                  <option value="" >Mới nhất</option>
+                  <option value="" >Giá tăng dần</option>
+                  <option value="" >Giá giảm dần</option>
+                  <option value="" >Đánh giá</option>
+                  <option value="" >Tên A->Z</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-results">
+            <div class="content-results d-flex align-items">
+              <p>Lọc theo:</p>
+              <div class="list-results d-flex align-items" id="js-check-results">
+   </div>
+              <a href="" class="remove-filter">
+                Xóa tất cả
+              </a>
+            </div>
+          </div>
+
+          <div class="product-list d-flex flex-wrap" id="js-product-list">
+            
+            <div class="product-item">
+  <a href="/gaming-pc-glacier-i3050.html" class="product-image">
+       
+    	<img src="/media/product/250-8687-tnc-store-pc-gaming-glacier-i3050-01bl-69.jpg" alt="PC Gaming - Glacier I3050 - 01BL">
+
+  </a>
+  <div class="product-info">
+    <a href="/gaming-pc-glacier-i3050.html" class="product-name line-clamp-2">
+      PC Gaming - Glacier I3050 - 01BL
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star5"></i>
+      <span>4 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">13.990.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">13.190.000đ</b>
+    
+          <div class="price-saleoff">-6%</div>
+
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/sentinel-i4080-bl.html" class="product-image">
+       
+    	<img src="/media/product/250-7796-sentinel.jpg" alt="PC Gaming - Sentinel I4080 - BL">
+
+  </a>
+  <div class="product-info">
+    <a href="/sentinel-i4080-bl.html" class="product-name line-clamp-2">
+      PC Gaming - Sentinel I4080 - BL
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star0"></i>
+      <span>0 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">118.820.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">74.790.000đ</b>
+            
+          <div class="price-saleoff">-38%</div>
+        
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/pc-gaming-sniper-i-3060-wh.html" class="product-image">
+       
+    	<img src="/media/product/250-7790-pc-gaming-sniper-i3060-wh-03.jpg" alt="PC Gaming - Sniper I3060 - WH - 03">
+      
+    
+      
+  </a>
+  <div class="product-info">
+    <a href="/pc-gaming-sniper-i-3060-wh.html" class="product-name line-clamp-2">
+      PC Gaming - Sniper I3060 - WH - 03
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star0"></i>
+      <span>0 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">25.471.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">17.690.000đ</b>
+        
+        
+                    
+          <div class="price-saleoff">-31%</div>
+        
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/gaming-pc-nova-a4070-wh.html" class="product-image">
+       
+    	<img src="/media/product/250-8557-pc-gaming-nova-a4070-wh.jpg" alt="PC Gaming - Nova A4070 - WH">
+      
+    
+      
+    	<span class="box-sale bestsale">Best Seller</span>
+      
+  </a>
+  <div class="product-info">
+    <a href="/gaming-pc-nova-a4070-wh.html" class="product-name line-clamp-2">
+      PC Gaming - Nova A4070 - WH
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star5"></i>
+      <span>12 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">43.739.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">42.290.000đ</b>
+        
+        
+                    
+          <div class="price-saleoff">-4%</div>
+        
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/pc-gaming-sniper-i4060ti-bl.html" class="product-image">
+       
+    	<img src="/media/product/250-8760-pc-gaming-sniper-i4060ti-bl-199.jpg" alt="PC Gaming - Sniper I4060Ti - BL">
+      
+    
+      
+  </a>
+  <div class="product-info">
+    <a href="/pc-gaming-sniper-i4060ti-bl.html" class="product-name line-clamp-2">
+      PC Gaming - Sniper I4060Ti - BL
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star5"></i>
+      <span>8 đánh giá</span>
+    </div>
+    <div class="main-price">
+      <del class="old-price"></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">32.490.000đ</b>
+        
+        
+          
+       
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/pc-gaming-sniper-i4060-white01.html" class="product-image">
+       
+    	<img src="/media/product/250-9095-sniper-i4060---wh-01.jpg" alt="PC Gaming - Sniper I4060 - White 01">
+      
+    
+      
+    	<span class="box-sale bestsale">Best Seller</span>
+      
+  </a>
+  <div class="product-info">
+    <a href="/pc-gaming-sniper-i4060-white01.html" class="product-name line-clamp-2">
+      PC Gaming - Sniper I4060 - White 01
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star5"></i>
+      <span>7 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">28.990.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">27.590.000đ</b>
+        
+        
+                    
+          <div class="price-saleoff">-5%</div>
+        
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/pc-gaming-sniper-4060ti-wh.html" class="product-image">
+       
+    	<img src="/media/product/250-9009-sniper-i4060ti---wh.jpg" alt="PC Gaming - Sniper I4060Ti - WH">
+      
+    
+      
+    	<span class="box-sale hot">Best Choice</span>
+      
+  </a>
+  <div class="product-info">
+    <a href="/pc-gaming-sniper-4060ti-wh.html" class="product-name line-clamp-2">
+      PC Gaming - Sniper I4060Ti - WH
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star5"></i>
+      <span>8 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">32.990.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">31.390.000đ</b>
+        
+        
+                    
+          <div class="price-saleoff">-5%</div>
+        
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+            
+            <div class="product-item">
+  <a href="/pc-gaming-sniper-i4060-bl.html" class="product-image">
+       
+    	<img src="/media/product/250-8959-sniper-i4060---bl.jpg" alt="PC Gaming - Sniper I4060 - BL">
+      
+    
+      
+    	<span class="box-sale hot">Best Choice</span>
+      
+  </a>
+  <div class="product-info">
+    <a href="/pc-gaming-sniper-i4060-bl.html" class="product-name line-clamp-2">
+      PC Gaming - Sniper I4060 - BL
+    </a>
+    <div class="info-review d-flex align-items">
+      <i class="icon-star star5"></i>
+      <span>3 đánh giá</span>
+    </div>
+    <div class="main-price">
+      
+      <del class="old-price">28.990.000<u>đ</u></del>
+      
+      <div class="d-flex align-items">
+        <b class="price">27.490.000đ</b>
+        
+        
+                    
+          <div class="price-saleoff">-6%</div>
+        
+        
+      </div>
+    </div>
+  </div>
+  <span class="boder-top"></span>
+  <span class="boder-right"></span>
+  <span class="boder-bottom"></span>
+  <span class="boder-left"></span>
+</div>
+      
+          </div>
+          <a class="show-more-product" href="" onclick="">
+            Xem thêm <i class="fa fa-angle-down"></i>
+          </a>
+          
+          <input type="hidden" id="current_page" value="1"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="form-info-sale">
+    <div class="container">
+      <div class="d-flex space-between align-items">
+        <div class="social-left">
+          <h3>
+            Theo dõi chúng tôi tại
+          </h3>
+          <div class="list-social d-flex align-items">
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 facebook">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 instagram">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 youtobe">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 shopee">
+              </i>
+            </a>
+          </div>
+        </div>
+        <div class="form-sale">
+          <h3>
+            Đăng ký email để nhận tin khuyến mãi
+          </h3>
+          <div id="newsletter" class="d-flex">
+            <input type="text" id="email-newsletter" placeholder="Nhập email của bạn"
+            />
+            <a href="javascript:;" class="send-newsletter">
+              Đăng ký
+            </a>
+          </div>
+          <div class="note-error">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-main">
+    <div class="container">
+      <div class="content-footer d-flex">
+        <div class="item">
+          <h3 class="title">
+            Danh Mục Sản Phẩm
+          </h3>
+          <div class="cnt">
+            <a href="">
+              PC Gaming
+            </a>
+            <a href="">
+              Laptop Gaming
+            </a>
+            <a href="">
+              VGA NVidia Rtx 4070
+            </a>
+            <a href="">
+              Ps5 Rẻ nhất Việt Nam
+            </a>
+            <a href="">
+              VGA NVidia Rtx 4060
+            </a>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="title">
+            Thông Tin Chung
+          </h3>
+          <div class="cnt">
+            <a href="/gioi-thieu">
+              Giới Thiệu
+            </a>
+            <a href="#">
+              Tuyển Dụng
+            </a>
+            <a href="/tin-tuc">
+              Tin Tức
+            </a>
+            <a href="#">
+              Ý Kiến Khách Hàng
+            </a>
+            <a href="/lien-he">
+              Liên Hệ Hợp Tác
+            </a>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="title">
+            Chính Sách
+          </h3>
+          <div class="cnt">
+            <a href="#">
+              Quy Định Chung
+            </a>
+            <a href="/chinh-sach-van-chuyen-tnc-store">
+              Chính Sách Vận Chuyển
+            </a>
+            <a href="/chinh-sach-va-quy-dinh-bao-hanh-tai-tnc-store">
+              Chính Sách Bảo Hành
+            </a>
+            <a href="/chinh-sach-doi-tra-lai-hang">
+              Chính Sách Đổi, Trả Hàng
+            </a>
+            <a href="/chinh-sach-cho-doanh-nghiep">
+              Chính Sách Cho Doanh Nghiệp
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="info-pay">
+        <h3>
+          Hình thức thanh toán
+        </h3>
+        <a href="#">
+          <div class="icon_2023 pay">
+            <img src="https://hoanghapc.vn/media/lib/hinh-thuc-thanh-toan.png" width="190px" alt="">
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/static/assets/default/script/library.js?v=1.002"></script>
+<script src="/static/assets/default/script/main.js?1.71"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+</body>
+</html>
+
+        
