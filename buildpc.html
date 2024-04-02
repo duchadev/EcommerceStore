@@ -1,0 +1,886 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+    <meta name="google-site-verification" content="EOEwXTWB17ajswn1Z2Q0g-6UH9mHD4f4OF125eZRWM4" />
+
+     <meta name="robots" content="index,follow" />
+  	<link rel="shortcut icon" href="https://www.tncstore.vn/static/assets/default/images/favicon_new.png" type="image/x-icon"  />
+    
+        <meta property="og:image" content="https://www.tncstore.vn/static/assets/default/images/logo.png" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  	<link rel="stylesheet" href="/static/assets/default/script/library.css?v=1.00111">
+  	<link href="/static/assets/default/script/style_2023.css?2024-04-02.13.01.15" rel="stylesheet" />
+
+</head>
+<body>
+  
+  <div class="header">
+    <div class="header-top">
+      <div class="container">
+        <div class="right d-flex align-items">
+          <a href="tel:0868302123" class="item d-flex align-items">
+            <i class="icon_2023 phone">
+            </i>
+            <span class="hover-txt">
+              0123456789
+            </span>
+          </a>
+          <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
+            <i class="icon_2023 email">
+            </i>
+            <span class="hover-txt">
+              abczxc@gmail.vn
+            </span>
+          </a>
+        </div>
+        <div class="clearfix">
+        </div>
+      </div>
+    </div>
+    <div class="header-mid">
+      <div class="container">
+        <div class="content-header-mid d-flex align-items">
+          <a href="..\static\assets\default\images\logo-white.png" class="logo">
+            <img src="" alt="logo" width="160px" height="45px" />
+          </a>
+          <div class="form__input">
+            <form>
+              <div class="searh-form-container">
+                <div class="box-select" onclick="_show_option_search();">
+                  <input type="hidden" name="category" id="js-search-catId" value="0" />
+                  <a href="" class="title-select" id="js-search-title">
+                    Tất cả danh mục
+                  </a>
+                  <div class="content-select" id="js-list-option-search">
+                    <a href="">
+                      Tất cả danh mục
+                    </a>
+                    <a href="" data-id="76">
+                      Xây dựng cấu hình PC
+                    </a>
+                    <a href="" data-id="82">
+                      PC Gaming
+                    </a>
+                    <a href="" data-id="210">
+                      PC Đồ Họa
+                    </a>
+                    <a href="" data-id="182">
+                      PC Văn Phòng
+                    </a>
+                    <a href="" data-id="217">
+                      Máy chơi game - Console
+                    </a>
+                    <a href="" data-id="68">
+                      Màn Hình Máy Tính
+                    </a>
+                    <a href="" data-id="65">
+                      VGA - Card màn hình
+                    </a>
+                    <a href="" data-id="60">
+                      Linh kiện máy tính
+                    </a>
+                    <a href="" data-id="78">
+                      Gaming Gears
+                    </a>
+                    <a href="" data-id="79">
+                      Laptop - Máy Tính Xách Tay
+                    </a>
+                    <a href="" data-id="103">
+                      Phụ Kiện - Tản Nhiệt PC
+                    </a>
+                  </div>
+                </div>
+                <input type="text" id="js-global-seach" class="text_search" name="q" placeholder="Nhập sản phẩm cần tìm..."
+                autocomplete="off" value="" />
+                <button type="submit" class="submit-search">
+                  <span>
+                    Tìm kiếm
+                  </span>
+                  <i class="icon_2023 search">
+                  </i>
+                </button>
+              </div>
+            </form>
+            <div class="autocomplete-suggestions" id="js-show-search">
+              <div class="content-suggestions" id="js-seach-holder">
+              </div>
+              <a href="/" class="more-all" id="click_search">
+                <span class="hover-txt">
+                  Xem tất cả
+                  <span id="total-pro">
+                  </span>
+                  sản phẩm
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="header-mid-right d-flex align-items">
+            <a class="item account d-flex align-items" href="" "
+           >
+            <i class="icon_2023 account "></i>
+            <span class="hover-txt ">Tài khoản</span>
+            </a>
+            <a
+            href=" "
+            class="item box-cart "
+            id="js-header-cart "
+            >
+            <i class="icon_2023 cart "></i>
+            <span class="counter-cart js-cart-counter ">0</span>
+            <div class="header-cart-hover " id="js-header-cart-holder ">
+            <!-- cart hover -->
+            </div>
+            </a>
+            </div>
+            <div class="global-login ">
+            <a
+            href=" "
+            class="close-login "
+            ">
+              <i class="fa fa-times">
+              </i>
+            </a>
+            <div class="content-form-login padding-24" id="js-form-holder">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <div class="container">
+        <div class="header-bottom-content d-flex">
+          <div class="header-menu">
+            <div class="title">
+              <i class="fa fa-bars">
+              </i>
+              <span class="hover-txt">
+                Danh mục sản phẩm
+              </span>
+              <i class="fa fa-angle-down">
+              </i>
+            </div>
+            <div class="height-hover">
+            </div>
+            <div class="menu_holder">
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Xây dựng cấu hình PC
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    PC Gaming
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    PC Đồ Họa
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    PC Văn Phòng
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Màn Hình Máy Tính
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    VGA - Card màn hình
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Linh kiện máy tính
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Gaming Gears
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Laptop - Máy Tính Xách Tay
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="item">
+                <a href="" class="item-cate d-flex align-items">
+                  <p class="cat-title">
+                    Phụ Kiện - Tản Nhiệt PC
+                  </p>
+                  <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!---header menu --->
+          <div class="header-bottom-right d-flex align-items">
+            <a href="" class="item">
+              <span class="txt" alt="Build PC Gaming">
+                Xây dựng cấu hình PC
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt" alt="PC Gaming">
+                PC gaming
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt" alt="Màn hình Gaming">
+                Màn hình gaming
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt" alt="Laptop Gaming">
+                Laptop gaming
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                PS5 Slim
+                <img border="0" src="/media/lib/07-12-2023/hotsale2.png" width="20" height="20"
+                />
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                PC Văn phòng
+              </span>
+            </a>
+            <a href="/media/marketing/khuyenmai/khuyen-mai-8-3.html" class="item">
+              <span class="txt">
+                Khuyến mãi
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                RTX 4070 Super
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                RTX 4080 Super
+              </span>
+            </a>
+            <a href="" class="item">
+              <span class="txt">
+                Giới thiệu
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <link href="/static/assets/default/script/buildpc.css?2024-04-02.13.01.15" rel="stylesheet" />
+
+<div class="page-buildpc">
+        <div class="container">
+            
+          
+  
+      <div class="breadcrumb">
+        <ol itemscope="" itemtype="http://schema.org/BreadcrumbList" class="ul clearfix">
+          <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a href="/" itemprop="item" class="nopad-l">
+              <span itemprop="name">Trang chủ</span>
+            </a> <i class="fa fa-angle-right"></i>
+            <meta itemprop="position" content="1">
+          </li>
+          <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a href="/buildpc" itemprop="item" class="nopad-l">
+              <span itemprop="name">Xây dựng cấu hình PC</span>
+            </a>
+            <meta itemprop="position" content="2">
+          </li>
+        </ol>
+      </div>
+      <div class="clearfix"></div>
+
+            <div class="content-buildpc d-flex">
+                <div class="left-buildpc">
+                    <div class="list-btn-action d-flex align-items">
+                        <a href=" " class="item active" onclick="showBuildId(1);changeTab(this);">
+                            Cấu hình 1
+                        </a>
+                        <a href=" " class="item" onclick="showBuildId(2);changeTab(this);">
+                            Cấu hình 2
+                        </a>
+                        <a href=" " class="item" onclick="showBuildId(3);changeTab(this);">
+                            Cấu hình 3
+                        </a>
+                        <a href=" " class="item" onclick="showBuildId(4);changeTab(this);">
+                            Cấu hình 4
+                        </a>
+                        <a href=" " class="item" onclick="showBuildId(5);changeTab(this);">
+                            Cấu hình 5
+                        </a>
+                    </div>
+                    <div class="background-white">
+                        <h3 class="title">Chọn linh kiện pc</h3>
+                        <div class="list-action d-flex align-items space-between" id="js-buildpc-action">
+                            <a href=" " class="item">
+                                <i class="fa-regular fa-floppy-disk"></i>
+                                <span class="hover-txt" data-action="save">Lưu cấu hình</span>
+                            </a>
+                            <a href=" " class="item" target="_blank">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                <span class="hover-txt" data-action="download-excel">Tải file excel cấu hình</span>
+                            </a>
+                            <a href=" " class="item" data-action="create-image" target="_blank">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                <span class="hover-txt" data-action="create-image">Tải ảnh cấu hình</span>
+                            </a>
+                            <a href=" " class="item" target="_blank">
+                                <i class="fa-solid fa-print"></i>
+                                <span class="hover-txt" data-action="view">In báo giá</span>
+                            </a>
+                            <a href=" " class="item" onclick="openPopupRebuild()">
+                                <i class="fa fa-undo"></i>
+                                <span class="hover-txt">Làm mới cấu hình</span>
+                            </a>
+                        </div>
+                        <div class="list-drive" id="js-buildpc-layout">
+                          <div class="item-drive">
+                              <span class="name">
+                                  Bộ vi xử lý
+                              </span>
+                              <div class="drive-checked" id="checked-62">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-62" data-info="{&quot;id&quot;:62,&quot;name&quot;:&quot;Bộ vi xử lý&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-62" data-id="62">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Bo mạch chủ
+                              </span>
+                              <div class="drive-checked" id="checked-61">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-61" data-info="{&quot;id&quot;:61,&quot;name&quot;:&quot;Bo mạch chủ&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-61" data-id="61">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  RAM
+                              </span>
+                              <div class="drive-checked" id="checked-63">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-63" data-info="{&quot;id&quot;:63,&quot;name&quot;:&quot;RAM&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-63" data-id="63">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Ổ Cứng SSD
+                              </span>
+                              <div class="drive-checked" id="checked-69">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-69" data-info="{&quot;id&quot;:69,&quot;name&quot;:&quot;Ổ Cứng SSD&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-69" data-id="69">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Ổ Cứng HDD
+                              </span>
+                              <div class="drive-checked" id="checked-64">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-64" data-info="{&quot;id&quot;:64,&quot;name&quot;:&quot;Ổ Cứng HDD&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-64" data-id="64">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  VGA
+                              </span>
+                              <div class="drive-checked" id="checked-65">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-65" data-info="{&quot;id&quot;:65,&quot;name&quot;:&quot;VGA&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-65" data-id="65">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Nguồn
+                              </span>
+                              <div class="drive-checked" id="checked-67">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-67" data-info="{&quot;id&quot;:67,&quot;name&quot;:&quot;Nguồn&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-67" data-id="67">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Vỏ Case
+                              </span>
+                              <div class="drive-checked" id="checked-66">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-66" data-info="{&quot;id&quot;:66,&quot;name&quot;:&quot;Vỏ Case&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-66" data-id="66">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Quạt Tản Nhiệt
+                              </span>
+                              <div class="drive-checked" id="checked-109">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-109" data-info="{&quot;id&quot;:109,&quot;name&quot;:&quot;Quạt Tản Nhiệt&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-109" data-id="109">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Tản Nhiệt CPU
+                              </span>
+                              <div class="drive-checked" id="checked-105">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-105" data-info="{&quot;id&quot;:105,&quot;name&quot;:&quot;Tản Nhiệt CPU&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-105" data-id="105">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Tản Nhiệt Nước AIO
+                              </span>
+                              <div class="drive-checked" id="checked-107">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-107" data-info="{&quot;id&quot;:107,&quot;name&quot;:&quot;Tản Nhiệt Nước AIO&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-107" data-id="107">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Màn Hình
+                              </span>
+                              <div class="drive-checked" id="checked-68">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-68" data-info="{&quot;id&quot;:68,&quot;name&quot;:&quot;Màn Hình&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-68" data-id="68">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Bàn phím
+                              </span>
+                              <div class="drive-checked" id="checked-110">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-110" data-info="{&quot;id&quot;:110,&quot;name&quot;:&quot;Bàn phím&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-110" data-id="110">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Chuột Gaming
+                              </span>
+                              <div class="drive-checked" id="checked-84">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-84" data-info="{&quot;id&quot;:84,&quot;name&quot;:&quot;Chuột Gaming&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-84" data-id="84">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Tai Nghe
+                              </span>
+                              <div class="drive-checked" id="checked-91">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-91" data-info="{&quot;id&quot;:91,&quot;name&quot;:&quot;Tai Nghe&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-91" data-id="91">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Bàn Gaming
+                              </span>
+                              <div class="drive-checked" id="checked-179">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-179" data-info="{&quot;id&quot;:179,&quot;name&quot;:&quot;Bàn Gaming&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-179" data-id="179">
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          <div class="item-drive">
+                              <span class="name">
+                                  Ghế Gaming
+                              </span>
+                              <div class="drive-checked" id="checked-92">
+                                  <span class="show-popup_select span-last open-selection box-add" id="js-category-info-92" data-info="{&quot;id&quot;:92,&quot;name&quot;:&quot;Ghế Gaming&quot;}">
+                              
+                                  </span>
+                                  <div class="show-selected js-item-row" id="js-selected-item-92" data-id="92">
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-buildpc">
+                    <div class="box-promotion background-white">
+                        <div class="box-info-promotion js-buildpc-promotion-content" >
+                            
+                        </div>
+                        <p class="note-user">Mã giảm giá và phiếu mua hàng sẽ khổng thể dùng lại sau khi đã đặt mua hàng
+                        </p>
+                        <div class="box-note-promotion">
+                            <p>Quý khách hàng lưu ý: Trị giá bộ PC để xét chọn mức Khuyến mại là tổng giá trị các linh
+                                kiện bắt buộc và linh kiện tùy
+                                chọn.</p>
+                            <p>Trong đó, những sản phẩm bắt buộc bao gồm: Main, CPU, RAM, SSD/HDD, Case, Nguồn.</p>
+                            <p>Những sản phẩm tùy chọn bao gồm: VGA, Màn Hình, Bàn Phím, Chuột,</p>
+                            <p>Mức giảm giá khi build PC áp dụng với số lượng 01 bộ. Với những đơn hàng build từ 2 bộ
+                                trở lên số tiền giảm mang tính
+                                chất tham khảo (vùi lòng liên hệ NVKD để biết thêm chi tiết).</p>
+                        </div>
+                    </div>
+                    <div class="box-add-buildpc background-white">
+                        <div class="box-config-summary">
+                            <h4 class="text-center">Mời bạn chọn linh kiện ở bảng tên</h4>
+                            <a href=" " class="add-buildpc error">
+                                <span class="txt">
+                                    Xác nhận mua hàng
+                                </span>
+                            </a>
+                          <div class="show-action-buy">
+                            <h4>Thông tin PC</h4>
+                            <div class="content-total-buildpc">
+                                <div class="item d-flex align-items space-between">
+                                    <b>Chi phí dự tính</b>
+                                    <b class="price js-config-summary"></b>
+                                </div>
+                                <div class="item d-flex align-items space-between" id="price-sale-promotion">
+                                    <b>Khuyến mãi</b>
+                                    <b class="price js-title-promotion">0đ</b>
+                                </div>
+                                <div class="item d-flex align-items space-between" id="total-sale-promotion">
+                                    <b>Giảm tiền mặt</b>
+                                    <b class="price">0đ</b>
+                                </div>
+                                <div class="item total d-flex align-items space-between">
+                                    <b>Tổng chi phí</b>
+                                    <b class="total-price-config js-config-summary js-total-price-final"></b>
+                                </div>
+                                <div class="item">
+                                    <span class="vat">Đã bao gồm VAT [nếu có]</span>
+                                </div>
+                            </div>
+                            <a href=" " class="add-buildpc active" onclick="addConfigToCart_Hura8()">
+                                <span class="txt">
+                                    Tiến hành thanh toán
+                                </span>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="icon-pay">
+                            <img src="/static/assets/default/images/pay_cart.png" alt="pay">
+                        </div>
+                        <div class="info-policy">
+                            <div class="item">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span>Hỗ trợ trả góp 0%, trả trước 0 đ</span>
+                            </div>
+                            <div class="item">
+                                <i class="fa-solid fa-money-bill"></i>
+                                <span>Hoàn tiền 200% nếu có hàng giả</span>
+                            </div>
+                            <div class="item">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>Giao hàng nhanh trên toàn quốc</span>
+                            </div>
+                            <div class="item">
+                                <i class="fa-solid fa-headset"></i>
+                                <span>Hỗ trợ kĩ thuật online 24/7</span>
+                            </div>
+                            <div class="item">
+                                <i class="fa-solid fa-wrench"></i>
+                                <span>Vệ sinh miễn phí PC, Laptop trọn đời</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <div id="js-modal-popup"><!-- popup select --></div>
+
+<div id="popup-rebuild_config" style="display:none; text-align:center;">
+   <div class="d-flex align-items space-center">
+    <h2>Chọn linh kiện mới</h2>
+  </div>
+    <p>Cảnh báo:  Toàn bộ linh kiện của bộ PC hiện tại sẽ bị xóa đi</p>
+    <button class="btn btn-red cancel" onclick="$.fancybox.close();">HỦY</button>
+    <button class="btn btn-red confirm" onclick="reBuild();">XÁC NHẬN</button>
+</div>
+<div class="footer">
+  <div class="form-info-sale">
+    <div class="container">
+      <div class="d-flex space-between align-items">
+        <div class="social-left">
+          <h3>
+            Theo dõi chúng tôi tại
+          </h3>
+          <div class="list-social d-flex align-items">
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 facebook">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 instagram">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 youtobe">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 shopee">
+              </i>
+            </a>
+          </div>
+        </div>
+        <div class="form-sale">
+          <h3>
+            Đăng ký email để nhận tin khuyến mãi
+          </h3>
+          <div id="newsletter" class="d-flex">
+            <input type="text" id="email-newsletter" placeholder="Nhập email của bạn"
+            />
+            <a href="javascript:;" class="send-newsletter">
+              Đăng ký
+            </a>
+          </div>
+          <div class="note-error">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-main">
+    <div class="container">
+      <div class="content-footer d-flex">
+        <div class="item">
+          <h3 class="title">
+            Danh Mục Sản Phẩm
+          </h3>
+          <div class="cnt">
+            <a href="">
+              PC Gaming
+            </a>
+            <a href="">
+              Laptop Gaming
+            </a>
+            <a href="">
+              VGA NVidia Rtx 4070
+            </a>
+            <a href="">
+              Ps5 Rẻ nhất Việt Nam
+            </a>
+            <a href="">
+              VGA NVidia Rtx 4060
+            </a>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="title">
+            Thông Tin Chung
+          </h3>
+          <div class="cnt">
+            <a href="/gioi-thieu">
+              Giới Thiệu
+            </a>
+            <a href="#">
+              Tuyển Dụng
+            </a>
+            <a href="/tin-tuc">
+              Tin Tức
+            </a>
+            <a href="#">
+              Ý Kiến Khách Hàng
+            </a>
+            <a href="/lien-he">
+              Liên Hệ Hợp Tác
+            </a>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="title">
+            Chính Sách
+          </h3>
+          <div class="cnt">
+            <a href="#">
+              Quy Định Chung
+            </a>
+            <a href="/chinh-sach-van-chuyen-tnc-store">
+              Chính Sách Vận Chuyển
+            </a>
+            <a href="/chinh-sach-va-quy-dinh-bao-hanh-tai-tnc-store">
+              Chính Sách Bảo Hành
+            </a>
+            <a href="/chinh-sach-doi-tra-lai-hang">
+              Chính Sách Đổi, Trả Hàng
+            </a>
+            <a href="/chinh-sach-cho-doanh-nghiep">
+              Chính Sách Cho Doanh Nghiệp
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="info-pay">
+        <h3>
+          Hình thức thanh toán
+        </h3>
+        <a href="#">
+          <div class="icon_2023 pay">
+            <img src="https://hoanghapc.vn/media/lib/hinh-thuc-thanh-toan.png" width="190px" alt="">
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<style>
+  .global-icon-right {position: fixed;bottom: 50px;right: 50px;z-index: 999;}
+  .fixed-left{position: fixed;top:13%;left: 8px;text-align: left}
+  .fixed-right{position: fixed;top:13%;right: 8px;text-align: right}
+  .fixed_banner{display:none;}
+  .fixed_banner.show{display:block;}
+  .fixed_banner.show .fixed-left,.fixed_banner.show .fixed-right{top:23%;}
+  
+</style>
+
+
+<script src="/static/assets/default/script/library.js?v=1.002"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+  
+  
+</body>
+</html>
+
+<!-- Load time: 0.05618 seconds  / 4 mb-->
+<!-- Powered by Hura8 Cloud - 2.3, Released: 10-Aug-2021 / Website: www.hurasoft.vn -->
+        
