@@ -21,12 +21,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
   @Modifying
   @Query("UPDATE User SET user_name = :user_name, user_phoneNumber = :user_phoneNumber, "
-      + "birthday = :birthday, password = :password WHERE userId = :user_id")
+      + "birthday = :birthday WHERE userId = :user_id")
   void updateUserByUserId(@Param("user_id") int user_id,
       @Param("user_name") String user_name,
       @Param("user_phoneNumber") String user_phoneNumber,
-      @Param("birthday") Date birthday,
-      @Param("password") String password);
+      @Param("birthday") Date birthday);
 
 
   @Query("SELECT u FROM User u WHERE u.user_name = :username")

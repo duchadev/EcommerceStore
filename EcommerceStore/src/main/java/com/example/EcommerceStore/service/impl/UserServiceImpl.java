@@ -15,8 +15,10 @@ import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
   PasswordEncoder passwordEncoder;
   @Autowired
   UserAddressRepository userAddressRepository;
+
   @Override
   public boolean register(RegisterRequest registerRequest) {
     User existingUser = userRepository.findByUserEmail(registerRequest.getEmail());
@@ -71,6 +74,30 @@ public class UserServiceImpl implements UserService {
       userRepository.save(users);
     }else {
       throw new RuntimeException("Internal Server error");
+    }
+  }
+
+  @Override
+  public void changePass(String current_password, String new_password, String re_new_password,
+      int user_id, Model model,String message_err1, String message_err2) {
+    User user = userRepository.findUserByUserId(user_id);
+    if(passwordEncoder.matches(current_password.trim(),user.getPassword().trim()))
+    {
+
+      if(new_password.trim().equalsIgnoreCase(re_new_password.trim()))
+      {
+        user.setPassword(passwordEncoder.encode(new_password));
+        userRepository.save(user);
+      } else
+      {
+        model.addAttribute("re_new_pass_error",message_err1);
+      }
+    } else
+    {
+      System.out.println(current_password);
+      System.out.println(passwordEncoder.encode(current_password));
+      System.out.println(user.getPassword());
+      model.addAttribute("cur_pass_error",message_err2);
     }
   }
 

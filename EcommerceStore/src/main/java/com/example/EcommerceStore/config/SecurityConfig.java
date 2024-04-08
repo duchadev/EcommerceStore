@@ -25,6 +25,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -55,7 +57,9 @@ private UserRepository  userRepository;
                 "/EcommerceStore/otp_verify", "/EcommerceStore/search",
                 "/EcommerceStore/productFilter/**","/EcommerceStore/productFilter/price/more/**"
                 , "/EcommerceStore/productBrandFilter/**", "/EcommerceStore/productDetails/**",
-                "/EcommerceStore/products/more", "/EcommerceStore/clean-booking/**").permitAll()
+                "/EcommerceStore/products/more", "/EcommerceStore/clean-booking/**",
+                "/static/asset/**",
+            "/static/media/banner/**","/media/product/**").permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
         .formLogin(formLogin ->
@@ -94,12 +98,15 @@ private UserRepository  userRepository;
         .addFilterAfter((request, response, chain) -> {
           Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
           if (authentication != null && authentication.isAuthenticated()) {
+
             Object principal = authentication.getPrincipal();
             if (principal instanceof OAuth2User) {
               OAuth2User oauth2User = (OAuth2User) principal;
+//              System.out.println(oauth2User);
               String email = (String) oauth2User.getAttribute("email");
               int id = userRepository.findUserByUserEmail(email).getUserId();
               session.setAttribute("user_id",id);
+
 
             } else  if(principal instanceof UserDetails userDetails)
             {
@@ -110,7 +117,7 @@ private UserRepository  userRepository;
 
           }
           chain.doFilter(request, response);
-        }, BasicAuthenticationFilter.class); // Thêm filter sau BasicAuthenticationFilter
+        }, BasicAuthenticationFilter.class);
     ;
 
     return httpSecurity.build();
@@ -130,6 +137,10 @@ private UserRepository  userRepository;
       AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
+
+
+
+  // Get the access token
 
   @Bean
   public PasswordEncoder passwordEncoder() {

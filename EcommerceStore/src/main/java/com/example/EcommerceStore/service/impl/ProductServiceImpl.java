@@ -1,7 +1,8 @@
-package com.example.EcommerceStore.service;
+package com.example.EcommerceStore.service.impl;
 
 import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.repository.ProductRepository;
+import com.example.EcommerceStore.service.ProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

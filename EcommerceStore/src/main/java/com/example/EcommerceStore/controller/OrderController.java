@@ -5,6 +5,7 @@ import com.example.EcommerceStore.entity.Cart;
 import com.example.EcommerceStore.entity.CartItem;
 import com.example.EcommerceStore.entity.Order;
 import com.example.EcommerceStore.entity.OrderDetail;
+import com.example.EcommerceStore.entity.PcComponent;
 import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.entity.UserAddress;
 import com.example.EcommerceStore.repository.CartItemRepository;
@@ -50,18 +51,33 @@ public class OrderController {
 
   @GetMapping("/order")
   public String viewOrder(@RequestParam("user_id") int user_id,
-      @RequestParam("total") int total, Model model) {
-    if (total == 0) {
-      model.addAttribute("error", "Your cart is empty");
-      return "order_error";
-    } else {
+      @RequestParam("total") int total,@RequestParam("typeOrder") String typeOrder,  Model model) {
+    if(typeOrder.trim().equalsIgnoreCase("cart"))
+    {
+      if (total == 0) {
+        model.addAttribute("error", "Your cart is empty");
+        return "order_error";
+      } else {
+
+        List<UserAddress> userAddressList = userAddressRepository.findUserAddressesByUserId(user_id);
+        model.addAttribute("userAddressList", userAddressList);
+        model.addAttribute("total", total);
+        model.addAttribute("user_id", user_id);
+        model.addAttribute("typeOrder", typeOrder);
+        return "order";
+
+      }
+    } else
+    {
       List<UserAddress> userAddressList = userAddressRepository.findUserAddressesByUserId(user_id);
       model.addAttribute("userAddressList", userAddressList);
       model.addAttribute("total", total);
       model.addAttribute("user_id", user_id);
-      return "order";
+      model.addAttribute("typeOrder", typeOrder);
 
+      return "order";
     }
+
 
 
   }
@@ -74,87 +90,145 @@ public class OrderController {
       @RequestParam("district") String district, @RequestParam("commute") String commute,
       @RequestParam("detail_address") String detail_address, @RequestParam("city") String city,
       @RequestParam("receive_name") String receive_name,
-      @RequestParam("receive_phone") String receive_phone) {
-    Cart cart = cartRepository.findCartByUserId(user_id);
-    int user_address;
-    if (address == 1) {
-      user_address = address_id;
+      @RequestParam("receive_phone") String receive_phone,
+      @RequestParam("typeOrder") String typeOrder) {
+    if(typeOrder.trim().equalsIgnoreCase("cart"))
+    {
+      Cart cart = cartRepository.findCartByUserId(user_id);
+      int user_address;
+      if (address == 1) {
+        user_address = address_id;
 //      session.setAttribute("user_address", user_address);
-    } else {
-      UserAddress userAddress = new UserAddress(district, commute, detail_address, city,
-          receive_name, receive_phone, user_id);
-      userAddressRepository.save(userAddress);
+      } else {
+        UserAddress userAddress = new UserAddress(district, commute, detail_address, city,
+            receive_name, receive_phone, user_id);
+        userAddressRepository.save(userAddress);
 //      UserAddress userAddress1 = userAddressRepository.getUserAddress();
-      user_address = userAddress.getAddressId();
+        user_address = userAddress.getAddressId();
 //      session.setAttribute("user_address", user_address);
-    }
-
-    if (payment_method == 1) {
-
-      String status = "PENDING";
-      String pStatus = "NOT YET";
-      LocalDateTime now = LocalDateTime.now();
-      Date orderDate = Date.valueOf(now.toLocalDate());
-
-      Order order = new Order(user_address, total, status, pStatus, user_id, orderDate);
-
-      orderRepository.save(order);
-      List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");
-      for (CartItem cartItem : cartItemList) {
-        OrderDetail orderDetail = new OrderDetail();
-        Product product = productRepository.getProductByProductId(cartItem.getProductId());
-//        System.out.println("Product ID: " + product.getProductId());
-//        System.out.println("cart item quantity: " + cartItem.getQuantity());
-        product.setProduct_quantity(product.getProduct_quantity() - cartItem.getQuantity());
-        orderDetail.setOrder(order);
-        orderDetail.setProduct_id(cartItem.getProductId());
-        orderDetail.setQuantity(cartItem.getQuantity());
-        orderDetail.setProduct_name(
-            productRepository.getProductByProductId(cartItem.getProductId()).getProduct_name());
-        orderDetail.setImage(
-            productRepository.getProductByProductId(cartItem.getProductId()).getProduct_image());
-
-        orderDetailRepository.save(orderDetail);
-        cartItemRepository.delete(cartItem);
-
-
       }
 
-      session.removeAttribute("cart");
-      session.removeAttribute("cartItemList");
-      cartRepository.delete(cart);
-      return "success";
-    } else {
+      if (payment_method == 1) {
 
-      String status = "PAID";
+        String status = "PENDING";
+        String pStatus = "NOT YET";
+        LocalDateTime now = LocalDateTime.now();
+        Date orderDate = Date.valueOf(now.toLocalDate());
 
-      LocalDateTime now = LocalDateTime.now();
-      Date orderDate = Date.valueOf(now.toLocalDate());
-      session.setAttribute("user_address", user_address);
-      session.setAttribute("total", total);
-      session.setAttribute("status", status);
-      session.setAttribute("user_id", user_id);
-      session.setAttribute("orderDate", orderDate);
-//      Order order = new Order(address_id, total, status, user_id, orderDate);
-//      orderRepository.save(order);
-//      List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");
-//      for (CartItem cartItem : cartItemList) {
-//        OrderDetail orderDetail = new OrderDetail();
-//        orderDetail.setOrder(order);
-//        orderDetail.setProduct_id(cartItem.getProductId());
-//        orderDetail.setQuantity(cartItem.getQuantity());
-//        orderDetail.setProduct_name(
-//            productRepository.getProductByProductId(cartItem.getProductId()).getProduct_name());
-//        orderDetail.setImage(
-//            productRepository.getProductByProductId(cartItem.getProductId()).getProduct_image());
-//        orderDetailRepository.save(orderDetail);
-//        cartItemRepository.delete(cartItem);
-//      }
-      model.addAttribute("total", total);
+        Order order = new Order(user_address, total, status, pStatus, user_id, orderDate);
+
+        orderRepository.save(order);
+        List<CartItem> cartItemList = (List<CartItem>) session.getAttribute("cartItemList");
+        for (CartItem cartItem : cartItemList) {
+          OrderDetail orderDetail = new OrderDetail();
+          Product product = productRepository.getProductByProductId(cartItem.getProductId());
+//        System.out.println("Product ID: " + product.getProductId());
+//        System.out.println("cart item quantity: " + cartItem.getQuantity());
+          product.setProduct_quantity(product.getProduct_quantity() - cartItem.getQuantity());
+          orderDetail.setOrder(order);
+          orderDetail.setProduct_id(cartItem.getProductId());
+          orderDetail.setQuantity(cartItem.getQuantity());
+          orderDetail.setProduct_name(
+              productRepository.getProductByProductId(cartItem.getProductId()).getProduct_name());
+          orderDetail.setImage(
+              productRepository.getProductByProductId(cartItem.getProductId()).getProduct_image());
+
+          orderDetailRepository.save(orderDetail);
+          cartItemRepository.delete(cartItem);
+
+
+        }
+
+        session.removeAttribute("cart");
+        session.removeAttribute("cartItemList");
+        cartRepository.delete(cart);
+        return "success";
+      } else {
+
+        String status = "PAID";
+
+        LocalDateTime now = LocalDateTime.now();
+        Date orderDate = Date.valueOf(now.toLocalDate());
+        session.setAttribute("user_address", user_address);
+        session.setAttribute("total", total);
+        session.setAttribute("status", status);
+        session.setAttribute("user_id", user_id);
+        session.setAttribute("orderDate", orderDate);
+
+        model.addAttribute("total", total);
 //      session.removeAttribute("cart");
 //      session.removeAttribute("cartItemList");
 //      cartRepository.delete(cart);
-      return "vnpay";
+        return "vnpay";
+      }
+
+    } else
+    {
+      // add order for pc building
+
+      int user_address;
+      if (address == 1) {
+        user_address = address_id;
+//      session.setAttribute("user_address", user_address);
+      } else {
+        UserAddress userAddress = new UserAddress(district, commute, detail_address, city,
+            receive_name, receive_phone, user_id);
+        userAddressRepository.save(userAddress);
+//      UserAddress userAddress1 = userAddressRepository.getUserAddress();
+        user_address = userAddress.getAddressId();
+//      session.setAttribute("user_address", user_address);
+      }
+
+      if (payment_method == 1) {
+
+        String status = "PENDING";
+        String pStatus = "NOT YET";
+        LocalDateTime now = LocalDateTime.now();
+        Date orderDate = Date.valueOf(now.toLocalDate());
+
+        Order order = new Order(user_address, total, status, pStatus, user_id, orderDate);
+       List<PcComponent> pcComponentList = (List<PcComponent>) session.getAttribute("componentList");
+        orderRepository.save(order);
+        for (PcComponent pcComponent : pcComponentList) {
+          OrderDetail orderDetail = new OrderDetail();
+          Product product = productRepository.getProductByProductId(pcComponent.getProduct_id());
+//        System.out.println("Product ID: " + product.getProductId());
+//        System.out.println("cart item quantity: " + cartItem.getQuantity());
+          product.setProduct_quantity(product.getProduct_quantity() - pcComponent.getQuantity());
+          orderDetail.setOrder(order);
+          orderDetail.setProduct_id(pcComponent.getProduct_id());
+          orderDetail.setQuantity(pcComponent.getQuantity());
+          orderDetail.setProduct_name(
+              productRepository.getProductByProductId(pcComponent.getProduct_id()).getProduct_name());
+          orderDetail.setImage(
+              productRepository.getProductByProductId(pcComponent.getProduct_id()).getProduct_image());
+
+          orderDetailRepository.save(orderDetail);
+
+
+
+        }
+
+
+
+        return "success";
+      } else {
+
+        String status = "PAID";
+
+        LocalDateTime now = LocalDateTime.now();
+        Date orderDate = Date.valueOf(now.toLocalDate());
+        session.setAttribute("user_address", user_address);
+        session.setAttribute("total", total);
+        session.setAttribute("status", status);
+        session.setAttribute("user_id", user_id);
+        session.setAttribute("orderDate", orderDate);
+
+        model.addAttribute("total", total);
+
+        return "vnpay";
+      }
+
     }
 
   }

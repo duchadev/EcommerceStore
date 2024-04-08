@@ -1,24 +1,15 @@
 package com.example.EcommerceStore.controller;
 
-import com.example.EcommerceStore.config.UserInfoDetails;
 import com.example.EcommerceStore.entity.Product;
 import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
-import com.example.EcommerceStore.service.ProductService;
-import com.example.EcommerceStore.service.ProductServiceImpl;
+import com.example.EcommerceStore.service.impl.ProductServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner.Mode;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -84,9 +75,11 @@ public class ProductController {
     model.addAttribute("listPhone", listPhone);
     List<Product> listLaptop = productRepository.findProductByProductType("Laptop");
     model.addAttribute("listLaptop", listLaptop);
+    List<Product> listPc = productRepository.findProductByProductType("PC");
+    model.addAttribute("listPC",listPc);
     List<Product> listEarPhone = productRepository.findProductByProductType("Ear Phone");
     model.addAttribute("listEarPhone", listEarPhone);
-    return "homepage";
+    return "test_homepage";
   }
 
   @GetMapping("/products/more")
@@ -152,7 +145,7 @@ public class ProductController {
     User user = (User) session.getAttribute("user");
     model.addAttribute("user", user);
 //    System.out.println("User id in product filter: "+ user.getUserId());
-    return "productFilter";
+    return "productFilter_test";
   }
 
   @GetMapping("/productFilter/more")
@@ -170,7 +163,7 @@ public class ProductController {
     for (Product p : moreProducts) {
       System.out.println(p);
     }
-    return "productFilter";
+    return "productFilter_test";
   }
 
   @GetMapping("/productBrandFilter/{product_brand}")
@@ -183,7 +176,7 @@ public class ProductController {
     model.addAttribute("productType", "Laptop");
     User user = (User) session.getAttribute("user");
     model.addAttribute("user", user);
-    return "productFilter";
+    return "productFilter_test";
   }
 
   @GetMapping("/productFilter")
@@ -195,16 +188,6 @@ public class ProductController {
         productType,
         start_price, end_price);
 
-//    if(listProduct.isEmpty())
-//    {
-//      System.out.println("hello");
-//    } else
-//    {
-//      for(Product p: listProduct)
-//      {
-//        System.out.println(p.getProductPrice());
-//      }
-//    }
 
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
@@ -217,7 +200,7 @@ public class ProductController {
     model.addAttribute("end_price", end_price);
     User user = (User) session.getAttribute("user");
     model.addAttribute("user", user);
-    return "productFilter";
+    return "productFilter_test";
   }
 
   @GetMapping("/productFilter/price/more")
@@ -233,7 +216,7 @@ public class ProductController {
     model.addAttribute("end_price", end_price);
     User user = (User) session.getAttribute("user");
     model.addAttribute("user", user);
-    return "productFilter";
+    return "productFilter_test";
   }
 
   @GetMapping("/search")
@@ -250,7 +233,7 @@ public class ProductController {
     model.addAttribute("user", user);
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
-    return "homepage";
+    return "test_homepage";
   }
 
   @GetMapping("/searchFilter")
@@ -267,7 +250,7 @@ public class ProductController {
     model.addAttribute("user", user);
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
-    return "productFilter";
+    return "productFilter_test";
   }
 
 }

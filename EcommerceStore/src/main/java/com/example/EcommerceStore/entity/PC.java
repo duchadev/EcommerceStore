@@ -29,7 +29,6 @@ public class PC {
   private String pc_description;
   private int pc_rating;
   private String pc_image;
-  @OneToMany(mappedBy = "pc")
-  private List<PcComponent> pcComponents;
+
 
 }

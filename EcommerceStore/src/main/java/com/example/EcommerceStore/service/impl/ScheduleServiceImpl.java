@@ -1,15 +1,16 @@
-package com.example.EcommerceStore.service;
+package com.example.EcommerceStore.service.impl;
 
 import com.example.EcommerceStore.entity.ProductStaff;
 import com.example.EcommerceStore.entity.Schedule;
 import com.example.EcommerceStore.repository.ProductStaffRepository;
+import com.example.EcommerceStore.service.ScheduleService;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ScheduleServiceImpl implements ScheduleService{
+public class ScheduleServiceImpl implements ScheduleService {
 @Autowired
 private ProductStaffRepository productStaffRepository;
   @Override

@@ -30,4 +30,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
   List<Product> findProductByPc_id(int pc_id);
   @Query(value="SELECT * FROM Product p WHERE p.product_type = :productType AND p.product_price >= :startPrice AND p.product_price <= :endPrice", nativeQuery = true)
   Page<Product> getFilteredProductByPrice(String productType, int startPrice, int endPrice, PageRequest pageRequest);
+  @Query("SELECT p FROM Product p WHERE p.productType = :product_type and p.pc_id = :pc_id")
+  List<Product> findProductsByProductTypeAndPc_id(String product_type, int pc_id);
 }
