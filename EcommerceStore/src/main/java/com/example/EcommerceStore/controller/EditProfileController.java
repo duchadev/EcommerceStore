@@ -4,6 +4,7 @@ package com.example.EcommerceStore.controller;
 import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
 
+import com.example.EcommerceStore.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -34,6 +35,8 @@ public class EditProfileController {
   public PasswordEncoder bCryptPasswordEncoder;
   @Autowired
   public UserRepository userRepository;
+  @Autowired
+  UserServiceImpl userService;
 
   @GetMapping("/profile/{user_email}")
   public String profile(@PathVariable String user_email, Model model, HttpSession session) {
@@ -47,7 +50,7 @@ public class EditProfileController {
       session.setAttribute("user", user);
     }
 
-    return "profile";
+    return "profile_test";
   }
 
   //update profile
@@ -58,7 +61,7 @@ public class EditProfileController {
       @RequestParam("user_name") String user_name,
       @RequestParam("user_phoneNumber") String user_phoneNumber,
       @RequestParam("birthday") String birthdayString,
-      @RequestParam("password") String password,
+
       @RequestParam("user_email") String user_email,
       Model model) {
     try {
@@ -71,8 +74,8 @@ public class EditProfileController {
 
         e.printStackTrace();
       }
-      String encodePass = bCryptPasswordEncoder.encode(password);
-      userRepository.updateUserByUserId(user_id, user_name, user_phoneNumber, birthday, encodePass);
+
+      userRepository.updateUserByUserId(user_id, user_name, user_phoneNumber, birthday);
 
       return "redirect:" + UriComponentsBuilder.fromPath("/EcommerceStore/profile/{user_email}")
           .buildAndExpand(user_email)
@@ -84,5 +87,28 @@ public class EditProfileController {
     }
   }
 
+  // change password
+  @GetMapping("/profile/change-pass/{user_id}")
+  public String changePassword(@PathVariable("user_id") int user_id, Model model) {
+    User user = userRepository.findUserByUserId(user_id);
+    model.addAttribute("user", user);
+    return "change_pass";
+  }
 
+  @PostMapping("/profile/change-pass")
+  public String changePass(@RequestParam("currentpassword") String current_password,
+      @RequestParam("newpassword") String new_password,
+      @RequestParam("renewpassword") String re_new_password,
+      @RequestParam("user_id") int user_id, Model model) {
+    User user = userRepository.findUserByUserId(user_id);
+    String message_err2 = "Mật khẩu hiện tại không đúng";
+    String message_err1 = "Mật khẩu không khớp";
+    userService.changePass(current_password, new_password, re_new_password, user_id, model,
+        message_err1, message_err2);
+    model.addAttribute("current_password", current_password);
+    model.addAttribute("new_password", new_password);
+    model.addAttribute("user", user);
+
+    return "change_pass";
+  }
 }

@@ -12,12 +12,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,8 @@ public class Product {
   private String productBrand;
   private String productType;
 
-
+  @Column(name="pc_id")
+  private int pc_id;
   public Product(int productId,String productName,int product_quantity,String product_image,
       int rating,String product_brand, int product_price,String product_type
   )

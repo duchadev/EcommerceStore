@@ -1,6 +1,7 @@
 package com.example.EcommerceStore.config;
 
 import com.example.EcommerceStore.entity.User;
+import com.example.EcommerceStore.repository.UserRepository;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -14,7 +15,6 @@ public class UserInfoDetails implements UserDetails {
   private String userEmail;
   private String password;
   private List<SimpleGrantedAuthority> roles;
-
   public UserInfoDetails(User user) {
     this.userEmail = user.getUserEmail();
     this.password = user.getPassword();

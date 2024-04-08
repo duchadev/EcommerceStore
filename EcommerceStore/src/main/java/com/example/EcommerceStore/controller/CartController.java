@@ -8,6 +8,9 @@ import com.example.EcommerceStore.repository.CartItemRepository;
 import com.example.EcommerceStore.repository.CartRepository;
 import com.example.EcommerceStore.repository.ProductRepository;
 import com.example.EcommerceStore.repository.UserRepository;
+import com.microsoft.sqlserver.jdbc.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/EcommerceStore")
@@ -52,21 +56,43 @@ public class CartController {
       model.addAttribute("user_id", user_id);
       session.setAttribute("cartItemList", cartItemList);
       int total = getTotal(cartItemList);
+      int item_quantity =0;
       if (cartItemList == null) {
         total = 0;
         model.addAttribute("total", total);
+        model.addAttribute("item_quantity", item_quantity);
       } else {
         model.addAttribute("total", total);
+        for(CartItem c: cartItemList)
+        {
+          item_quantity+=c.getQuantity();
+        }
+        model.addAttribute("item_quantity", item_quantity);
       }
+
+
     }
 
-    return "cart";
+    return "cart_test";
   }
 
   @PostMapping("/cart/add")
-  public String addToCart(@RequestParam("product_id") int product_id,
-      @RequestParam("user_id") int user_id, Model model, HttpSession session) {
+  public  ResponseEntity<String> addToCart(HttpServletRequest request, Model model,
+      HttpSession session, HttpServletResponse response) {
     try {
+      int product_id = Integer.parseInt(request.getParameter("product_id"));
+      int user_id = Integer.parseInt(request.getParameter("user_id"));
+      String quantityString = request.getParameter("quantity");
+      System.out.println(product_id);
+      System.out.println(user_id);
+
+      // Validate quantity parameter
+      if (!StringUtils.isNumeric(quantityString)) {
+        return ResponseEntity.badRequest().body("Error");
+      }
+
+      int quantity = Integer.parseInt(quantityString);
+      System.out.println(quantity);
       Optional<Product> productOptional = productRepository.findById(product_id);
 
       if (productOptional.isPresent()) {
@@ -84,8 +110,7 @@ public class CartController {
           cartRepository.save(cart);
 
           if (existingItem.isPresent()) {
-
-            existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
+            existingItem.get().setQuantity(existingItem.get().getQuantity() + quantity);
             session.setAttribute("cartItemList", existingItem.stream().toList());
             model.addAttribute("cartItemList", existingItem.stream().toList());
             cartItemRepository.save(existingItem.get());
@@ -93,12 +118,13 @@ public class CartController {
             // create new cart_item if product have not been in cart yet
             CartItem cartItem = new CartItem();
             cartItem.setProductId(product.getProductId());
-            cartItem.setQuantity(1);
+            cartItem.setQuantity(quantity);
             cartItem.setCart(cart);
             cartItem.setCartId(cart.getCartId());
             cart.getCartItemList().add(cartItem);
 
             cartItemRepository.save(cartItem);
+
           }
 
           List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
@@ -115,21 +141,29 @@ public class CartController {
           model.addAttribute("user_id", user_id);
           // Set the user in the cart
           model.addAttribute("userRepository", userRepository);
+          System.out.println("ran");
+          session.setAttribute("user", user);
 
-          return "cart";
+          // Redirect to the cart page
+          response.sendRedirect("/EcommerceStore/cart/"+user_id);
+
+          return ResponseEntity.ok("Added to cart");
         } else {
-
-          return "error";
+          return ResponseEntity.badRequest().body("User not found");
         }
       } else {
-        //handle product not found
-        return "error";
+        // handle product not found
+        return ResponseEntity.badRequest().body("Error");
       }
+    } catch (NumberFormatException ex) {
+      // handle invalid integer format for quantity
+      return ResponseEntity.badRequest().body("Error");
     } catch (Exception ex) {
       model.addAttribute("error", ex);
-      return "error";
-    }
+      return ResponseEntity.badRequest().body("Error");
+        }
   }
+
 
   // get cart of current user
   private Cart getCurrentUserCart(int user_id) {
@@ -156,6 +190,9 @@ public class CartController {
       if ("increase".equalsIgnoreCase(action)) {
         cartItem.setQuantity(cartItem.getQuantity() + 1);
         cartItemRepository.save(cartItem);
+
+        setModel(model, cart);
+
 //
 //        System.out.println("Product ID: " + cartItem.getProductId());
 //        System.out.println("Quantity: "+ cartItem.getQuantity());
@@ -163,11 +200,13 @@ public class CartController {
         if (cartItem.getQuantity() > 1) {
           cartItem.setQuantity(cartItem.getQuantity() - 1);
           cartItemRepository.save(cartItem);
+          setModel(model, cart);
 //          System.out.println("Product ID: " + cartItem.getProductId());
 //          System.out.println("Quantity: "+ cartItem.getQuantity());
         } else {
+          setModel(model, cart);
           removeItem(cartItemId, user_id, model);
-          return "cart";
+          return "cart_test";
         }
       }
 
@@ -185,10 +224,29 @@ public class CartController {
       model.addAttribute("user_id", user_id);
       cartItemRepository.save(cartItem);
 
-      return "cart";
+      return "cart_test";
     } catch (Exception ex) {
       model.addAttribute("error", ex.getMessage());
       return "error";
+    }
+  }
+// set quantity and total to view
+  private void setModel(Model model, Cart cart) {
+    List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
+
+    int total = getTotal(cartItemList);
+    int item_quantity =0;
+    if (cartItemList == null) {
+      total = 0;
+      model.addAttribute("total", total);
+      model.addAttribute("item_quantity", item_quantity);
+    } else {
+      model.addAttribute("total", total);
+      for(CartItem c: cartItemList)
+      {
+        item_quantity+=c.getQuantity();
+      }
+      model.addAttribute("item_quantity", item_quantity);
     }
   }
 
@@ -214,7 +272,7 @@ public class CartController {
 
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("user_id", user_id);
-      return "cart";
+      return "cart_test";
     } catch (Exception ex) {
       model.addAttribute("error", ex.getMessage());
       return "error";
