@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-  <meta name="google-site-verification" content="EOEwXTWB17ajswn1Z2Q0g-6UH9mHD4f4OF125eZRWM4"/>
+  <meta name="google-site-verification" content="EOEwXTWB17ajswn1Z2Q0g-6UH9mHD4f4OF125eZRWM4" />
 
-  <meta name="robots" content="index,follow"/>
-  <link rel="shortcut icon"
-        href="https://www.tncstore.vn/static/assets/default/images/favicon_new.png"
-        type="image/x-icon"/>
+  <meta name="robots" content="index,follow" />
 
-  <meta property="og:image"
-        content="https://www.tncstore.vn/static/assets/default/images/logo.png"/>
 
-  <link rel="stylesheet"
-        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css}"/>
+  <meta property="og:image" content="https://www.tncstore.vn/static/assets/default/images/logo.png" />
+
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css}" />
   <link rel="stylesheet" href="/asset/default/script/library.css">
-  <link href="/asset/default/script/style_2023.css" rel="stylesheet"/>
+  <link href="/asset/default/script/style_2023.css" rel="stylesheet" />
 
-  <link href="/asset/default/script/buildpc.css" rel="stylesheet"/>
+  <link href="/asset/default/script/buildpc.css" rel="stylesheet" />
   <style>
     .modal {
       position: fixed;
       z-index: 3;
-      top: 0;
-      left: 0;
+      top: 10%;
+      left: 10%;
       width: 80%;
       height: 80%;
-      overflow: auto;
       background-color: white;
-      background-clip: padding-box;
+      overflow: auto;
       display: none;
     }
 
-
     .modal-content {
-      width: 35% !important;
+      width: 50%; /* Định nghĩa chiều rộng của modal */
       padding: 40px;
       position: absolute;
-      top: 15% !important;
-      left: 30% !important;
+      top: 50%; /* đưa modal lên giữa màn hình theo chiều dọc */
+      left: 50%; /* đưa modal lên giữa màn hình theo chiều ngang */
+      transform: translate(-50%, -50%); /* dịch chuyển modal đi một nửa chiều rộng và chiều cao của nó theo chiều ngang và dọc */
+      background-color: white;
+      border-radius: 8px; /* làm mịn viền của modal */
     }
   </style>
 </head>
+
 <body>
 
 <div class="header">
@@ -53,15 +52,15 @@
           <i class="icon_2023 phone">
           </i>
           <span class="hover-txt">
-              0123456789
-            </span>
+                            0123456789
+                        </span>
         </a>
         <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
           <i class="icon_2023 email">
           </i>
           <span class="hover-txt">
-              abczxc@gmail.vn
-            </span>
+                            abczxc@gmail.vn
+                        </span>
         </a>
       </div>
       <div class="clearfix">
@@ -72,13 +71,13 @@
     <div class="container">
       <div class="content-header-mid d-flex align-items">
         <a href="/asset/default/images/logo-white.png" class="logo">
-          <img src="" alt="logo" width="160px" height="45px"/>
+          <img src="" alt="logo" width="160px" height="45px" />
         </a>
         <div class="form__input">
           <form>
             <div class="searh-form-container">
               <div class="box-select" onclick="_show_option_search();">
-                <input type="hidden" name="category" id="js-search-catId" value="0"/>
+                <input type="hidden" name="category" id="js-search-catId" value="0" />
                 <a href="" class="title-select" id="js-search-title">
                   Tất cả danh mục
                 </a>
@@ -122,12 +121,11 @@
                 </div>
               </div>
               <input type="text" id="js-global-seach" class="text_search" name="q"
-                     placeholder="Nhập sản phẩm cần tìm..."
-                     autocomplete="off" value=""/>
+                     placeholder="Nhập sản phẩm cần tìm..." autocomplete="off" value="" />
               <button type="submit" class="submit-search">
-                  <span>
-                    Tìm kiếm
-                  </span>
+                                    <span>
+                                        Tìm kiếm
+                                    </span>
                 <i class="icon_2023 search">
                 </i>
               </button>
@@ -137,26 +135,21 @@
             <div class="content-suggestions" id="js-seach-holder">
             </div>
             <a href="/" class="more-all" id="click_search">
-                <span class="hover-txt">
-                  Xem tất cả
-                  <span id="total-pro">
-                  </span>
-                  sản phẩm
-                </span>
+                                <span class="hover-txt">
+                                    Xem tất cả
+                                    <span id="total-pro">
+                                    </span>
+                                    sản phẩm
+                                </span>
             </a>
           </div>
         </div>
         <div class="header-mid-right d-flex align-items">
-          <a class="item account d-flex align-items" href=""
-          >
+          <a class="item account d-flex align-items" href="">
             <i class="icon_2023 account "></i>
             <span class="hover-txt ">Tài khoản</span>
           </a>
-          <a
-              href=" "
-              class="item box-cart "
-              id="js-header-cart "
-          >
+          <a href=" " class="item box-cart " id="js-header-cart ">
             <i class="icon_2023 cart "></i>
             <span class="counter-cart js-cart-counter ">0</span>
             <div class="header-cart-hover " id="js-header-cart-holder ">
@@ -165,10 +158,7 @@
           </a>
         </div>
         <div class="global-login ">
-          <a
-              href=""
-              class="close-login "
-          >
+          <a href="" class="close-login ">
             <i class="fa fa-times">
             </i>
           </a>
@@ -186,8 +176,8 @@
             <i class="fa fa-bars">
             </i>
             <span class="hover-txt">
-                Danh mục sản phẩm
-              </span>
+                                Danh mục sản phẩm
+                            </span>
             <i class="fa fa-angle-down">
             </i>
           </div>
@@ -200,9 +190,9 @@
                   Xây dựng cấu hình PC
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -211,9 +201,9 @@
                   PC Gaming
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -222,9 +212,9 @@
                   PC Đồ Họa
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -233,9 +223,9 @@
                   PC Văn Phòng
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -244,9 +234,9 @@
                   Màn Hình Máy Tính
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -255,9 +245,9 @@
                   VGA - Card màn hình
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -266,9 +256,9 @@
                   Linh kiện máy tính
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -277,9 +267,9 @@
                   Gaming Gears
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -288,9 +278,9 @@
                   Laptop - Máy Tính Xách Tay
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
             <div class="item">
@@ -299,9 +289,9 @@
                   Phụ Kiện - Tản Nhiệt PC
                 </p>
                 <span class="box-right">
-                    <i class="fa fa-angle-right">
-                    </i>
-                  </span>
+                                        <i class="fa fa-angle-right">
+                                        </i>
+                                    </span>
               </a>
             </div>
           </div>
@@ -309,56 +299,55 @@
         <!---header menu --->
         <div class="header-bottom-right d-flex align-items">
           <a href="" class="item">
-              <span class="txt" alt="Build PC Gaming">
-                Xây dựng cấu hình PC
-              </span>
+                            <span class="txt" alt="Build PC Gaming">
+                                Xây dựng cấu hình PC
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt" alt="PC Gaming">
-                PC gaming
-              </span>
+                            <span class="txt" alt="PC Gaming">
+                                PC gaming
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt" alt="Màn hình Gaming">
-                Màn hình gaming
-              </span>
+                            <span class="txt" alt="Màn hình Gaming">
+                                Màn hình gaming
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt" alt="Laptop Gaming">
-                Laptop gaming
-              </span>
+                            <span class="txt" alt="Laptop Gaming">
+                                Laptop gaming
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt">
-                PS5 Slim
-                <img border="0" src="/media/lib/07-12-2023/hotsale2.png" width="20" height="20"
-                />
-              </span>
+                            <span class="txt">
+                                PS5 Slim
+                                <img border="0" src="/media/lib/07-12-2023/hotsale2.png" width="20" height="20" />
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt">
-                PC Văn phòng
-              </span>
+                            <span class="txt">
+                                PC Văn phòng
+                            </span>
           </a>
           <a href="/media/marketing/khuyenmai/khuyen-mai-8-3.html" class="item">
-              <span class="txt">
-                Khuyến mãi
-              </span>
+                            <span class="txt">
+                                Khuyến mãi
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt">
-                RTX 4070 Super
-              </span>
+                            <span class="txt">
+                                RTX 4070 Super
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt">
-                RTX 4080 Super
-              </span>
+                            <span class="txt">
+                                RTX 4080 Super
+                            </span>
           </a>
           <a href="" class="item">
-              <span class="txt">
-                Giới thiệu
-              </span>
+                            <span class="txt">
+                                Giới thiệu
+                            </span>
           </a>
         </div>
       </div>
@@ -380,7 +369,7 @@
           <meta itemprop="position" content="1">
         </li>
         <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-          <a href="/buildpc" itemprop="item" class="nopad-l">
+          <a href="/EcommerceStore/build-pc" itemprop="item" class="nopad-l">
             <span itemprop="name">Xây dựng cấu hình PC</span>
           </a>
           <meta itemprop="position" content="2">
@@ -391,77 +380,49 @@
 
     <div class="content-buildpc d-flex">
       <div class="left-buildpc">
-        <div class="list-btn-action d-flex align-items">
-          <a href=" " class="item active" onclick="showBuildId(1);changeTab(this);">
-            Cấu hình 1
-          </a>
-          <a href=" " class="item" onclick="showBuildId(2);changeTab(this);">
-            Cấu hình 2
-          </a>
-          <a href=" " class="item" onclick="showBuildId(3);changeTab(this);">
-            Cấu hình 3
-          </a>
-          <a href=" " class="item" onclick="showBuildId(4);changeTab(this);">
-            Cấu hình 4
-          </a>
-          <a href=" " class="item" onclick="showBuildId(5);changeTab(this);">
-            Cấu hình 5
-          </a>
-        </div>
+
         <div class="background-white">
           <h3 class="title">Chọn linh kiện pc</h3>
-          <div class="list-action d-flex align-items space-between" id="js-buildpc-action">
-            <a href=" " class="item">
-              <i class="fa-regular fa-floppy-disk"></i>
-              <span class="hover-txt" data-action="save">Lưu cấu hình</span>
-            </a>
-            <a href=" " class="item" target="_blank">
-              <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              <span class="hover-txt" data-action="download-excel">Tải file excel cấu hình</span>
-            </a>
-            <a href=" " class="item" data-action="create-image" target="_blank">
-              <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              <span class="hover-txt" data-action="create-image">Tải ảnh cấu hình</span>
-            </a>
-            <a href=" " class="item" target="_blank">
-              <i class="fa-solid fa-print"></i>
-              <span class="hover-txt" data-action="view">In báo giá</span>
-            </a>
-            <a href=" " class="item" onclick="openPopupRebuild()">
-              <i class="fa fa-undo"></i>
-              <span class="hover-txt">Làm mới cấu hình</span>
-            </a>
-          </div>
+
           <div class="list-drive" id="js-buildpc-layout">
             <div class="item-drive">
-                              <span class="name">
-                                  Bộ vi xử lý
-                              </span>
+                                <span class="name">
+                                    Bộ vi xử lý
+                                </span>
 
               <div class="drive-checked" id="checked-62">
 
-                                  <span th:if="${cpu}==null" th:value="CPU"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-62"
-                                        data-info="{&quot;id&quot;:62,&quot;name&quot;:&quot;Bộ vi xử lý&quot;}">
-
-                                  </span>
-                <span th:id="CPU" th:if="${cpu}!=null" th:text="${cpu.getProduct_name()}">
+                                    <span th:if="${cpu}==null" th:value="CPU"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-62"
+                                          data-info="{&quot;id&quot;:62,&quot;name&quot;:&quot;Bộ vi xử lý&quot;}">
 
                                     </span>
-                <a th:id="CPU" th:if="${cpu != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${cpu.getProductId()})}">Xoa</a>
-                <div class="input-quantity">
-                  <button th:if="${cpu!=null}" th:value="${cpu.getProductId()}"
-                          th:id="decrement+${cpu.getProductType()}" onclick="stepper(this)"> -
-                  </button>
+                <div class="d-infor">
+                                        <span class="product-name" th:id="CPU" th:if="${cpu}!=null"
+                                              th:text="${cpu.getProduct_name()}">
 
-                  <input th:if="${cpu!=null}" type="number" min="0" max="100" step="1"
-                         th:value="${pcBuildingService.findPcComponentByProductId(componentList,cpu.getProductId()).getQuantity()}"
-                         th:id="my-input+${cpu.getProductType()}" readonly>
-                  <button th:if="${cpu!=null}" th:value="${cpu.getProductId()}"
-                          th:id="increment+${cpu.getProductType()}" onclick="stepper(this)"> +
-                  </button>
+                                        </span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item"> <a th:id="CPU"
+                                                                                                           th:if="${cpu != null}"
+                                                                                                           th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${cpu.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
+                <div class="info-main-price d-flex align-items space-between">
+                  <div class="input-quantity">
+                    <button th:if="${cpu!=null}" th:value="${cpu.getProductId()}"
+                            th:id="decrement+${cpu.getProductType()}" onclick="stepper(this)"> -
+                    </button>
+
+                    <input th:if="${cpu!=null}" type="number" min="0" max="100" step="1"
+                           th:value="${pcBuildingService.findPcComponentByProductId(componentList,cpu.getProductId()).getQuantity()}"
+                           th:id="my-input+${cpu.getProductType()}" readonly>
+                    <button th:if="${cpu!=null}" th:value="${cpu.getProductId()}"
+                            th:id="increment+${cpu.getProductType()}" onclick="stepper(this)"> +
+                    </button>
+                  </div>
                 </div>
                 <div class="show-selected js-item-row" id="js-selected-item-62" data-id="62">
                 </div>
@@ -469,31 +430,40 @@
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Bo mạch chủ
-                              </span>
+                                <span class="name">
+                                    Bo mạch chủ
+                                </span>
               <div class="drive-checked" id="checked-61">
-                                  <span th:if="${main} == null" th:value="'MAIN'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-61"
-                                        data-info="{&quot;id&quot;:61,&quot;name&quot;:&quot;Bo mạch chủ&quot;}">
+                                    <span th:if="${main} == null" th:value="'MAIN'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-61"
+                                          data-info="{&quot;id&quot;:61,&quot;name&quot;:&quot;Bo mạch chủ&quot;}">
 
-                                  </span>
-                <span th:if="${main!= null}" th:text="${main.getProduct_name()}"></span>
-                <a th:id="MAIN" th:if="${main != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${main.getProductId()})}">Xoa</a>
-                <div class="input-quantity">
-                  <button th:if="${main != null}" th:value="${main.getProductId()}"
-                          th:id="decrement+${main.getProductType()}" onclick="stepper(this)"> -
-                  </button>
-                  <input th:if="${main!=null}" type="number" min="0" max="100" step="1"
-                         th:value="${pcBuildingService.findPcComponentByProductId(componentList,main.getProductId()).getQuantity()}"
-                         th:id="my-input+${main.getProductType()}" readonly>
-                  <button th:if="${main != null}" th:value="${main.getProductId()}"
-                          th:id="increment + ${main.getProductType()}" onclick="stepper(this)"> +
-                  </button>
+                                    </span>
+                <div class="d-info">
+
+                                        <span class="product-name" th:if="${main!= null}"
+                                              th:text="${main.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="MAIN" th:if="${main != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${main.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
                 </div>
-
+                <div class="info-main-price d-flex align-items space-between">
+                  <div class="input-quantity">
+                    <button th:if="${main != null}" th:value="${main.getProductId()}"
+                            th:id="decrement+${main.getProductType()}" onclick="stepper(this)"> -
+                    </button>
+                    <input th:if="${main!=null}" type="number" min="0" max="100" step="1"
+                           th:value="${pcBuildingService.findPcComponentByProductId(componentList,main.getProductId()).getQuantity()}"
+                           th:id="my-input+${main.getProductType()}" readonly>
+                    <button th:if="${main != null}" th:value="${main.getProductId()}"
+                            th:id="increment + ${main.getProductType()}" onclick="stepper(this)"> +
+                    </button>
+                  </div>
+                </div>
                 <div th:id="MAIN" class="show-selected js-item-row" id="js-selected-item-61"
                      data-id="61">
                 </div>
@@ -501,19 +471,26 @@
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  RAM
-                              </span>
+                                <span class="name">
+                                    RAM
+                                </span>
               <div class="drive-checked" id="checked-63">
-                                  <span th:if="${ram == null}" th:value="'RAM'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-63"
-                                        data-info="{&quot;id&quot;:63,&quot;name&quot;:&quot;RAM&quot;}">
-                                 <input type="hidden" name="product_type" value="RAM">
-                                  </span>
-                <span th:id="RAM" th:if="${ram != null}" th:text="${ram.getProduct_name()}"></span>
-                <a th:id="RAM" th:if="${ram != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${ram.getProductId()})}">Xoa</a>
+                                    <span th:if="${ram == null}" th:value="'RAM'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-63"
+                                          data-info="{&quot;id&quot;:63,&quot;name&quot;:&quot;RAM&quot;}">
+                                        <input type="hidden" name="product_type" value="RAM">
+                                    </span>
+                <div class="d-infor">
+                                        <span class="product-name" th:id="RAM" th:if="${ram != null}"
+                                              th:text="${ram.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                                <span class="btn-action_seclect delete_select remove-item">
+                                        <a th:id="RAM" th:if="${ram != null}"
+                                           th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${ram.getProductId()})}">Xoa</a>
+                                        </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${ram != null}" th:value="${ram.getProductId()}"
                           th:id="decrement+${ram.getProductType()}" onclick="stepper(this)"> -
@@ -533,20 +510,28 @@
               </div>
             </div>
 
-            <div class="item-drive">
-                              <span class="name">
-                                  Ổ Cứng SSD
-                              </span>
-              <div class="drive-checked" id="checked-69">
-                                  <span th:if="${ssd == null}" th:value="'SSD'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-69"
-                                        data-info="{&quot;id&quot;:69,&quot;name&quot;:&quot;Ổ Cứng SSD&quot;}">
 
-                                  </span>
-                <span th:id="SSD" th:if="${ssd != null}" th:text="${ssd.getProduct_name()}"></span>
-                <a th:id="SSD" th:if="${ssd != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${ssd.getProductId()})}">Xoa</a>
+
+            <div class="item-drive">
+                                <span class="name">
+                                    Ổ Cứng SSD
+                                </span>
+              <div class="drive-checked" id="checked-69">
+                                    <span th:if="${ssd == null}" th:value="'SSD'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-69"
+                                          data-info="{&quot;id&quot;:69,&quot;name&quot;:&quot;Ổ Cứng SSD&quot;}">
+
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="SSD" th:if="${ssd != null}" th:text="${ssd.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="SSD" th:if="${ssd != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${ssd.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${ssd != null}" th:value="${ssd.getProductId()}"
                           th:id="decrement+${ssd.getProductType()}" onclick="stepper(this)"> -
@@ -558,55 +543,34 @@
                           th:id="increment + ${ssd.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="ssd_id" th:if="${ssd != null}" th:value="${ssd.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-69" data-id="69">
                 </div>
               </div>
             </div>
 
-            <div class="item-drive">
-                              <span class="name">
-                                  Ổ Cứng HDD
-                              </span>
-              <div class="drive-checked" id="checked-64">
-                                  <span th:if="${hdd ==null}" th:value="'HDD'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-64"
-                                        data-info="{&quot;id&quot;:64,&quot;name&quot;:&quot;Ổ Cứng HDD&quot;}">
-
-                                  </span>
-                <span th:id="HDD" th:if="${hdd != null}" th:text="${hdd.getProduct_name()}"></span>
-                <a th:id="HDD" th:if="${hdd != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${hdd.getProductId()})}">Xoa</a>
-                <div class="input-quantity">
-                  <button th:if="${hdd != null}" th:value="${hdd.getProductId()}"
-                          th:id="decrement+${hdd.getProductType()}" onclick="stepper(this)"> -
-                  </button>
-                  <input th:if="${hdd!=null}" type="number" min="0" max="100" step="1"
-                         th:value="${pcBuildingService.findPcComponentByProductId(componentList,hdd.getProductId()).getQuantity()}"
-                         th:id="my-input+${hdd.getProductType()}" readonly>
-                  <button th:if="${hdd != null}" th:value="${hdd.getProductId()}"
-                          th:id="increment + ${hdd.getProductType()}" onclick="stepper(this)"> +
-                  </button>
-                </div>
-                <div class="show-selected js-item-row" id="js-selected-item-64" data-id="64">
-                </div>
-              </div>
-            </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  VGA
-                              </span>
+                                <span class="name">
+                                    VGA
+                                </span>
               <div class="drive-checked" id="checked-65">
-                                  <span th:if="${vga == null}" th:value="'VGA'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-65"
-                                        data-info="{&quot;id&quot;:65,&quot;name&quot;:&quot;VGA&quot;}">
+                                    <span th:if="${vga == null}" th:value="'VGA'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-65"
+                                          data-info="{&quot;id&quot;:65,&quot;name&quot;:&quot;VGA&quot;}">
 
-                                  </span>
-                <span th:id="VGA" th:if="${vga != null}" th:text="${vga.getProduct_name()}"></span>
-                <a th:id="VGA" th:if="${vga != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${vga.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="VGA" th:if="${vga != null}" th:text="${vga.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="VGA" th:if="${vga != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${vga.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${vga != null}" th:value="${vga.getProductId()}"
                           th:id="decrement+${vga.getProductType()}" onclick="stepper(this)"> -
@@ -618,22 +582,24 @@
                           th:id="increment + ${vga.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="vga_id" th:if="${vga != null}" th:value="${vga.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-65" data-id="65">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Nguồn
-                              </span>
+                                <span class="name">
+                                    Nguồn
+                                </span>
               <div class="drive-checked" id="checked-67">
-                                  <span th:if="${powerSupply == null}" th:value="'NGUON'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-67"
-                                        data-info="{&quot;id&quot;:67,&quot;name&quot;:&quot;Nguồn&quot;}">
-                                 <input type="hidden" name="product_type" value="NGUON">
-                                  </span>
+                                    <span th:if="${powerSupply == null}" th:value="'NGUON'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-67"
+                                          data-info="{&quot;id&quot;:67,&quot;name&quot;:&quot;Nguồn&quot;}">
+                                        <input type="hidden" name="product_type" value="NGUON">
+                                    </span>
                 <span th:id="NGUON" th:if="${powerSupply != null}"
                       th:text="${hdd.getProduct_name()}"></span>
                 <a th:id="NGUON" th:if="${powerSupply != null}"
@@ -647,8 +613,8 @@
                          th:value="${pcBuildingService.findPcComponentByProductId(componentList,powerSupply.getProductId()).getQuantity()}"
                          th:id="my-input+${powerSupply.getProductType()}" readonly>
                   <button th:if="${powerSupply != null}" th:value="${powerSupply.getProductId()}"
-                          th:id="increment + ${powerSupply.getProductType()}"
-                          onclick="stepper(this)"> +
+                          th:id="increment + ${powerSupply.getProductType()}" onclick="stepper(this)">
+                    +
                   </button>
                 </div>
                 <div class="show-selected js-item-row" id="js-selected-item-67" data-id="67">
@@ -656,21 +622,29 @@
               </div>
             </div>
 
-            <div class="item-drive">
-                              <span class="name">
-                                  Vỏ Case
-                              </span>
-              <div class="drive-checked" id="checked-66">
-                                  <span th:if="${cases == null}" th:value="CASE"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-66"
-                                        data-info="{&quot;id&quot;:66,&quot;name&quot;:&quot;Vỏ Case&quot;}">
 
-                                  </span>
-                <span th:id="CASE" th:if="${cases != null}"
-                      th:text="${cases.getProduct_name()}"></span>
-                <a th:id="CASE" th:if="${cases != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${cases.getProductId()})}">Xoa</a>
+
+            <div class="item-drive">
+                                <span class="name">
+                                    Vỏ Case
+                                </span>
+              <div class="drive-checked" id="checked-66">
+                                    <span th:if="${cases == null}" th:value="'CASE'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-66"
+                                          data-info="{&quot;id&quot;:66,&quot;name&quot;:&quot;Vỏ Case&quot;}">
+
+                                    </span>
+                <div class="d-infor">
+                                        <span class="product-name" th:id="CASE" th:if="${cases != null}"
+                                              th:text="${cases.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="CASE" th:if="${cases != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${cases.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${cases != null}" th:value="${cases.getProductId()}"
                           th:id="decrement+${cases.getProductType()}" onclick="stepper(this)"> -
@@ -682,25 +656,33 @@
                           th:id="increment + ${cases.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="cases_id" th:if="${cases != null}" th:value="${cases.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-66" data-id="66">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                              Quạt Tản Nhiệt
-                              </span>
+                                <span class="name">
+                                    Quạt Tản Nhiệt
+                                </span>
               <div class="drive-checked" id="checked-109">
-                                  <span th:if="${fan == null}" th:value="'FAN'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-109"
-                                        data-info="{&quot;id&quot;:109,&quot;name&quot;:&quot;Quạt Tản Nhiệt&quot;}">
+                                    <span th:if="${fan == null}" th:value="'FAN'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-109"
+                                          data-info="{&quot;id&quot;:109,&quot;name&quot;:&quot;Quạt Tản Nhiệt&quot;}">
 
-                                  </span>
-                <span th:id="FAN" th:if="${fan != null}" th:text="${fan.getProduct_name()}"></span>
-                <a th:id="FAN" th:if="${fan != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${fan.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="FAN" th:if="${fan != null}" th:text="${fan.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="FAN" th:if="${fan != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${fan.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${fan != null}" th:value="${fan.getProductId()}"
                           th:id="decrement+${fan.getProductType()}" onclick="stepper(this)"> -
@@ -712,95 +694,110 @@
                           th:id="increment + ${fan.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="fan_id" th:if="${fan != null}" th:value="${fan.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-109" data-id="109">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Tản Nhiệt CPU
-                              </span>
+                                <span class="name">
+                                    Tản Nhiệt CPU
+                                </span>
               <div class="drive-checked" id="checked-105">
-                                  <span th:if="${fan == null}" th:value="'COOLER'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-105"
-                                        data-info="{&quot;id&quot;:105,&quot;name&quot;:&quot;Tản Nhiệt CPU&quot;}">
+                                    <span th:if="${cooler == null}" th:value="'COOLER'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-105"
+                                          data-info="{&quot;id&quot;:105,&quot;name&quot;:&quot;Tản Nhiệt CPU&quot;}">
 
-                                  </span>
-                <span th:id="COOLER" th:if="${fan != null}"
-                      th:text="${fan.getProduct_name()}"></span>
-                <a th:id="COOLER" th:if="${fan != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${fan.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="COOLER" th:if="${cooler != null}" th:text="${cooler.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="COOLER" th:if="${cooler != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${cooler.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
-                  <button th:if="${fan != null}" th:value="${fan.getProductId()}"
-                          th:id="decrement+${fan.getProductType()}" onclick="stepper(this)"> -
+                  <button th:if="${cooler != null}" th:value="${cooler.getProductId()}"
+                          th:id="decrement+${cooler.getProductType()}" onclick="stepper(this)"> -
                   </button>
-                  <input th:if="${fan!=null}" type="number" min="0" max="100" step="1"
-                         th:value="${pcBuildingService.findPcComponentByProductId(componentList,fan.getProductId()).getQuantity()}"
-                         th:id="my-input+${fan.getProductType()}" readonly>
-                  <button th:if="${fan != null}" th:value="${fan.getProductId()}"
-                          th:id="increment + ${fan.getProductType()}" onclick="stepper(this)"> +
+                  <input th:if="${cooler!=null}" type="number" min="0" max="100" step="1"
+                         th:value="${pcBuildingService.findPcComponentByProductId(componentList,cooler.getProductId()).getQuantity()}"
+                         th:id="my-input+${cooler.getProductType()}" readonly>
+                  <button th:if="${cooler != null}" th:value="${cooler.getProductId()}"
+                          th:id="increment + ${cooler.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="cooler_id" th:if="${cooler != null}" th:value="${cooler.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-105" data-id="105">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Tản Nhiệt Nước AIO
-                              </span>
+                                <span class="name">
+                                    Tản Nhiệt Nước AIO
+                                </span>
               <div class="drive-checked" id="checked-107">
-                                  <span th:if="${waterCooling == null}" th:value="'COOLER'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-107"
-                                        data-info="{&quot;id&quot;:107,&quot;name&quot;:&quot;Tản Nhiệt Nước AIO&quot;}">
+                                    <span th:if="${waterCooling == null}" th:value="'WATER_COOLER'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-107"
+                                          data-info="{&quot;id&quot;:107,&quot;name&quot;:&quot;Tản Nhiệt Nước AIO&quot;}">
 
-                                  </span>
-                <span th:id="COOLER" th:if="${waterCooling != null}"
-                      th:text="${waterCooling.getProduct_name()}"></span>
-                <a th:id="COOLER" th:if="${waterCooling != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${waterCooling.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="WATER_COOLER" th:if="${waterCooling != null}" th:text="${waterCooling.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="WATER_COOLER" th:if="${waterCooling != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${waterCooling.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${waterCooling != null}" th:value="${waterCooling.getProductId()}"
-                          th:id="decrement+${waterCooling.getProductType()}"
-                          onclick="stepper(this)"> -
+                          th:id="decrement+${waterCooling.getProductType()}" onclick="stepper(this)"> -
                   </button>
                   <input th:if="${waterCooling!=null}" type="number" min="0" max="100" step="1"
                          th:value="${pcBuildingService.findPcComponentByProductId(componentList,waterCooling.getProductId()).getQuantity()}"
                          th:id="my-input+${waterCooling.getProductType()}" readonly>
                   <button th:if="${waterCooling != null}" th:value="${waterCooling.getProductId()}"
-                          th:id="increment + ${waterCooling.getProductType()}"
-                          onclick="stepper(this)"> +
+                          th:id="increment + ${waterCooling.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="water_cooler_id" th:if="${waterCooling != null}" th:value="${waterCooling.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-107" data-id="107">
                 </div>
               </div>
             </div>
 
+
             <div class="item-drive">
-                              <span class="name">
-                                  Màn Hình
-                              </span>
+                                <span class="name">
+                                    Màn Hình
+                                </span>
               <div class="drive-checked" id="checked-68">
-                <div th:if="${screen == null}">
-                   <span th:value="'SCREEN'"
-                         class="show-popup_select span-last open-selection box-add"
-                         id="js-category-info-68"
-                         data-info="{&quot;id&quot;:68,&quot;name&quot;:&quot;Màn Hình&quot;}">
+                                    <span th:if="${screen == null}" th:value="'SCREEN'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-68"
+                                          data-info="{&quot;id&quot;:68,&quot;name&quot;:&quot;Màn Hình&quot;}">
 
-                                  </span>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="SCREEN" th:if="${screen != null}" th:text="${screen.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="SCREEN" th:if="${screen != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${screen.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
                 </div>
-
-                <div th:if="${screen != null}">
-                  <span th:id="SCREEN" th:text="${screen.getProduct_name()}"></span>
-                </div>
-
-                <a th:id="SCREEN" th:if="${screen != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${screen.getProductId()})}">Xoa</a>
                 <div class="input-quantity">
                   <button th:if="${screen != null}" th:value="${screen.getProductId()}"
                           th:id="decrement+${screen.getProductType()}" onclick="stepper(this)"> -
@@ -812,26 +809,33 @@
                           th:id="increment + ${screen.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="monitor_id" th:if="${screen != null}" th:value="${screen.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-68" data-id="68">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Bàn phím
-                              </span>
+                                <span class="name">
+                                    Bàn phím
+                                </span>
               <div class="drive-checked" id="checked-110">
-                                  <span th:if="${keyboard == null}" th:value="'KEYBOARD'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-110"
-                                        data-info="{&quot;id&quot;:110,&quot;name&quot;:&quot;Bàn phím&quot;}">
+                                    <span th:if="${keyboard == null}" th:value="'KEYBOARD'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-110"
+                                          data-info="{&quot;id&quot;:110,&quot;name&quot;:&quot;Bàn phím&quot;}">
 
-                                  </span>
-                <div th:id="KEYBOARD" th:if="${keyboard != null}"><span
-                    th:text="${keyboard.getProduct_name()}"></span></div>
-                <a th:id="KEYBOARD" th:if="${keyboard != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${keyboard.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="KEYBOARD" th:if="${keyboard != null}" th:text="${keyboard.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="KEYBOARD" th:if="${keyboard != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${keyboard.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${keyboard != null}" th:value="${keyboard.getProductId()}"
                           th:id="decrement+${keyboard.getProductType()}" onclick="stepper(this)"> -
@@ -840,30 +844,36 @@
                          th:value="${pcBuildingService.findPcComponentByProductId(componentList,keyboard.getProductId()).getQuantity()}"
                          th:id="my-input+${keyboard.getProductType()}" readonly>
                   <button th:if="${keyboard != null}" th:value="${keyboard.getProductId()}"
-                          th:id="increment + ${keyboard.getProductType()}" onclick="stepper(this)">
-                    +
+                          th:id="increment + ${keyboard.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="keyboard_id" th:if="${keyboard != null}" th:value="${keyboard.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-110" data-id="110">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Chuột Gaming
-                              </span>
+                                <span class="name">
+                                    Chuột Gaming
+                                </span>
               <div class="drive-checked" id="checked-84">
-                                  <span th:if="${mouse == null}" th:value="'MOUSE'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-84"
-                                        data-info="{&quot;id&quot;:84,&quot;name&quot;:&quot;Chuột Gaming&quot;}">
+                                    <span th:if="${mouse == null}" th:value="'MOUSE'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-84"
+                                          data-info="{&quot;id&quot;:84,&quot;name&quot;:&quot;Chuột Gaming&quot;}">
 
-                                  </span>
-                <span th:id="MOUSE" th:if="${mouse != null}"
-                      th:text="${mouse.getProduct_name()}"></span>
-                <a th:id="MOUSE" th:if="${mouse != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${mouse.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="MOUSE" th:if="${mouse != null}" th:text="${mouse.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="MOUSE" th:if="${mouse != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${mouse.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${mouse != null}" th:value="${mouse.getProductId()}"
                           th:id="decrement+${mouse.getProductType()}" onclick="stepper(this)"> -
@@ -875,26 +885,33 @@
                           th:id="increment + ${mouse.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="mouse_id" th:if="${mouse != null}" th:value="${mouse.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-84" data-id="84">
                 </div>
               </div>
             </div>
 
             <div class="item-drive">
-                              <span class="name">
-                                  Tai Nghe
-                              </span>
+                                <span class="name">
+                                    Tai Nghe
+                                </span>
               <div class="drive-checked" id="checked-91">
-                                  <span th:if="${earphone == null}" th:value="'EARPHONE'"
-                                        class="show-popup_select span-last open-selection box-add"
-                                        id="js-category-info-91"
-                                        data-info="{&quot;id&quot;:91,&quot;name&quot;:&quot;Tai Nghe&quot;}">
+                                    <span th:if="${earphone == null}" th:value="'EARPHONE'"
+                                          class="show-popup_select span-last open-selection box-add"
+                                          id="js-category-info-91"
+                                          data-info="{&quot;id&quot;:91,&quot;name&quot;:&quot;Tai Nghe&quot;}">
 
-                                  </span>
-                <span th:id="EARPHONE" th:if="${earphone != null}"
-                      th:text="${earphone.getProduct_name()}"></span>
-                <a th:id="EARPHONE" th:if="${earphone != null}"
-                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${earphone.getProductId()})}">Xoa</a>
+                                    </span>
+                <div class="d-infor">
+                  <span class="product-name" th:id="EARPHONE" th:if="${earphone != null}" th:text="${earphone.getProduct_name()}"></span>
+                  <div class="btn-edit d-flex" style="margin-left: 475px">
+                                            <span class="btn-action_seclect delete_select remove-item">
+                                                <a th:id="EARPHONE" th:if="${earphone != null}"
+                                                   th:href="@{/EcommerceStore/pc-building/remove/{pc_id}/{product_id}(pc_id=${pc_id},product_id=${earphone.getProductId()})}">Xoa</a>
+                                            </span>
+                  </div>
+                </div>
                 <div class="input-quantity">
                   <button th:if="${earphone != null}" th:value="${earphone.getProductId()}"
                           th:id="decrement+${earphone.getProductType()}" onclick="stepper(this)"> -
@@ -903,14 +920,16 @@
                          th:value="${pcBuildingService.findPcComponentByProductId(componentList,earphone.getProductId()).getQuantity()}"
                          th:id="my-input+${earphone.getProductType()}" readonly>
                   <button th:if="${earphone != null}" th:value="${earphone.getProductId()}"
-                          th:id="increment + ${earphone.getProductType()}" onclick="stepper(this)">
-                    +
+                          th:id="increment + ${earphone.getProductType()}" onclick="stepper(this)"> +
                   </button>
                 </div>
+                <input type="hidden" name="headphone_id" th:if="${earphone != null}" th:value="${earphone.getProductId()}">
+                <input type="hidden" name="pc_id" th:value="${pc_id}">
                 <div class="show-selected js-item-row" id="js-selected-item-91" data-id="91">
                 </div>
               </div>
             </div>
+
 
 
           </div>
@@ -972,9 +991,9 @@
               </div>
               <a th:href="@{/EcommerceStore/order(user_id=${user_id}, total=${total}, typeOrder='pc_building_pay')}"
                  class="add-buildpc active">
-    <span class="txt">
-        Tiến hành thanh toán
-    </span>
+                                    <span class="txt">
+                                        Tiến hành thanh toán
+                                    </span>
               </a>
 
 
@@ -1053,8 +1072,7 @@
             Đăng ký email để nhận tin khuyến mãi
           </h3>
           <div id="newsletter" class="d-flex">
-            <input type="text" id="emailnewsletter" placeholder="Nhập email của bạn"
-            />
+            <input type="text" id="emailnewsletter" placeholder="Nhập email của bạn" />
             <a href="javascript:;" class="send-newsletter">
               Đăng ký
             </a>
@@ -1070,17 +1088,17 @@
   <input type="hidden" name="productList" id="listProduct" th:value="${productList}">
 
   <div id="myModal" class="modal">
-    <div class="modal-content" id="modall" style="width:30%;">
+    <div class="modal-content" id="modall" style="width:80%;">
       <h2 id="header-modal">Thêm</h2>
       <div class="container-form">
-        <div id="employeeForm">
+
           <div class="form-group">
 
             <div id="modalContent">
 
             </div>
           </div>
-        </div>
+
       </div>
     </div>
   </div>
@@ -1200,18 +1218,17 @@
     display: block;
   }
 
-  .fixed_banner.show .fixed-left, .fixed_banner.show .fixed-right {
+  .fixed_banner.show .fixed-left,
+  .fixed_banner.show .fixed-right {
     top: 23%;
   }
-
 </style>
 
 
 <script src="/asset/default/js/library.js"></script>
 <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
 
-<script
-    th:src="@{https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js}"></script>
 <script>
   const modal = document.getElementById('myModal');
   var pcId = document.getElementById('pc_id').value;
@@ -1242,13 +1259,18 @@
         let modalContent = "";
         products.forEach(product => {
           console.log(product);
-          modalContent += `<p>${product.product_name}</p>`;
+          modalContent += `
+<div class="pro-item d-flex">
+<div class="pro-image"><img src="/asset/img/cac.png" alt=""/> </div>`
+          modalContent += ` <p >${product.product_name}</p>`;
+          modalContent += `<div class="price"> <p style="position:fixed; left: 70%"> ${product.productPrice}</p> </div>`;
           modalContent += `<input type="hidden" name="product_type" id="product_type"
-th:value="${product.productType}"/>`;
-          modalContent += `<input type="hidden" name="product_id" id="product_id"
 th:value="${product.productId}"/>`;
-          modalContent += ` <button type="button" style="margin-left: 46.5%;" class="submit submit-form"
-           th:id="them${product.productId}">Thêm</button>`;
+          modalContent += `<input type="hidden" name="product_id" id="product_id"
+th:value="${product.productType}"/>`;
+          modalContent += ` <button  type="button" style="position:fixed; margin-top: 10px; right: 10%; margin-left: 46.5%; border: none;
+ background-color: #0d95e8; color:white; width: 50px; height: 40px" class="submit submit-form"
+           th:id="them${product.productId}">Thêm</button>  </div>`;
 
         });
         document.getElementById('modalContent').innerHTML = modalContent;
@@ -1262,7 +1284,7 @@ th:value="${product.productId}"/>`;
             console.log('button: ', btn);
             console.log('previous button', btn.previousElementSibling);
             console.log('previous button value',
-                btn.previousElementSibling.getAttribute('th:value'))
+                btn.previousElementSibling.previousElementSibling.getAttribute('value'))
             // Lấy thông tin sản phẩm từ modal
             // var productTypeInput = btn.previousElementSibling.previousElementSibling.children[0];
 
@@ -1273,13 +1295,12 @@ th:value="${product.productId}"/>`;
             // var productIdInput = document.getElementById('product_id');
             // var productType = productTypeInput.value;
             // var productId = productIdInput.value;
-            var productTypeInput = btn.previousElementSibling.previousElementSibling.getAttribute(
-                'th:value');
-            var productIdInput = btn.previousElementSibling.getAttribute('th:value');
+            var productTypeInput = btn.previousElementSibling.getAttribute('th:value');
+            var productIdInput = btn.previousElementSibling.previousElementSibling.getAttribute('th:value');
             // var productType = productTypeInput.value;
             // var productId = productIdInput.value;
-            console.log("productType", productTypeInput);
-            console.log("productId", productIdInput);
+            console.log("productType: ", productTypeInput);
+            console.log("productId: ", productIdInput);
             // Gửi yêu cầu để thêm sản phẩm vào danh sách
             fetch(
                 `/EcommerceStore/pc-building/add-product-to-list?product_type=${productTypeInput.trim()}&pc_id=${pcId}&product_id=${productIdInput}`,
@@ -1320,7 +1341,7 @@ th:value="${product.productId}"/>`;
   // Hiển thị modal khi bấm vào nút "Thêm"
 
   window.addEventListener('click', (event) => {
-    if (event.target === modal) {
+    if (event.target !== modal) {
       modal.style.display = 'none';
     }
   });
@@ -1425,8 +1446,8 @@ th:value="${product.productId}"/>`;
 </script>
 
 </body>
+
 </html>
 
 <!-- Load time: 0.05618 seconds  / 4 mb-->
 <!-- Powered by Hura8 Cloud - 2.3, Released: 10-Aug-2021 / Website: www.hurasoft.vn -->
-        

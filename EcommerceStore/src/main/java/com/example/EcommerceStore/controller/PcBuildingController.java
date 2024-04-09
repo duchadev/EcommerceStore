@@ -62,6 +62,7 @@ public class PcBuildingController {
   @GetMapping("/build-pc")
   public String getMapping(Model model, HttpSession session) {
     List<PC> pcList = pcRepository.findAll();
+    pcList.removeIf(pc -> pc.getPc_id() == 4);
     model.addAttribute("pcList", pcList);
     int user_id = (int) session.getAttribute("user_id");
     model.addAttribute("user_id", user_id);
