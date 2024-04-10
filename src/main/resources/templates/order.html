@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order</title>
+</head>
+<body>
+<h1>Order information</h1>
+
+<form th:action="@{/EcommerceStore/order}" method="post">
+  <label for="address1">Saved Address</label>
+  <input type="radio" name="address" id="address1" value="1" >
+  <input type="hidden" name="user_id" th:value="${user_id}">
+  <label for="useraddress">Select user address:</label>
+  <select name="useraddress" id="useraddress" >
+    <option th:each="useraddress: ${userAddressList}"
+            th:value="${useraddress.getAddressID()}"
+            th:text="${useraddress.toString()}"
+    ></option>
+    <option th:if="${userAddressList.isEmpty()}" th:value="${-1}" type="hidden">
+    </option>
+  </select>
+
+  <br>
+  <label for="address2">Other Address</label>
+  <input type="radio" name="address" id="address2" value="2" >
+  <br>
+  <label for="city">City:</label>
+  <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm" type="text" name="city">
+    <option value="" selected>Chọn tỉnh thành</option>
+  </select>
+  <label for="district">District: </label>
+  <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm" type="text" name="district">
+    <option value="" selected>Chọn quận huyện</option>
+  </select>
+  <label for="commute">Commute: </label>
+  <select class="form-select form-select-sm" id="commute" aria-label=".form-select-sm" type="text" name="commute">
+    <option value="" selected>Chọn phường xã</option>
+  </select>
+  <label for="detail_address">Detail Address: </label>
+  <input type="text" id="detail_address" name="detail_address" value=""><br>
+  <label for="receive_name">Receiver Name:</label>
+  <input type="text" id="receive_name" name="receive_name" value=""><br>
+  <label for="receive_phone">Receiver Phone:</label>
+  <input type="text" id="receive_phone" name="receive_phone" value=""><br>
+  <h4>Payment method:</h4>
+  <label for="cash">Cash</label>
+  <input type="radio" id="cash" name="payment_method" value="1"><br>
+  <label for="vnpay">VNPay</label>
+  <input type="radio" id="vnpay" name="payment_method" value="2">
+  <br>
+  <label for="total">Total: </label> <br>
+  <input type="text" name="total" id="total" th:value="${total}" readonly>
+  <button type="submit">Confirm Order</button>
+</form>
+<a href="/EcommerceStore/product">Back</a>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+  var cities = document.getElementById("city");
+  var districts = document.getElementById("district");
+  var wards = document.getElementById("commute");
+  var Parameter = {
+    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+    method: "GET",
+    responseType: "application/json",
+  };
+  var promise = axios(Parameter);
+  promise.then(function (result) {
+    renderCity(result.data);
+  });
+
+  function renderCity(data) {
+    for (const city of data) {
+      cities.options[cities.options.length] = new Option(city.Name, city.Name);
+    }
+    cities.onchange = function () {
+      districts.length = 1;
+      wards.length = 1;
+      if (this.value != "") {
+        const result = data.find((n) => n.Name === this.value);
+        if (result) {
+          for (const district of result.Districts) {
+            districts.options[districts.options.length] = new Option(district.Name, district.Name);
+          }
+        }
+      }
+    };
+
+    districts.onchange = function () {
+      wards.length = 1;
+      const selectedCity = data.find((n) => n.Name === cities.value);
+      if (this.value != "" && selectedCity) {
+        const selectedDistrict = selectedCity.Districts.find((n) => n.Name === this.value);
+        if (selectedDistrict) {
+          for (const ward of selectedDistrict.Wards) {
+            wards.options[wards.options.length] = new Option(ward.Name, ward.Name);
+          }
+        }
+      }
+    };
+  }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    // Lấy ra các input radio và select
+    var address1 = document.getElementById("address1");
+    var address2 = document.getElementById("address2");
+    var userAddressList = document.getElementById("useraddress");
+
+    // Nếu danh sách địa chỉ không rỗng
+    if (userAddressList.options.length > 0) {
+    // Chọn saved address
+    address1.checked = true;
+  } else {
+    // Chọn other address
+    address2.checked = true;
+  }
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Lấy ra các phần tử HTML của các trường dữ liệu và label
+    var otherAddressFields = document.querySelectorAll("#city, #district, #commute, #detail_address, #receive_name, #receive_phone");
+    var otherAddressLabels = document.querySelectorAll("label[for='city'], label[for='district'], label[for='commute'], label[for='detail_address'], label[for='receive_name'], label[for='receive_phone']");
+    var userAddressList = document.getElementById("useraddress");
+
+    // Lấy ra các input radio
+    var address1 = document.getElementById("address1");
+    var address2 = document.getElementById("address2");
+
+    // Thiết lập sự kiện onchange cho các input radio
+    address1.addEventListener("change", function() {
+      if (this.checked) {
+        // Ẩn các trường dữ liệu và label khi chọn saved address
+        otherAddressFields.forEach(function(field) {
+          field.style.display = "none";
+        });
+        otherAddressLabels.forEach(function(label) {
+          label.style.display = "none";
+        });
+        userAddressList.style.display = "block"
+      }
+    });
+
+    address2.addEventListener("change", function() {
+      if (this.checked) {
+        // Hiển thị các trường dữ liệu và label khi chọn other address
+        otherAddressFields.forEach(function(field) {
+          field.style.display = "block";
+        });
+        otherAddressLabels.forEach(function(label) {
+          label.style.display = "block";
+        });
+      }
+    });
+
+    // Mặc định ẩn các trường dữ liệu và label khi trang được tải
+    otherAddressFields.forEach(function(field) {
+      field.style.display = "none";
+    });
+    otherAddressLabels.forEach(function(label) {
+      label.style.display = "none";
+    });
+  });
+</script>
+</body>
+
+</html>
