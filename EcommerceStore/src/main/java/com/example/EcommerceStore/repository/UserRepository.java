@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends JpaRepository<User, Integer> {
   User findByUserEmail(String emailId);
   User findUserByUserId(int user_id);
-  @Query(value = "select * from [dbo].[User] where user_email = :user_email", nativeQuery = true)
+  @Query(value = "select * from dbo_user where user_email = :user_email", nativeQuery = true)
   Optional<User> findByEmail(@Param("user_email") String user_email);
 
   @Modifying

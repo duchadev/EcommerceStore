@@ -34,18 +34,28 @@ public class LoginController {
   }
 
   @PostMapping("/login")
-  public String login(@RequestParam String username, @RequestParam String password, Model model) {
+  public String login(@RequestParam String username,
+      @RequestParam String password,
+      Model model) {
 
-    Optional<User> user = userRepository.findByEmail(username);
-    if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
-      // auth successful, redirect to the product page
-      return "redirect:/EcommerceStore/product";
+    User user = userRepository.findUserByUserEmail(username);
+    if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+      if (user.getVerified() == 1) {
+
+        return "product";
+      } else {
+
+        model.addAttribute("user_email", username);
+        model.addAttribute("errorlogin1", "You have not verified your account!");
+        return "login";
+      }
     } else {
-      // auth failed, set error message and return to login page
-      model.addAttribute("errorlogin", "Invalid username or password");
+
+      model.addAttribute("errorlogin2", "sai roi");
       return "login";
     }
   }
+
 
 
   @GetMapping("/signingoogle")
@@ -69,7 +79,7 @@ public class LoginController {
     user.setUser_name((String) map.get("name"));
     user.setRoles("USER");
     user.setPassword("");
-    user.setUser_phoneNumber(""); 
+    user.setUser_phoneNumber("");
     user.setBirthday(Timestamp.valueOf("1990-01-01 00:00:00"));
 
     return user;
@@ -88,8 +98,6 @@ public class LoginController {
     }
     return "redirect:/EcommerceStore/product";
   }
-
-
 
 
   public User toFacebookUser(Map<String, Object> map) {

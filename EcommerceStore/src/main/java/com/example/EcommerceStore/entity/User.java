@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "[User]")
+@Table(name = "dbo_user")
 public class User {
 
   @Id
@@ -40,6 +40,6 @@ public class User {
   private String roles;
   private String otp;
   private LocalDateTime otpGeneratedTime;
-  @Column(name = "is_active", columnDefinition = "BIT")
-  private boolean verified;
+  @Column(name = "is_active")
+  private int verified;
 }
