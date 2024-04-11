@@ -42,24 +42,36 @@ public class SecurityConfig {
 
   @Autowired
   private OurUserDetailsService userDetailsService;
-@Autowired
-private UserRepository  userRepository;
+  @Autowired
+  private UserRepository userRepository;
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
       HttpSession session) throws Exception {
-    httpSecurity.authorizeHttpRequests(auth -> auth
+
+    httpSecurity.
+
+        authorizeHttpRequests(auth -> auth
             .requestMatchers("/EcommerceStore/product", "/EcommerceStore/products/more/**",
                 "/EcommerceStore/loginpage",
                 "/EcommerceStore/productDetails/{product_id}", "/css/**", "/js/**", "/vendor/**",
                 "/fonts/**", "/images/**", "/static/**", "/asset/**",
                 "/EcommerceStore/register_form", "/EcommerceStore/register",
                 "/EcommerceStore/otp_verify", "/EcommerceStore/search",
-                "/EcommerceStore/productFilter/**","/EcommerceStore/productFilter/price/more/**"
+                "/EcommerceStore/productFilter/**", "/EcommerceStore/productFilter/price/more/**"
                 , "/EcommerceStore/productBrandFilter/**", "/EcommerceStore/productDetails/**",
                 "/EcommerceStore/products/more", "/EcommerceStore/clean-booking/**",
                 "/static/asset/**",
-            "/static/media/banner/**","/media/product/**").permitAll()
+                "/static/media/banner/**", "/media/product/**", "/EcommerceStore/verifyOTP",
+                "/EcommerceStore/forgot_password","/EcommerceStore/send_otp_new_pass"
+            , "/EcommerceStore/change_new_pass",
+                "/EcommerceStore/forgot_pass_verify")
+            .permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
         .formLogin(formLogin ->
@@ -68,8 +80,29 @@ private UserRepository  userRepository;
                 .permitAll()
                 .loginProcessingUrl("/EcommerceStore/login")
                 .defaultSuccessUrl("/EcommerceStore/product", true)
+
                 .failureUrl("/EcommerceStore/loginpage?error=true")
+                //handle success auth
+                .successHandler((request, response, authentication) -> {
+                  Object user = authentication.getPrincipal();
+                  if (user instanceof UserDetails userDetails) {
+                    String email = userDetails.getUsername();
+                    User user1 = userRepository.findUserByUserEmail(email);
+
+                    if (user1.getVerified() == 0) {
+                      String errorMessage = "You have not verified your account!";
+                      request.getSession().setAttribute("user_email", user1.getUserEmail());
+
+                      request.getSession().setAttribute("errorMessage1", errorMessage);
+                      response.sendRedirect("/EcommerceStore/loginpage?error=true");
+                    } else {
+                      response.sendRedirect("/EcommerceStore/product");
+                    }
+                  }
+
+                })
                 .failureHandler((request, response, exception) -> {
+
                   String errorMessage = "Invalid username or password";
                   request.getSession().setAttribute("errorMessage", errorMessage);
                   response.sendRedirect("/EcommerceStore/loginpage?error=true");
@@ -105,14 +138,13 @@ private UserRepository  userRepository;
 //              System.out.println(oauth2User);
               String email = (String) oauth2User.getAttribute("email");
               int id = userRepository.findUserByUserEmail(email).getUserId();
-              session.setAttribute("user_id",id);
+              session.setAttribute("user_id", id);
 
 
-            } else  if(principal instanceof UserDetails userDetails)
-            {
+            } else if (principal instanceof UserDetails userDetails) {
               String email = userDetails.getUsername();
               int id = userRepository.findUserByUserEmail(email).getUserId();
-              session.setAttribute("user_id",id);
+              session.setAttribute("user_id", id);
             }
 
           }
@@ -138,14 +170,7 @@ private UserRepository  userRepository;
     return authenticationConfiguration.getAuthenticationManager();
   }
 
-
-
   // Get the access token
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 
 
 }

@@ -48,6 +48,7 @@ public class ProductController {
         model.addAttribute("userRepository", userRepository);
         session.setAttribute("user", user);
         System.out.println("User: " + user.getUserId());
+        System.out.println("User: " + user.getVerified());
 
         int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);

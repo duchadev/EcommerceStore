@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-
+@Table(name="address")
 public class UserAddress {
 
   @Id
