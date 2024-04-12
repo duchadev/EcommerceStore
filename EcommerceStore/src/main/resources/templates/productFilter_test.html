@@ -30,7 +30,7 @@
               0123456789
             </span>
         </a>
-        <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
+        <a href="mailto:" class="item d-flex align-items">
           <i class="icon_2023 email">
           </i>
           <span class="hover-txt">
@@ -49,10 +49,10 @@
           <img src="" alt="logo" width="160px" height="45px"/>
         </a>
         <div class="form__input">
-          <form>
+          <form th:action="@{/EcommerceStore/searchFilter}" method="get">
             <div class="searh-form-container">
               <div class="box-select" onclick="_show_option_search();">
-                <input type="hidden" name="category" id="js-search-catId" value="0"/>
+
                 <a href="" class="title-select" id="js-search-title">
                   Tất cả danh mục
                 </a>
@@ -95,9 +95,18 @@
                   </a>
                 </div>
               </div>
-              <input type="text" id="js-global-seach" class="text_search" name="q"
+              <input type="text" id="js-global-seach" class="text_search" name="keyword"
+
                      placeholder="Nhập sản phẩm cần tìm..."
-                     autocomplete="off" value=""/>
+                     autocomplete="off" th:value="${keyword}"/>
+              <input type="hidden" name="page" id="page"
+
+                     th:value="${10}"
+              />
+              <input type="hidden" name="size" id="size"
+
+                     value="4"
+              />
               <button type="submit" class="submit-search">
                   <span>
                     Tìm kiếm
@@ -121,19 +130,36 @@
           </div>
         </div>
         <div class="header-mid-right d-flex align-items">
-          <a class="item account d-flex align-items" href=""
+          <a class="item account d-flex align-items" th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}"
           >
             <i class="icon_2023 account "></i>
-            <span class="hover-txt ">Tài khoản</span>
+            <span class="hover-txt" >Tài khoản</span>
+
+
           </a>
-          <a
-              href=" "
-              class="item box-cart "
-              id="js-header-cart "
+          <a class="item box-cart "
+             id="js-header-cart "
+             th:if="${userRepository != null and userRepository.findByUserEmail(user_email) != null}"
+             th:href="@{/EcommerceStore/cart/{user_id}(user_id=${userRepository.findByUserEmail(user_email).userId})}"
           >
+
+            <i class="fa-solid fa-cart-shopping"></i>
             <i class="icon_2023 cart "></i>
             <span class="counter-cart js-cart-counter ">0</span>
             <div class="header-cart-hover " id="js-header-cart-holder ">
+              <!-- cart hover -->
+            </div>
+          </a>
+          <p th:value="${user_email}"  id="user_id"></p>
+
+          <a class="item box-cart "
+             th:if="${user_email == null}"
+             th:href="@{/EcommerceStore/cart}"
+          >
+            <i class="fa-solid fa-cart-shopping"></i>
+            <i class="icon_2023 cart "></i>
+            <span class="counter-cart js-cart-counter ">0</span>
+            <div class="header-cart-hover " >
               <!-- cart hover -->
             </div>
           </a>
@@ -291,7 +317,7 @@
                 PC gaming
               </span>
           </a>
-          <a th:href="@{/EcommerceStore/productFilter/Man Hinh}" class="item">
+          <a th:href="@{/EcommerceStore/productFilter/SCREEN}" class="item">
               <span class="txt" alt="Màn hình Gaming">
                 Màn hình gaming
               </span>
@@ -381,9 +407,11 @@
 
                   <div class="icon-check ">
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=0,
+                end_price=8000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>Dưới 8 triệu</span>
-                    <span class="total-attr">(4)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -392,9 +420,10 @@
                   <div class="icon-check " onclick="">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=8000000, end_price=11000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>8 triệu - 11 triệu</span>
-                    <span class="total-attr">(2)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -403,9 +432,11 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=11000000,
+                end_price=15000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>11 triệu - 15 triệu</span>
-                    <span class="total-attr">(7)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -414,9 +445,10 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=15000000,
+                end_price=20000000, product_type=${productType})}" class="filter-right d-flex align-items space-between">
                     <span>15 triệu - 20 triệu</span>
-                    <span class="total-attr">(5)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -425,9 +457,11 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=20000000,
+                end_price=25000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>20 triệu - 25 triệu</span>
-                    <span class="total-attr">(4)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -436,9 +470,11 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=25000000,
+                  end_price=30000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>25 triệu - 30 triệu</span>
-                    <span class="total-attr">(7)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -447,9 +483,11 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a  th:href="@{/EcommerceStore/productFilter(start_price=30000000,
+                end_price=50000000, product_type=${productType})}"
+                      class="filter-right d-flex align-items space-between">
                     <span>30 triệu - 50 triệu</span>
-                    <span class="total-attr">(14)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -458,9 +496,11 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=50000000,
+                 end_price=70000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>50 triệu - 70 triệu</span>
-                    <span class="total-attr">(8)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -469,9 +509,11 @@
                   <div class="icon-check ">
 
                   </div>
-                  <a href="" class="filter-right d-flex align-items space-between">
+                  <a th:href="@{/EcommerceStore/productFilter(start_price=70000000,
+                end_price=85000000, product_type=${productType})}"
+                     class="filter-right d-flex align-items space-between">
                     <span>70 triệu - 80 triệu</span>
-                    <span class="total-attr">(3)</span>
+                    <span class="total-attr" ></span>
                   </a>
                 </div>
 
@@ -479,51 +521,66 @@
 
             </div>
 
-            <!-----end gia ban --->
 
           </div>
+
         </div>
       </div>
       <!---end  left --->
       <div class="right">
         <div class="background-white">
           <div class="main-title d-flex space-between align-items">
-            <h1>PC Gaming</h1>
-            <div class="right-sort d-flex align-items">
-              <div class="total-product">có bao nhiêu sp trong db m show nó ở đây, khó quá thì xoá
-                đi cũng được
-              </div>
-              <div class="content-sort d-flex align-items">
-                <p>Hiển thị theo:</p>
-                <select onchange="location.href=this.value" class="sort-pro">
-                  <option value="">Sắp xếp sản phẩm</option>
-                  <option value="">Mới nhất</option>
-                  <option value="">Giá tăng dần</option>
-                  <option value="">Giá giảm dần</option>
-                  <option value="">Đánh giá</option>
-                  <option value="">Tên A->Z</option>
-                </select>
-              </div>
-            </div>
+            <h1 th:if="${productType != null}"  th:text="${productType}"></h1>
+
+              <h1 th:if="${productType == null}" >Product</h1>
+
+
           </div>
 
-          <div class="filter-results">
-            <div class="content-results d-flex align-items">
-              <p>Lọc theo:</p>
-              <div class="list-results d-flex align-items" id="js-check-results">
-              </div>
-              <a href="" class="remove-filter">
-                Xóa tất cả
-              </a>
-            </div>
-          </div>
 
+          <p th:if="${productList == null}">No available product</p>
           <div class="product-list d-flex flex-wrap"  id="js-product-list">
 
-              <div class="product-item"  th:each="product :${listProduct}">
+              <div class="product-item"  th:each="product :${productList}">
                 <a href="/gaming-pc-glacier-i3050.html" class="product-image">
 
-                  <img src="/media/product/250-8687-tnc-store-pc-gaming-glacier-i3050-01bl-69.jpg"
+                  <img src=""
+                       alt="PC Gaming - Glacier I3050 - 01BL">
+
+                </a>
+                <div class="product-info">
+                  <a th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productId})}"
+                     th:text="${product.getProduct_name()}"
+                     class="product-name line-clamp-2">
+
+                  </a>
+                  <div class="info-review d-flex align-items">
+                    <i class="icon-star star5"></i>
+                    <span th:text="${product.getRating()}"></span>
+                  </div>
+                  <div class="main-price">
+
+                    <del class="old-price" th:text="${product.getProductPrice()}"><u>đ</u></del>
+
+                    <div class="d-flex align-items">
+                      <b class="price">13.190.000đ</b>
+
+                      <div class="price-saleoff">-6%</div>
+
+                    </div>
+                  </div>
+                </div>
+                <span class="boder-top"></span>
+                <span class="boder-right"></span>
+                <span class="boder-bottom"></span>
+                <span class="boder-left"></span>
+              </div>
+
+            <div id="product-container" class="product-list d-flex flex-wrap">
+              <div class="product-item"  th:each="product :${productListMore}">
+                <a href="/gaming-pc-glacier-i3050.html" class="product-image">
+
+                  <img src=""
                        alt="PC Gaming - Glacier I3050 - 01BL">
 
                 </a>
@@ -556,11 +613,18 @@
               </div>
 
 
+            </div>
 
           </div>
-          <a class="show-more-product" href="" onclick="">
-            Xem thêm <i class="fa fa-angle-down"></i>
-          </a>
+          <input type="hidden" name="product_type" id="product_type" th:value="${productType}">
+          <input type="hidden" name="start_price" id="start_price" th:value="${start_price}">
+          <input type="hidden" name="end_price" id="end_price" th:value="${end_price}">
+          <div th:if="${productList} != null">
+            <button class="show-more-product" id="show-more-btn"  >
+              Xem thêm <i class="fa fa-angle-down"></i>
+            </button>
+
+          </div>
 
           <input type="hidden" id="current_page" value="1"/>
         </div>
@@ -667,10 +731,10 @@
             <a href="#">
               Quy Định Chung
             </a>
-            <a href="/chinh-sach-van-chuyen-tnc-store">
+            <a href="">
               Chính Sách Vận Chuyển
             </a>
-            <a href="/chinh-sach-va-quy-dinh-bao-hanh-tai-tnc-store">
+            <a href="">
               Chính Sách Bảo Hành
             </a>
             <a href="/chinh-sach-doi-tra-lai-hang">
@@ -700,6 +764,88 @@
 <script rel="stylesheet" src="/asset/default/js/main.js"></script>
 <script
     th:src="@{https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js}"></script>
+<script>
+  // show more product
+  const product_type = document.getElementById('product_type').value;
+  const keyword = document.getElementById('js-global-seach').value;
+console.log(keyword)
+  let page = 0;
+  let size = 4; // Số sản phẩm muốn hiển thị mỗi lần
+  const start_price = parseInt(document.getElementById('start_price').value);
+  const end_price = parseInt(document.getElementById('end_price').value);
+  console.log('product type: ', product_type)
+  console.log(start_price,  end_price);
+  document.addEventListener('DOMContentLoaded', function () {
 
+    if (product_type !== '' && (isNaN(start_price) || isNaN(end_price)) &&  keyword === '') {
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/productFilter/more?product_type=' + product_type + '&page=' + page
+            + '&size=' + size)
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          console.log("Response HTML:", html);
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+    } else if(product_type !== '' && (start_price!== 0 || end_price !== 0) && keyword ===''){
+
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/productFilter/price/more?product_type=' + product_type
+            + '&start_price=' + start_price + '&end_price=' + end_price
+            + '&page=' + page + '&size=' + size)
+
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+
+    }
+    if(keyword !== ''){
+
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/searchFilter?keyword=' + encodeURIComponent(keyword) + '&page=' + page
+            + '&size=' + size)
+
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+
+    }
+
+  });
+</script>
 </body>
 </html>

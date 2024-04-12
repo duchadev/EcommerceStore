@@ -1,17 +1,23 @@
 package com.example.EcommerceStore.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +29,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="[Order]")
+@Table(name="dbo_order")
 @ToString
 public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "order_id")
-  private int orderId;
+  private long orderId;
   @Column(name="user_id")
   private int userId;
   private int address_id;
@@ -50,5 +56,26 @@ public class Order {
   }
   @OneToMany(mappedBy = "order", cascade  = CascadeType.ALL)
   private List<OrderDetail> orderDetails = new ArrayList<>();
+  @JsonManagedReference(value = "orderDetail_order")
+  @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
+  private List<OrderDetail> orderDetailList;
+
+  @JsonBackReference(value = "order_address")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name="address_id", referencedColumnName = "address_id", insertable=false, updatable=false)
+  private Address address;
+
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Order order)) return false;
+    return getOrderId() == order.getOrderId();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getOrderId());
+  }
 
 }

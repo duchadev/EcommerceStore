@@ -4,7 +4,7 @@ import com.example.EcommerceStore.entity.Order;
 import com.example.EcommerceStore.entity.OrderDetail;
 import com.example.EcommerceStore.repository.OrderDetailRepository;
 import com.example.EcommerceStore.repository.OrderRepository;
-import com.example.EcommerceStore.repository.UserAddressRepository;
+import com.example.EcommerceStore.repository.AddressRepository;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.service.impl.OrderServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class OrderTrackingController {
   @Autowired
   private UserRepository userRepository;
   @Autowired
-  private UserAddressRepository userAddressRepository;
+  private AddressRepository userAddressRepository;
   @Autowired
   private OrderDetailRepository orderDetailRepository;
   @Autowired
@@ -107,7 +107,7 @@ public class OrderTrackingController {
 
   @GetMapping("/viewOrderDetail")
   public String viewOrderDetail(HttpServletRequest request, Model model, HttpSession session) {
-    int order_id = Integer.parseInt(request.getParameter("order_id"));
+    long order_id = Long.parseLong(request.getParameter("order_id"));
     List<OrderDetail> orderDetailList = orderDetailRepository.findOrderDetailsByOrderOrderId(
         order_id);
     model.addAttribute("orderDetailList", orderDetailList);

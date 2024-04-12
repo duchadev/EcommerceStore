@@ -24,7 +24,7 @@
           <i class="icon_2023 phone"></i>
           <span class="hover-txt">0123456789</span>
         </a>
-        <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
+        <a href="mailto:" class="item d-flex align-items">
           <i class="icon_2023 email"></i>
           <span class="hover-txt">abcd@gmail.com</span>
         </a>
@@ -148,12 +148,12 @@
           </div>
         </div>
         <div class="header-mid-right d-flex align-items">
-          <a class="item account d-flex align-items" href="/taikhoan">
+          <a class="item account d-flex align-items" th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}"
+          >
             <i class="icon_2023 account"></i>
-            <span
-                class="hover-txt line-clamp-1"
-                style="width: 74px; white-space: normal"
-            >thanh hải</span
+
+            <span class="hover-txt" >Tài khoản</span>
+
             >
           </a>
 
@@ -163,7 +163,7 @@
               id="js-header-cart"
           >
             <i class="icon_2023 cart"></i>
-            <span class="counter-cart js-cart-counter">0</span>
+            <span class="counter-cart js-cart-counter ">0</span>
 
             <div class="header-cart-hover" id="js-header-cart-holder">
               <!-- cart hover -->
@@ -282,9 +282,9 @@
                 <div class="list-holder d-flex flex-wrap">
                   <div class="item-holder">
                     <a
-                        href="/may-tinh-van-phong-tnc.html"
+                        href=""
                         class="title-holder"
-                    >Máy Tính Văn Phòng TNC</a
+                    >Máy Tính Văn Phòng </a
                     >
                   </div>
 
@@ -1275,7 +1275,7 @@
           <meta itemprop="position" content="1">
         </li>
         <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-          <a href="https://www.tncstore.vn/taikhoan?view=change-info" itemprop="item" class="nopad-l">
+          <a href="" itemprop="item" class="nopad-l">
             <span itemprop="name"> Tài khoản </span>
           </a>
           <meta itemprop="position" content="2" />
@@ -1515,10 +1515,10 @@
             <a href="#">
               Quy Định Chung
             </a>
-            <a href="/chinh-sach-van-chuyen-tnc-store">
+            <a href="">
               Chính Sách Vận Chuyển
             </a>
-            <a href="/chinh-sach-va-quy-dinh-bao-hanh-tai-tnc-store">
+            <a href="">
               Chính Sách Bảo Hành
             </a>
             <a href="/chinh-sach-doi-tra-lai-hang">

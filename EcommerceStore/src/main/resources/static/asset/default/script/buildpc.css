@@ -305,7 +305,7 @@
 }
 .contain-item-drive .info-name-edit-remove .show-popup_select {
   margin-left: 0;
-  color: var(--color-global);
+  color: var(--color-global);.header .header-mid-right
 }
 .contain-item-drive .info-name-edit-remove .delete_select:hover {
   color: red;

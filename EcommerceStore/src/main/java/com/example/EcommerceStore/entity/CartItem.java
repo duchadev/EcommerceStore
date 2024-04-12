@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
@@ -20,7 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "[cart_item]")
+@ToString
+@Table(name = "cart_item")
 public class CartItem {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

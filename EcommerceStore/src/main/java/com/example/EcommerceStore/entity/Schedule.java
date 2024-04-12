@@ -1,58 +1,44 @@
 package com.example.EcommerceStore.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Schedule")
 public class Schedule {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "schedule_id")
-  private int schedule_id;
-  private int user_id;
-  private String time;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int ID;
+  private Date time;
   private String status;
-  private String notes;
+  private String phone;
+  private String name;
+  private int shift;
 
-  private int staff_id;
+  @JsonBackReference(value = "schedule_user")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name="user_id")
+  private User user;
 
-  private int address_id;
-  private String product_type;
-  private String customer_name;
-  private String customer_phone_number;
-  private String customer_email;
-  private int price;
-  private Date date;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "staff_id")
+  private Staff staff;
 
-  public Schedule(int user_id, String time, String status, String notes, int staff_id,
-      int address_id, String product_type, String customer_name,
-      String customer_phone_number, String customer_email, int price, Date date) {
-    this.user_id = user_id;
-    this.time = time;
-    this.status = status;
-    this.notes = notes;
-    this.staff_id = staff_id;
-    this.address_id = address_id;
-    this.product_type = product_type;
-    this.customer_name = customer_name;
-    this.customer_phone_number = customer_phone_number;
-    this.customer_email = customer_email;
-    this.price = price;
-    this.date = date;
-  }
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "order_detail_id")
+  private OrderDetail orderDetail;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "address_id")
+  private Address address;
 }

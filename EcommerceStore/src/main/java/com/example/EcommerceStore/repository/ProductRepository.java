@@ -32,4 +32,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
   Page<Product> getFilteredProductByPrice(String productType, int startPrice, int endPrice, PageRequest pageRequest);
   @Query("SELECT p FROM Product p WHERE p.productType = :product_type and p.pc_id = :pc_id")
   List<Product> findProductsByProductTypeAndPc_id(String product_type, int pc_id);
+  @Query("SELECT DISTINCT p FROM Product p JOIN p.orderDetailList od JOIN od.order o JOIN o.address.user u WHERE u.userId = :userId AND p NOT IN (SELECT DISTINCT f.product FROM Feedback f WHERE f.user.userId = :userId)")
+  List<Product> findProductsToFeedbackByUser(@Param("userId") int userId);
 }

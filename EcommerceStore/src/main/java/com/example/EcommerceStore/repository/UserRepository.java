@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends JpaRepository<User, Integer> {
   User findByUserEmail(String emailId);
   User findUserByUserId(int user_id);
-  @Query(value = "select * from [dbo].[User] where user_email = :user_email", nativeQuery = true)
+  @Query(value = "select * from dbo_user where user_email = :user_email", nativeQuery = true)
   Optional<User> findByEmail(@Param("user_email") String user_email);
 
   @Modifying
@@ -31,8 +31,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
   @Query("SELECT u FROM User u WHERE u.user_name = :username")
   public User getUserByUsername(@Param("username") String username);
 
-  boolean existsUserByUserEmail(String userEmail);
 
-  boolean existsByPassword(String password);
+
   User findUserByUserEmail(String email);
+  @Query(value = "select *  from dbo_user u where u.user_email = :email", nativeQuery = true)
+  User existsByUserEmail(@Param("email") String email);
+  @Query(value = "select * from dbo_user u where u.user_email = :user_email", nativeQuery = true)
+  Optional<User> findByEmail2(@Param("user_email") String user_email);
+
 }

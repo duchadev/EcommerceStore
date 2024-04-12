@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public  interface ScheduleRepository extends JpaRepository<Schedule,Integer> {
-List<Schedule> findSchedulesByDate(Date date);
+
 }

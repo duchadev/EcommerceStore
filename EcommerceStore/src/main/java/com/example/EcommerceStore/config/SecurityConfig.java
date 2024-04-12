@@ -3,7 +3,6 @@ package com.example.EcommerceStore.config;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
-import com.example.EcommerceStore.entity.User;
 import com.example.EcommerceStore.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,12 +22,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -36,15 +38,29 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-
 @EnableMethodSecurity
+@Order(2)
+
 public class SecurityConfig {
 
   @Autowired
   private OurUserDetailsService userDetailsService;
 @Autowired
 private UserRepository  userRepository;
+  @Bean
+  public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+    UserDetails user = org.springframework.security.core.userdetails.User.withUsername("user")
+        .password("password")
+        .roles("USER")
+        .build();
 
+    UserDetails admin = User.withUsername("admin")
+        .password("adminpassword")
+        .roles("ADMIN")
+        .build();
+
+    return new InMemoryUserDetailsManager(user, admin);
+  }
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
       HttpSession session) throws Exception {
@@ -59,7 +75,7 @@ private UserRepository  userRepository;
                 , "/EcommerceStore/productBrandFilter/**", "/EcommerceStore/productDetails/**",
                 "/EcommerceStore/products/more", "/EcommerceStore/clean-booking/**",
                 "/static/asset/**",
-            "/static/media/banner/**","/media/product/**").permitAll()
+            "/static/media/banner/**","/media/product/**","/styles.css").permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
         .formLogin(formLogin ->
@@ -68,8 +84,29 @@ private UserRepository  userRepository;
                 .permitAll()
                 .loginProcessingUrl("/EcommerceStore/login")
                 .defaultSuccessUrl("/EcommerceStore/product", true)
+
                 .failureUrl("/EcommerceStore/loginpage?error=true")
+                //handle success auth
+                .successHandler((request, response, authentication) -> {
+                  Object user = authentication.getPrincipal();
+                  if (user instanceof UserDetails userDetails) {
+                    String email = userDetails.getUsername();
+                    com.example.EcommerceStore.entity.User user1 = userRepository.findUserByUserEmail(email);
+
+                    if (user1.getVerified() == 0) {
+                      String errorMessage = "You have not verified your account!";
+                      request.getSession().setAttribute("user_email", user1.getUserEmail());
+
+                      request.getSession().setAttribute("errorMessage1", errorMessage);
+                      response.sendRedirect("/EcommerceStore/loginpage?error=true");
+                    } else {
+                      response.sendRedirect("/EcommerceStore/product");
+                    }
+                  }
+
+                })
                 .failureHandler((request, response, exception) -> {
+
                   String errorMessage = "Invalid username or password";
                   request.getSession().setAttribute("errorMessage", errorMessage);
                   response.sendRedirect("/EcommerceStore/loginpage?error=true");

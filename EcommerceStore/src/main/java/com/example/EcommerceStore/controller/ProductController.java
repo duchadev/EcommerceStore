@@ -43,30 +43,34 @@ public class ProductController {
         // Standard UserDetails case
         String email = userDetails.getUsername();
         model.addAttribute("user_email", email);
-        session.setAttribute("user_email", email);
-        User user = userRepository.findByUserEmail(email);
+        User user = userRepository.findUserByUserEmail(email);
         model.addAttribute("userRepository", userRepository);
-        session.setAttribute("user", user);
-        System.out.println("User: " + user.getUserId());
-
         int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);
+        session.setAttribute("user_id", userRepository.findUserByUserEmail(email).getUserId());
+        if (user.getRoles().trim().equals("ADMIN"))
+          return "redirect:/admin";
       } else if (principal instanceof OAuth2User oAuth2User) {
         // get user_email when sign in with google or facebook
         Map<String, Object> attributes = oAuth2User.getAttributes();
         model.addAttribute("user_email",
             attributes.get("email"));
-        session.setAttribute("user_email", attributes.get("email"));
+
+        if(userRepository.existsByUserEmail((String) attributes.get("email"))==null){
+          var user =  User.builder().user_name((String) attributes.get("name"))
+              .userEmail((String) attributes.get("email")).password("").verified(1).roles("USER").build();
+          userRepository.save(user);
+          ;
+        }
+        session.setAttribute("user_id", userRepository.findUserByUserEmail((String) attributes.get("email")).getUserId());
 
         model.addAttribute("userRepository", userRepository);
-        User user = userRepository.findByUserEmail((String) attributes.get("email"));
-        session.setAttribute("user", user);
-//        System.out.println("User: "+user.getUserId());
 
       } else {
         return "error";
       }
     }
+
 
     List<Product> productList = productService.getInitialProducts();
     model.addAttribute("productList", productList);
@@ -75,8 +79,6 @@ public class ProductController {
     model.addAttribute("listPhone", listPhone);
     List<Product> listLaptop = productRepository.findProductByProductType("Laptop");
     model.addAttribute("listLaptop", listLaptop);
-    List<Product> listPc = productRepository.findProductByProductType("PC");
-    model.addAttribute("listPC",listPc);
     List<Product> listEarPhone = productRepository.findProductByProductType("Ear Phone");
     model.addAttribute("listEarPhone", listEarPhone);
     return "test_homepage";
@@ -101,7 +103,7 @@ public class ProductController {
         String email = userDetails.getUsername();
         model.addAttribute("user_email", email);
         User user = userRepository.findByUserEmail(email);
-
+        model.addAttribute("user", user);
         model.addAttribute("userRepository", userRepository);
         int user_id = user.getUserId();
         model.addAttribute("user_id", user_id);
@@ -111,7 +113,7 @@ public class ProductController {
         model.addAttribute("user_email",
             attributes.get("email"));
         model.addAttribute("userRepository", userRepository);
-        User user = (User) session.getAttribute("user");
+        User user = userRepository.findUserByUserEmail( attributes.get("email").toString());
         model.addAttribute("user", user);
 
       } else {
@@ -138,7 +140,7 @@ public class ProductController {
   public String productFilter(@PathVariable("product_type") String product_type, Model model
       , HttpSession session) {
     List<Product> listProduct = productService.searchFilteredProduct(product_type);
-    model.addAttribute("listProduct", listProduct);
+    model.addAttribute("productList", listProduct);
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
     model.addAttribute("productType", product_type);
@@ -170,7 +172,7 @@ public class ProductController {
   public String findByProductBrand(@PathVariable("product_brand") String product_brand,
       Model model, HttpSession session) {
     List<Product> listProduct = productRepository.findProductsByProductBrand(product_brand);
-    model.addAttribute("listProduct", listProduct);
+    model.addAttribute("productList", listProduct);
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
     model.addAttribute("productType", "Laptop");
@@ -192,7 +194,7 @@ public class ProductController {
     String email = String.valueOf(session.getAttribute("user_email"));
     model.addAttribute("user_email", email);
     if (!listProduct.isEmpty()) {
-      model.addAttribute("listProduct", listProduct);
+      model.addAttribute("productList", listProduct);
     }
 
     model.addAttribute("productType", productType);
@@ -220,7 +222,7 @@ public class ProductController {
   }
 
   @GetMapping("/search")
-  public String searchProduct(@RequestParam String keyword,
+  public String searchProduct(@RequestParam("keyword") String keyword,
       @RequestParam int page, @RequestParam int size,
       Model model, HttpSession session) {
 
@@ -237,7 +239,7 @@ public class ProductController {
   }
 
   @GetMapping("/searchFilter")
-  public String searchFilteredProduct(@RequestParam String keyword,
+  public String searchFilteredProduct(@RequestParam("keyword") String keyword,
       @RequestParam int page, @RequestParam int size,
       Model model, HttpSession session) {
 

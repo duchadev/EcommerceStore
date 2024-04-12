@@ -1,21 +1,16 @@
 package com.example.EcommerceStore.service.impl;
 
 import com.example.EcommerceStore.entity.User;
-import com.example.EcommerceStore.entity.UserAddress;
-import com.example.EcommerceStore.repository.UserAddressRepository;
+import com.example.EcommerceStore.repository.AddressRepository;
 import com.example.EcommerceStore.repository.UserRepository;
 import com.example.EcommerceStore.request.RegisterRequest;
-import com.example.EcommerceStore.response.RegisterResponse;
 import com.example.EcommerceStore.service.UserService;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -30,13 +25,13 @@ public class UserServiceImpl implements UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
   @Autowired
-  UserAddressRepository userAddressRepository;
+  AddressRepository userAddressRepository;
 
   @Override
   public boolean register(RegisterRequest registerRequest) {
     User existingUser = userRepository.findByUserEmail(registerRequest.getEmail());
     if (existingUser != null) {
-      if (existingUser.isVerified()) {
+      if (existingUser.getVerified() == 1) {
         return false;
       }
     } else {
@@ -49,6 +44,7 @@ public class UserServiceImpl implements UserService {
           .user_phoneNumber("")
           .birthday(Date.valueOf(currentDate))
           .otpGeneratedTime(LocalDateTime.now())
+          .verified(0)
           .build();
       String otp = generateOTP();
       users.setOtp(otp);
@@ -63,18 +59,29 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public void verify(String email, String otp) {
-    User users = userRepository.findByUserEmail(email);
-    if (users == null){
-      throw new RuntimeException("User not found");
-    } else if (users.isVerified()) {
-      throw new RuntimeException("User is already verified");
-    } else if (otp.equals(users.getOtp())) {
-      users.setVerified(true);
-      userRepository.save(users);
-    }else {
-      throw new RuntimeException("Internal Server error");
+  public boolean verify(String email, String otp) {
+    User user = userRepository.findUserByUserEmail(email);
+
+    System.out.println("Email nhap vao: " + email);
+    System.out.println("OTP nhapp vao" + otp);
+    System.out.println("OTP trong db:" + user.getOtp());
+
+    // Convert emails to lowercase for case-insensitive comparison
+    if (user.getVerified() == 1) {
+      return false;
+    } else {
+      String lowerCaseEmail = email.toLowerCase();
+      if (otp.trim().equals(user.getOtp().trim()) && lowerCaseEmail.equals(
+          user.getUserEmail().toLowerCase())) {
+        user.setVerified(1);
+        user.setOtp("0");
+        userRepository.save(user);
+        return true;
+      } else {
+        return false;
+      }
     }
+
   }
 
   @Override
@@ -133,11 +140,52 @@ public class UserServiceImpl implements UserService {
   )
   {
     String subject = "Thông báo thông tin đặt lịch vệ sinh";
-    String body = "Tên khách hàng: "+ userAddressRepository.getUserAddressByAddressId(user_address).getReceive_name() + "<br>"
-        +"Số điện thoại: " + userAddressRepository.getUserAddressByAddressId(user_address).getReceive_phone() +"<br>"
-       +"Địa chỉ khách hàng: "+ userAddressRepository.getUserAddressByAddressId(user_address) +"<br>"
+    String body = "Tên khách hàng: "+ userAddressRepository.getAddressByAddressID(user_address).getReceiverName() + "<br>"
+        +"Số điện thoại: " + userAddressRepository.getAddressByAddressID(user_address).getReceiverPhone() +"<br>"
+       +"Địa chỉ khách hàng: "+ userAddressRepository.getAddressByAddressID(user_address) +"<br>"
         +"Ngày giờ: "+ date +" - "+ time +"<br>"
         + "Ghi chú: "+ note;
     emailService.sendEmail(email,subject,body);
   }
+  public void send(String email) {
+    User user = userRepository.findUserByUserEmail(email);
+
+    String otp = generateOTP();
+    user.setOtp(otp);
+    userRepository.save(user);
+    sendVerificationEmail(email, otp);
+  }
+  //re_verify account
+
+
+  //verify for create new user
+
+  //verify for change pass
+  @Override
+  public boolean verifyForgotPass(String email, String otp) {
+    User user = userRepository.findUserByUserEmail(email);
+    String lowerCaseEmail = email.toLowerCase();
+    if (otp.trim().equals(user.getOtp().trim()) && lowerCaseEmail.equals(
+        user.getUserEmail().toLowerCase())) {
+      user.setOtp("0");
+      userRepository.save(user);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public boolean changeNewPass(String email, String new_pass, String confirm_new_pass) {
+    User user = userRepository.findUserByUserEmail(email);
+    if (new_pass.trim().equalsIgnoreCase(confirm_new_pass.trim())) {
+
+      user.setPassword(passwordEncoder.encode(new_pass));
+      userRepository.save(user);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

@@ -1,24 +1,23 @@
 package com.example.EcommerceStore.controller;
 
 import com.example.EcommerceStore.config.VNPayService;
+import com.example.EcommerceStore.entity.Address;
 import com.example.EcommerceStore.entity.Cart;
 import com.example.EcommerceStore.entity.CartItem;
 import com.example.EcommerceStore.entity.Order;
 import com.example.EcommerceStore.entity.OrderDetail;
 import com.example.EcommerceStore.entity.PcComponent;
 import com.example.EcommerceStore.entity.Product;
-import com.example.EcommerceStore.entity.UserAddress;
 import com.example.EcommerceStore.repository.CartItemRepository;
 import com.example.EcommerceStore.repository.CartRepository;
 import com.example.EcommerceStore.repository.OrderDetailRepository;
 import com.example.EcommerceStore.repository.OrderRepository;
 import com.example.EcommerceStore.repository.ProductRepository;
-import com.example.EcommerceStore.repository.UserAddressRepository;
+import com.example.EcommerceStore.repository.AddressRepository;
+import com.example.EcommerceStore.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +27,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Controller
 @RequestMapping("/EcommerceStore")
 public class OrderController {
 
   @Autowired
-  private UserAddressRepository userAddressRepository;
+  private AddressRepository userAddressRepository;
   @Autowired
   private OrderRepository orderRepository;
   @Autowired
@@ -48,6 +46,8 @@ public class OrderController {
   private CartRepository cartRepository;
   @Autowired
   private VNPayService vnPayService;
+  @Autowired
+  private UserRepository userRepository;
 
   @GetMapping("/order")
   public String viewOrder(@RequestParam("user_id") int user_id,
@@ -59,7 +59,7 @@ public class OrderController {
         return "order_error";
       } else {
 
-        List<UserAddress> userAddressList = userAddressRepository.findUserAddressesByUserId(user_id);
+        List<Address> userAddressList = userAddressRepository.findByUser(user_id);
         model.addAttribute("userAddressList", userAddressList);
         model.addAttribute("total", total);
         model.addAttribute("user_id", user_id);
@@ -69,7 +69,7 @@ public class OrderController {
       }
     } else
     {
-      List<UserAddress> userAddressList = userAddressRepository.findUserAddressesByUserId(user_id);
+      List<Address> userAddressList = userAddressRepository.findByUser(user_id);
       model.addAttribute("userAddressList", userAddressList);
       model.addAttribute("total", total);
       model.addAttribute("user_id", user_id);
@@ -100,12 +100,17 @@ public class OrderController {
         user_address = address_id;
 //      session.setAttribute("user_address", user_address);
       } else {
-        UserAddress userAddress = new UserAddress(district, commute, detail_address, city,
-            receive_name, receive_phone, user_id);
+        Address userAddress = new Address();
+        userAddress.setUser(userRepository.findUserByUserId(user_id));
+        userAddress.setCity(city);
+        userAddress.setDetail(detail_address);
+        userAddress.setDistrict(district);
+        userAddress.setCommute(commute);
+        userAddress.setReceiverPhone(receive_phone);
+        userAddress.setReceiverName(receive_name);
         userAddressRepository.save(userAddress);
-//      UserAddress userAddress1 = userAddressRepository.getUserAddress();
-        user_address = userAddress.getAddressId();
-//      session.setAttribute("user_address", user_address);
+        Address userAddress1 = userAddressRepository.getNewestAddress();
+        user_address = userAddress1.getAddressID();
       }
 
       if (payment_method == 1) {
@@ -171,12 +176,17 @@ public class OrderController {
         user_address = address_id;
 //      session.setAttribute("user_address", user_address);
       } else {
-        UserAddress userAddress = new UserAddress(district, commute, detail_address, city,
-            receive_name, receive_phone, user_id);
+        Address userAddress = new Address();
+        userAddress.setUser(userRepository.findUserByUserId(user_id));
+        userAddress.setCity(city);
+        userAddress.setDetail(detail_address);
+        userAddress.setDistrict(district);
+        userAddress.setCommute(commute);
+        userAddress.setReceiverPhone(receive_phone);
+        userAddress.setReceiverName(receive_name);
         userAddressRepository.save(userAddress);
-//      UserAddress userAddress1 = userAddressRepository.getUserAddress();
-        user_address = userAddress.getAddressId();
-//      session.setAttribute("user_address", user_address);
+        Address userAddress1 = userAddressRepository.getNewestAddress();
+        user_address = userAddress1.getAddressID();
       }
 
       if (payment_method == 1) {

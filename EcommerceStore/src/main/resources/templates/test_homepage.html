@@ -59,68 +59,68 @@
           <img src="../static/asset/default/images/logo-white.png" alt="logo" width="160px" height="45px"/>
         </a>
         <div class="form__input">
-          <form>
+          <form th:action="@{/EcommerceStore/searchFilter}" method="get">
             <div class="searh-form-container">
               <div class="box-select" onclick="_show_option_search();">
-                <input type="hidden" name="category" id="js-search-catId" value="0"/>
+
                 <a href="" class="title-select" id="js-search-title">
                   Tất cả danh mục
                 </a>
                 <div class="content-select" id="js-list-option-search">
-                  <a href="/EcommerceStore/build-pc" class="item">
-              <span class="txt" alt="Build PC Gaming"
-              >Xây dựng cấu hình PC</span
-              >
+                  <a href="">
+                    Tất cả danh mục
                   </a>
-                  <a href="/EcommerceStore/productFilter/PC" class="item">
-                    <span class="txt" alt="PC Gaming">PC gaming</span>
+                  <a href="" data-id="76">
+                    Xây dựng cấu hình PC
                   </a>
-                  <a href="/EcommerceStore/productFilter/Man Hinh" class="item">
-                    <span class="txt" alt="Màn hình Gaming">Màn hình gaming</span>
+                  <a href="" data-id="82">
+                    PC Gaming
                   </a>
-                  <a href="/EcommerceStore/productFilter/Laptop" class="item">
-                    <span class="txt" alt="Laptop Gaming">Laptop gaming</span>
+                  <a href="" data-id="210">
+                    PC Đồ Họa
                   </a>
-                  <a
-                      href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-japan.html"
-                      class="item"
-                  >
-              <span class="txt"
-              >PS5 Slim
-                <img
-                    border="0"
-                    src="/media/lib/07-12-2023/hotsale2.png"
-                    width="20"
-                    height="20"
-                /></span>
+                  <a href="" data-id="182">
+                    PC Văn Phòng
                   </a>
-                  <a href="/pc-van-phong.html" class="item">
-                    <span class="txt">PC Văn phòng</span>
+                  <a href="" data-id="217">
+                    Máy chơi game - Console
                   </a>
-                  <a
-                      href="/media/marketing/khuyenmai/khuyen-mai-8-3.html"
-                      class="item"
-                  >
-                    <span class="txt"> Khuyến mãi </span>
+                  <a href="" data-id="68">
+                    Màn Hình Máy Tính
                   </a>
-                  <a href="/EcommerceStore/productFilter/VGA" class="item">
-                    <span class="txt">VGA</span>
+                  <a href="" data-id="65">
+                    VGA - Card màn hình
                   </a>
-                  <a href="/vga-nvidia-rtx-4080.html" class="item">
-                    <span class="txt">Clean booking</span>
+                  <a href="" data-id="60">
+                    Linh kiện máy tính
                   </a>
-                  <a href="/gioi-thieu" class="item">
-                    <span class="txt">Giới thiệu</span>
+                  <a href="" data-id="78">
+                    Gaming Gears
+                  </a>
+                  <a href="" data-id="79">
+                    Laptop - Máy Tính Xách Tay
+                  </a>
+                  <a href="" data-id="103">
+                    Phụ Kiện - Tản Nhiệt PC
                   </a>
                 </div>
               </div>
-              <input type="text" id="js-global-seach" class="text_search" name="q"
+              <input type="text" id="js-global-seach" class="text_search" name="keyword"
+
                      placeholder="Nhập sản phẩm cần tìm..."
-                     autocomplete="off" value=""/>
+                     autocomplete="off" th:value="${keyword}"/>
+              <input type="hidden" name="page" id="page"
+
+                     th:value="${10}"
+              />
+              <input type="hidden" name="size" id="size"
+
+                     value="4"
+              />
               <button type="submit" class="submit-search">
-                    <span>
-                      Tìm kiếm
-                    </span>
+                  <span>
+                    Tìm kiếm
+                  </span>
                 <i class="icon_2023 search">
                 </i>
               </button>
@@ -143,7 +143,8 @@
           <a class="item account d-flex align-items" th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}"
           >
             <i class="icon_2023 account "></i>
-            <span class="hover-txt ">Tài khoản</span>
+            <span class="hover-txt" >Tài khoản</span>
+
           </a>
           <a class="item box-cart "
              id="js-header-cart "
@@ -214,7 +215,7 @@
               </a>
             </div>
             <div class="item">
-              <a href="" class="item-cate d-flex align-items">
+              <a href="/EcommerceStore/productFilter/PC" class="item-cate d-flex align-items">
                 <p class="cat-title">
                   PC Gaming
                 </p>
@@ -236,7 +237,7 @@
               </a>
             </div>
             <div class="item">
-              <a href="" class="item-cate d-flex align-items">
+              <a href="/EcommerceStore/productFilter/PC" class="item-cate d-flex align-items">
                 <p class="cat-title">
                   PC Văn Phòng
                 </p>
@@ -258,7 +259,7 @@
               </a>
             </div>
             <div class="item">
-              <a href="" class="item-cate d-flex align-items">
+              <a href="/EcommerceStore/productFilter/VGA" class="item-cate d-flex align-items">
                 <p class="cat-title">
                   VGA - Card màn hình
                 </p>
@@ -291,7 +292,7 @@
               </a>
             </div>
             <div class="item">
-              <a href="" class="item-cate d-flex align-items">
+              <a href="/EcommerceStore/productFilter/Laptop" class="item-cate d-flex align-items">
                 <p class="cat-title">
                   Laptop - Máy Tính Xách Tay
                 </p>
@@ -321,17 +322,17 @@
                   Xây dựng cấu hình PC
                 </span>
           </a>
-          <a href="" class="item">
+          <a href="/EcommerceStore/productFilter/PC" class="item">
                 <span class="txt" alt="PC Gaming">
                   PC gaming
                 </span>
           </a>
-          <a href="" class="item">
+          <a href="/EcommerceStore/productFilter/SCREEN" class="item">
                 <span class="txt" alt="Màn hình Gaming">
                   Màn hình gaming
                 </span>
           </a>
-          <a href="" class="item">
+          <a href="/EcommerceStore/productFilter/Laptop" class="item">
                 <span class="txt" alt="Laptop Gaming">
                   Laptop gaming
                 </span>
@@ -343,7 +344,7 @@
                   />
                 </span>
           </a>
-          <a href="" class="item">
+          <a href="/EcommerceStore/productFilter/PC" class="item">
                 <span class="txt">
                   PC Văn phòng
                 </span>
@@ -353,12 +354,12 @@
                   Khuyến mãi
                 </span>
           </a>
-          <a href="" class="item">
+          <a href="/EcommerceStore/productFilter/VGA" class="item">
                 <span class="txt">
                   RTX 4070 Super
                 </span>
           </a>
-          <a href="" class="item">
+          <a href="/EcommerceStore/productFilter/VGA" class="item">
                 <span class="txt">
                   RTX 4080 Super
                 </span>

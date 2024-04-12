@@ -354,15 +354,15 @@
           </div>
           <span class="txt" style="color: red; text-align: center;">Đăng kí nhận thông tin khi có hàng</span><br>
           <div  th:if="${productRepository.getProductByProductId(productId).getProduct_quantity() == 0}"
-               style="margin-left: 35%">
+                style="margin-left: 35%">
             <form action="/EcommerceStore/register-product" method="post">
-                <input type="hidden" name="product_id"  th:value="${product.productId}">
-                <input type="hidden" name="user_email" th:value="${user_email}">
-                <button type="submit">Đăng kí nhận thông tin</button>
+              <input type="hidden" name="product_id"  th:value="${product.productId}">
+              <input type="hidden" name="user_email" th:value="${user_email}">
+              <button type="submit">Đăng kí nhận thông tin</button>
 
             </form>
           </div>
-             <!-- end group add product -->
+          <!-- end group add product -->
           <div class="info-policy">
             <div class="item">
               <i class="fa-solid fa-credit-card"></i>

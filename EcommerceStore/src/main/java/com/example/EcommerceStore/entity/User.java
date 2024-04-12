@@ -19,16 +19,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "[User]")
+@Table(name = "dbo_user")
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+@Column(name="user_id")
   private int userId;
 
-  @Column(unique = true)
+  @Column(name="user_name",unique = true)
+
   private String user_name;
+  @Column(name="birthday")
   private Date birthday;
   @Column(name = "user_email")
   private String userEmail;
@@ -40,6 +42,6 @@ public class User {
   private String roles;
   private String otp;
   private LocalDateTime otpGeneratedTime;
-  @Column(name = "is_active", columnDefinition = "BIT")
-  private boolean verified;
+  @Column(name = "is_active")
+  private int verified;
 }

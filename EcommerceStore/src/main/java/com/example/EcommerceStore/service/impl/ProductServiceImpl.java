@@ -1,21 +1,33 @@
 package com.example.EcommerceStore.service.impl;
 
+import com.example.EcommerceStore.entity.Order;
+import com.example.EcommerceStore.entity.OrderDetail;
 import com.example.EcommerceStore.entity.Product;
+import com.example.EcommerceStore.repository.FeedbackRepository;
+import com.example.EcommerceStore.repository.OrderRepository;
 import com.example.EcommerceStore.repository.ProductRepository;
 import com.example.EcommerceStore.service.ProductService;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
   @Autowired
   private ProductRepository productRepository;
+  @Autowired
+  private FeedbackRepository feedbackRepository;
+  @Autowired
+  private OrderRepository orderRepository;
 
   @Override
   public Page<Product> getAll(Integer pageNo) {
@@ -95,5 +107,64 @@ public class ProductServiceImpl implements ProductService {
         start,end, PageRequest.of(page,size));
 
     return filteredPage.getContent();
+  }
+  public void save(Product product) {
+    productRepository.save(product);
+  }
+
+  public Product get(int id) {
+    try{
+      Optional<Product> result = productRepository.findById(id);
+      if (result.isPresent()) {
+        return result.get();
+      }
+
+    } catch (Exception ex)
+    {
+      ex.printStackTrace();
+      System.out.println(ex);
+    }
+return null;
+
+  }
+  @Transactional
+  public void delete(int id)  {
+    try{
+      Optional<Product> result = productRepository.findById(id);
+      if (result.isPresent()) {
+        productRepository.deleteById(id);
+      }
+    }catch (Exception ex)
+    {
+      System.out.println(ex);
+      ex.printStackTrace();
+    }
+
+
+  }
+  public List<Product> listAll() {
+    return (List<Product>) productRepository.findAll(Sort.by(Sort.Direction.DESC, "product_id"));
+  }
+  public void setRating(Product product){
+    product.setRating(feedbackRepository.sumRatingByProductId(product.getProductId()) / feedbackRepository.countByProductId(product.getProductId()));
+    productRepository.save(product);
+  }
+  public List<OrderDetail> getAllUserBoughtByUserId(int userId) {
+    try {
+      List<Order> orderList = orderRepository.findOrdersByUserId(userId);
+      List<OrderDetail> orderDetailList = new ArrayList<>();
+      for (Order order : orderList) {
+        System.err.println(order.getOrderId());
+        for (OrderDetail od : order.getOrderDetails()) {
+          System.err.println(od.getProduct().getProduct_name() + " od");
+          orderDetailList.add(od);
+        }
+      }
+      return orderDetailList;
+    } catch (Exception e) {
+      System.err.println("XXXXXXXXXXXXXXx");
+      e.printStackTrace();
+      return null;
+    }
   }
 }

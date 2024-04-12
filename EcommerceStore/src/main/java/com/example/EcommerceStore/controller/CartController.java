@@ -14,10 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,42 +46,114 @@ public class CartController {
 
 
   @GetMapping("/cart/{user_id}")
-  public String viewCart(@PathVariable("user_id") int user_id, Model model, HttpSession session) {
+  public String viewCart(@PathVariable("user_id") int user_id,
+      Model model, HttpSession session, Authentication authentication) {
     Cart cart = cartRepository.findCartByUserId(user_id);
+    try {
+      if (authentication != null && authentication.isAuthenticated()) {
+        Object principal = authentication.getPrincipal();
 
-    if (cart == null) {
-      int total = 0;
-      model.addAttribute("total", total);
-      model.addAttribute("error", "Your cart is empty");
-    } else {
-      List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
-      model.addAttribute("productRepository", productRepository);
-      model.addAttribute("cartItemList", cartItemList);
-      model.addAttribute("user_id", user_id);
-      session.setAttribute("cartItemList", cartItemList);
-      int total = getTotal(cartItemList);
-      int item_quantity =0;
-      if (cartItemList == null) {
-        total = 0;
-        model.addAttribute("total", total);
-        model.addAttribute("item_quantity", item_quantity);
-      } else {
-        model.addAttribute("total", total);
-        for(CartItem c: cartItemList)
-        {
-          item_quantity+=c.getQuantity();
+        if (principal instanceof UserDetails userDetails) {
+          // Standard UserDetails case
+          String email = userDetails.getUsername();
+          model.addAttribute("user_email", email);
+          User user = userRepository.findByUserEmail(email);
+          model.addAttribute("userRepository", userRepository);
+          int userid = user.getUserId();
+          model.addAttribute("user_id", userid);
+          session.setAttribute("user_id", userRepository.findByEmail(email).get().getUserId());
+          if (user.getRoles().equals("ADMIN")) {
+            return "redirect:/admin";
+          } else {
+            if (cart == null) {
+              int total = 0;
+              model.addAttribute("total", total);
+              model.addAttribute("error", "Your cart is empty");
+            } else {
+              List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(
+                  cart.getCartId());
+              model.addAttribute("productRepository", productRepository);
+              model.addAttribute("cartItemList", cartItemList);
+              model.addAttribute("user_id", user_id);
+              session.setAttribute("cartItemList", cartItemList);
+              int total = getTotal(cartItemList);
+              int item_quantity = 0;
+              if (cartItemList == null) {
+                total = 0;
+                model.addAttribute("total", total);
+                model.addAttribute("item_quantity", item_quantity);
+              } else {
+                model.addAttribute("total", total);
+                for (CartItem c : cartItemList) {
+                  item_quantity += c.getQuantity();
+                }
+                model.addAttribute("item_quantity", item_quantity);
+              }
+
+
+            }
+
+            return "cart_test";
+          }
+
+        } else if (principal instanceof OAuth2User oAuth2User) {
+          // get user_email when sign in with google or facebook
+          Map<String, Object> attributes = oAuth2User.getAttributes();
+          model.addAttribute("user_email",
+              attributes.get("email"));
+
+          if (userRepository.existsByUserEmail((String) attributes.get("email")) == null) {
+            var user = User.builder().user_name((String) attributes.get("name"))
+                .userEmail((String) attributes.get("email")).password("").verified(1)
+                .roles("USER").build();
+            userRepository.save(user);
+            ;
+          }
+          if (cart == null) {
+            int total = 0;
+            model.addAttribute("total", total);
+            model.addAttribute("error", "Your cart is empty");
+          } else {
+            List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(
+                cart.getCartId());
+            model.addAttribute("productRepository", productRepository);
+            model.addAttribute("cartItemList", cartItemList);
+            model.addAttribute("user_id", user_id);
+            session.setAttribute("cartItemList", cartItemList);
+            int total = getTotal(cartItemList);
+            int item_quantity = 0;
+            if (cartItemList == null) {
+              total = 0;
+              model.addAttribute("total", total);
+              model.addAttribute("item_quantity", item_quantity);
+            } else {
+              model.addAttribute("total", total);
+              for (CartItem c : cartItemList) {
+                item_quantity += c.getQuantity();
+              }
+              model.addAttribute("item_quantity", item_quantity);
+            }
+          }
+          session.setAttribute("user_id",
+              userRepository.findByEmail((String) attributes.get("email")).get().getUserId());
+          model.addAttribute("userRepository", userRepository);
+        } else {
+          return "error";
         }
-        model.addAttribute("item_quantity", item_quantity);
       }
 
+      return "cart_test";
+    } catch (Exception exception) {
+      System.out.println(exception);
+      exception.printStackTrace();
+      model.addAttribute("error", exception);
+      return "error";
 
     }
-
-    return "cart_test";
   }
 
   @PostMapping("/cart/add")
-  public  ResponseEntity<String> addToCart(HttpServletRequest request, Model model,
+  public ResponseEntity<String> addToCart(HttpServletRequest request, Model model,
       HttpSession session, HttpServletResponse response) {
     try {
       int product_id = Integer.parseInt(request.getParameter("product_id"));
@@ -130,12 +206,16 @@ public class CartController {
           List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
           model.addAttribute("cartItemList", cartItemList);
           session.setAttribute("cartItemList", cartItemList);
+          for (CartItem c : cartItemList) {
+            System.out.println(c);
+          }
           int total = getTotal(cartItemList);
           if (cartItemList == null) {
             total = 0;
             model.addAttribute("total", total);
           } else {
             model.addAttribute("total", total);
+            System.out.println(total);
           }
           model.addAttribute("productRepository", productRepository);
           model.addAttribute("user_id", user_id);
@@ -145,23 +225,27 @@ public class CartController {
           session.setAttribute("user", user);
 
           // Redirect to the cart page
-          response.sendRedirect("/EcommerceStore/cart/"+user_id);
+          response.sendRedirect("/EcommerceStore/cart/" + user_id);
 
           return ResponseEntity.ok("Added to cart");
         } else {
           return ResponseEntity.badRequest().body("User not found");
         }
       } else {
+        System.out.println("Loi o day");
+
         // handle product not found
         return ResponseEntity.badRequest().body("Error");
       }
     } catch (NumberFormatException ex) {
       // handle invalid integer format for quantity
+      System.out.println("loi 1" + ex);
       return ResponseEntity.badRequest().body("Error");
     } catch (Exception ex) {
       model.addAttribute("error", ex);
+      System.out.println("loi 2" + ex);
       return ResponseEntity.badRequest().body("Error");
-        }
+    }
   }
 
 
@@ -230,21 +314,21 @@ public class CartController {
       return "error";
     }
   }
-// set quantity and total to view
+
+  // set quantity and total to view
   private void setModel(Model model, Cart cart) {
     List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
 
     int total = getTotal(cartItemList);
-    int item_quantity =0;
+    int item_quantity = 0;
     if (cartItemList == null) {
       total = 0;
       model.addAttribute("total", total);
       model.addAttribute("item_quantity", item_quantity);
     } else {
       model.addAttribute("total", total);
-      for(CartItem c: cartItemList)
-      {
-        item_quantity+=c.getQuantity();
+      for (CartItem c : cartItemList) {
+        item_quantity += c.getQuantity();
       }
       model.addAttribute("item_quantity", item_quantity);
     }

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +16,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name= "product_register")
 public class ProductRegister {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name="pRegister_id")
+@Column(name="p_register_id")
   private int pRegister_id;
 @Column(name="product_id")
   private int productId;
